@@ -1,0 +1,14 @@
+{
+  "name": "TM1637TinyDisplay",
+  "keywords": "LED, TM1637",
+  "description": "Arduino Library for TM1637 LED Tiny Display Module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jasonacox/TM1637TinyDisplay.git"
+  },
+  "frameworks": "arduino",
+  "platforms": [
+    "atmelavr",
+    "espressif"
+  ]
+}
