@@ -215,7 +215,7 @@ void TM1637TinyDisplay::clear()
 	setSegments(data);
 }
 
-void TM1637TinyDisplay::showNumberDec(int num, bool leading_zero, uint8_t length, uint8_t pos)
+void TM1637TinyDisplay::showNumber(int num, bool leading_zero, uint8_t length, uint8_t pos)
 {
   showNumberDecEx(num, 0, leading_zero, length, pos);
 }
@@ -329,6 +329,56 @@ void TM1637TinyDisplay::showString(char s[], unsigned int scrollDelay,
       setSegments(digits, length, pos);
       delay(scrollDelay);
     }
+  }
+}
+
+void TM1637TinyDisplay::showLevel(unsigned int level = 100, bool horizontal = true) 
+{
+  uint8_t digits[4] = {0,0,0,0};
+  uint8_t digit = 0b00000000;
+
+  if(level>100) level=100;
+
+  if(horizontal) {
+    // Must fit within 3 bars
+    int bars = (int)((level*3)/100.0);
+    if(bars == 0 && level > 0) bars = 1; // only level=0 turns off display
+    switch(bars) {
+      case 1:
+        digit = 0b00001000;
+        break;
+      case 2:
+        digit = 0b01001000;
+        break;
+      case 3:
+        digit = 0b01001001;
+        break;
+      default: // keep at zero
+        break;
+    }
+    for(int x = 0; x < 4; x++) {
+      digits[x] = digit;
+    }
+  }
+  else {
+    // Must fit within 8 bars
+    int bars = (int)((level*8)/100.0);
+    if(bars == 0 && level > 0) bars = 1;
+    for(int x = 0; x<4; x++) { // for each digit
+      int left = bars-(x*2);
+      if(left > 1) digits[x] = 0b00110110;
+      if(left == 1) digits[x] = 0b00110000;
+    }
+  }
+  setSegments(digits);
+}
+
+void TM1637TinyDisplay::showAnimation(const uint8_t data[][4], unsigned int frames, unsigned int ms)
+{
+  // Animation sequence
+  for (int x = 0; x < frames; x++) {
+    setSegments(data[x]);
+    delay(ms);
   }
 }
 

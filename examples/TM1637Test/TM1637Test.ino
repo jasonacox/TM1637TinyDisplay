@@ -6,7 +6,7 @@
 #define DIO 5
 
 // The amount of time (in milliseconds) between tests
-#define TEST_DELAY   2000
+#define TEST_DELAY   1000
 
 // Example of manually defining a display pattern
 const uint8_t SEG_DONE[] = {
@@ -133,32 +133,32 @@ void loop()
   delay(TEST_DELAY);
 
   // Show decimal numbers with/without leading zeros
-  display.showNumberDec(0, false); // Expect: ___0
+  display.showNumber(0, false); // Expect: ___0
   delay(TEST_DELAY);
-  display.showNumberDec(0, true);  // Expect: 0000
+  display.showNumber(0, true);  // Expect: 0000
   delay(TEST_DELAY);
-  display.showNumberDec(1, false); // Expect: ___1
+  display.showNumber(1, false); // Expect: ___1
   delay(TEST_DELAY);
-  display.showNumberDec(1, true);  // Expect: 0001
+  display.showNumber(1, true);  // Expect: 0001
   delay(TEST_DELAY);
-  display.showNumberDec(301, false); // Expect: _301
+  display.showNumber(301, false); // Expect: _301
   delay(TEST_DELAY);
-  display.showNumberDec(301, true); // Expect: 0301
-  delay(TEST_DELAY);
-  display.clear();
-  display.showNumberDec(14, false, 2, 1); // Expect: _14_
+  display.showNumber(301, true); // Expect: 0301
   delay(TEST_DELAY);
   display.clear();
-  display.showNumberDec(4, true, 2, 2);  // Expect: __04
-  delay(TEST_DELAY);
-  display.showNumberDec(-1, false);  // Expect: __-1
-  delay(TEST_DELAY);
-  display.showNumberDec(-12);        // Expect: _-12
-  delay(TEST_DELAY);
-  display.showNumberDec(-999);       // Expect: -999
+  display.showNumber(14, false, 2, 1); // Expect: _14_
   delay(TEST_DELAY);
   display.clear();
-  display.showNumberDec(-5, false, 3, 0); // Expect: _-5_
+  display.showNumber(4, true, 2, 2);  // Expect: __04
+  delay(TEST_DELAY);
+  display.showNumber(-1, false);  // Expect: __-1
+  delay(TEST_DELAY);
+  display.showNumber(-12);        // Expect: _-12
+  delay(TEST_DELAY);
+  display.showNumber(-999);       // Expect: -999
+  delay(TEST_DELAY);
+  display.clear();
+  display.showNumber(-5, false, 3, 0); // Expect: _-5_
   delay(TEST_DELAY);
   display.showNumberHexEx(0xf1af);        // Expect: f1Af
   delay(TEST_DELAY);
@@ -195,6 +195,30 @@ void loop()
     delay(TEST_DELAY);
   }
 
+  // Level Examples
+  //    horizontal
+  for (int count = 0; count < 3; count++) {
+    for (int x = 0; x <= 100; x = x + 10) {
+      display.showLevel(x, true);
+      delay(20);
+    }
+    for (int x = 100; x > 0; x = x - 10) {
+      display.showLevel(x, true);
+      delay(20);
+    }
+  }
+  //    vertical
+  for (int count = 0; count < 3; count++) {
+    for (int x = 0; x <= 100; x = x + 10) {
+      display.showLevel(x, false);
+      delay(20);
+    }
+    for (int x = 100; x > 0; x = x - 10) {
+      display.showLevel(x, false);
+      delay(20);
+    }
+  }
+
   // String Usage Examples
   display.clear();
   display.showString("String Test 1234");
@@ -212,12 +236,10 @@ void loop()
   display.showString("End");
   delay(TEST_DELAY);
 
-  // Animation sequence
+  // Animation sequence - Run 3 times
+  display.clear();
   for (int count = 0; count < 3; count++) {
-    for (int x = 0; x < 12; x++) {
-      display.setSegments(SEG_ANIMATION[x]);
-      delay(10);
-    }
+    display.showAnimation(SEG_ANIMATION, 12, 10);
   }
   display.clear();
   delay(TEST_DELAY);

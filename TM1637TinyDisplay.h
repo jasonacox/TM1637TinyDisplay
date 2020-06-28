@@ -54,7 +54,7 @@ public:
   //! The setting takes effect when a command is given to change the data being
   //! displayed.
   //!
-  //! @param brightness A number from 0 (lowes brightness) to 7 (highest brightness)
+  //! @param brightness A number from 0 (lowest brightness) to 7 (highest brightness)
   //! @param on Turn display on or off
   void setBrightness(uint8_t brightness, bool on = true);
 
@@ -86,7 +86,7 @@ public:
   //!        fits to the number of digits requested (for example, if two digits are to be displayed,
   //!        the number must be between 0 to 99)
   //! @param pos The position of the most significant digit (0 - leftmost, 3 - rightmost)
-  void showNumberDec(int num, bool leading_zero = false, uint8_t length = 4, uint8_t pos = 0);
+  void showNumber(int num, bool leading_zero = false, uint8_t length = 4, uint8_t pos = 0);
 
   //! Display a decimal number, with dot control
   //!
@@ -159,6 +159,38 @@ public:
   //! @param pos The position of the most significant digit (0 - leftmost, 3 - rightmost)
   void showString(char s[], unsigned int scrollDelay = 200, uint8_t length = 4, uint8_t pos = 0);
  
+  //! Display a Level Indicator (both orientations)
+  //!
+  //! Illumiate LEDs to provide a visual indicator of level (horizontal or vertical orientation)
+  //!
+  //! @param level A value between 0 and 100 (representing percentage)
+  //! @param horizontal Boolean (true/false) where true = horizontal, false = vertical
+  void showLevel(unsigned int level = 100, bool horizontal = true);
+  
+  //! Display a sequence of raw LED segment data to create an animation
+  //!
+  //! Play thorugh an array of raw LED segment data to create a moving pattern.  
+  //!
+  //! const uint8_t Example[2][4] = 
+  //! {
+  //!  {                // frame 1
+  //!   0b00001000,                                     // digit 1
+  //!   0b00000000,                                     // digit 2
+  //!   0b00000000,                                     // digit 3
+  //!   0b00000000                                      // digit 4
+  //!  },
+  //!  {                // frame 2
+  //!   0b00000000,                                     // digit 1
+  //!   0b00001000,                                     // digit 2
+  //!   0b00000000,                                     // digit 3
+  //!   0b00000000                                      // digit 4
+  //!  }
+  //! }
+  //! @param data A multi-dimensional array containing the LED segment - data[frames][4]
+  //! @param frames Number of frames in the sequence to animate
+  //! @param ms Time to delay between each frame
+  void showAnimation(const uint8_t data[][4], unsigned int frames = 0, unsigned int ms = 10);
+
   //! Translate a single ASCII character into 7 segment code
   //!
   //! The method accepts a number between 0 - 255 and converts it to the

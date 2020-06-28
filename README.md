@@ -23,10 +23,13 @@ Copy this repository into your Arduino library as defined by the Arduino IDE ske
 ## Usage
 The library provides a single class named TM1637TinyDisplay. An instance of this class provides the following functions:
 
-* `setSegments` - Set the raw value of the segments of each digit
-* `showNumberDec` - Display a decimal number
-* `showNumberDecEx` - Display a decimal number with decimal points or colon
-* `showString` - Display a ASCII string of text with scrolling  
+* `showNumber` - Display a integer number (positive or negative)
+* `showNumberDecEx` - Display a number with ability to set decimal points or colon
+* `showNumberHexEx` - Display a number in hexadecimal format and set decimal point or colon
+* `showString` - Display a ASCII string of text with optional scrolling  
+* `showLevel` - Use display LEDs to simulate a level indicator (vertical or horizontal)  
+* `showAnimation` - Display a sequence of frames to render an animation
+* `setSegments` - Directly set the value of the LED segments in each digit
 * `setBrightness` - Sets the brightness of the display
 
 Please refer to [TM1637TinyDisplay.h](TM1637TinyDisplay.h) for more information. An [example sketch](examples) is included which demonstrates the operation of the above functions.
