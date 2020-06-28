@@ -217,16 +217,16 @@ void TM1637TinyDisplay::clear()
 
 void TM1637TinyDisplay::showNumber(int num, bool leading_zero, uint8_t length, uint8_t pos)
 {
-  showNumberDecEx(num, 0, leading_zero, length, pos);
+  showNumberDec(num, 0, leading_zero, length, pos);
 }
 
-void TM1637TinyDisplay::showNumberDecEx(int num, uint8_t dots, bool leading_zero,
+void TM1637TinyDisplay::showNumberDec(int num, uint8_t dots, bool leading_zero,
                                     uint8_t length, uint8_t pos)
 {
   showNumberBaseEx(num < 0? -10 : 10, num < 0? -num : num, dots, leading_zero, length, pos);
 }
 
-void TM1637TinyDisplay::showNumberHexEx(uint16_t num, uint8_t dots, bool leading_zero,
+void TM1637TinyDisplay::showNumberHex(uint16_t num, uint8_t dots, bool leading_zero,
                                     uint8_t length, uint8_t pos)
 {
   showNumberBaseEx(16, num, dots, leading_zero, length, pos);

@@ -172,7 +172,7 @@ void loop()
 
   // Run through all the dots
   for (k = 0; k <= 4; k++) {
-    display.showNumberDecEx(0, (0x80 >> k), true);
+    display.showNumberDec(0, (0x80 >> k), true);
     delay(TEST_DELAY);
   }
 

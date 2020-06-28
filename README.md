@@ -24,8 +24,8 @@ Copy this repository into your Arduino library as defined by the Arduino IDE ske
 The library provides a single class named TM1637TinyDisplay. An instance of this class provides the following functions:
 
 * `showNumber` - Display a integer number (positive or negative)
-* `showNumberDecEx` - Display a number with ability to set decimal points or colon
-* `showNumberHexEx` - Display a number in hexadecimal format and set decimal point or colon
+* `showNumberDec` - Display a number with ability to set decimal points or colon
+* `showNumberHex` - Display a number in hexadecimal format and set decimal point or colon
 * `showString` - Display a ASCII string of text with optional scrolling  
 * `showLevel` - Use display LEDs to simulate a level indicator (vertical or horizontal)  
 * `showAnimation` - Display a sequence of frames to render an animation
