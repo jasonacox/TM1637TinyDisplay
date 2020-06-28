@@ -160,14 +160,14 @@ void loop()
   display.clear();
   display.showNumber(-5, false, 3, 0); // Expect: _-5_
   delay(TEST_DELAY);
-  display.showNumberHexEx(0xf1af);        // Expect: f1Af
+  display.showNumberHex(0xf1af);        // Expect: f1Af
   delay(TEST_DELAY);
-  display.showNumberHexEx(0x2c);          // Expect: __2C
+  display.showNumberHex(0x2c);          // Expect: __2C
   delay(TEST_DELAY);
-  display.showNumberHexEx(0xd1, 0, true); // Expect: 00d1
+  display.showNumberHex(0xd1, 0, true); // Expect: 00d1
   delay(TEST_DELAY);
   display.clear();
-  display.showNumberHexEx(0xd1, 0, true, 2); // Expect: d1__
+  display.showNumberHex(0xd1, 0, true, 2); // Expect: d1__
   delay(TEST_DELAY);
 
   // Run through all the dots
