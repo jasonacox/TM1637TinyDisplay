@@ -1,4 +1,4 @@
-/  TM1637 Tiny Display
+//  TM1637 Tiny Display
 //  Arduino tiny library for TM1637 LED Display
 //
 //  Author: Jason A. Cox - @jasonacox

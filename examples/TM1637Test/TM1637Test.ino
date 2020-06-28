@@ -2,8 +2,8 @@
 #include <TM1637TinyDisplay.h>
 
 // Module connection pins (Digital Pins)
-#define CLK 2
-#define DIO 3
+#define CLK 4
+#define DIO 5
 
 // The amount of time (in milliseconds) between tests
 #define TEST_DELAY   2000
@@ -14,6 +14,85 @@ const uint8_t SEG_DONE[] = {
   SEG_A | SEG_B | SEG_C | SEG_D | SEG_E | SEG_F,   // O
   SEG_C | SEG_E | SEG_G,                           // n
   SEG_A | SEG_D | SEG_E | SEG_F | SEG_G            // E
+};
+
+// Example of defining an animation sequence for moving patterns
+/* Set up 7-segment LED Binary Data
+
+    |--A--|
+    F     B
+    |--G--|
+    E     C
+    |--D--|
+           H - Decimal
+
+    XGFEDCBA
+  0b00000000
+*/
+const uint8_t SEG_ANIMATION[12][4] =
+{
+  {
+    0b00001000,                                     //
+    0b00000000,                                     //
+    0b00000000,                                     //
+    0b00000000                                      //
+  },
+  {
+    0b00000000,                                     //
+    0b00001000,                                     //
+    0b00000000,                                     //
+    0b00000000                                      //
+  }, {
+    0b00000000,                                     //
+    0b00000000,                                     //
+    0b00001000,                                     //
+    0b00000000                                      //
+  }, {
+    0b00000000,                                     //
+    0b00000000,                                     //
+    0b00000000,                                     //
+    0b00001000                                      //
+  }, {
+    0b00000000,                                     //
+    0b00000000,                                     //
+    0b00000000,                                     //
+    0b00000100                                      //
+  }, {
+    0b00000000,                                     //
+    0b00000000,                                     //
+    0b00000000,                                     //
+    0b00000010                                      //
+  }, {
+    0b00000000,                                     //
+    0b00000000,                                     //
+    0b00000000,                                     //
+    0b00000001                                      //
+  }, {
+    0b00000000,                                     //
+    0b00000000,                                     //
+    0b00000001,                                     //
+    0b00000000                                      //
+  }, {
+    0b00000000,                                     //
+    0b00000001,                                     //
+    0b00000000,                                     //
+    0b00000000                                      //
+  }, {
+    0b00000001,                                     //
+    0b00000000,                                     //
+    0b00000000,                                     //
+    0b00000000                                      //
+  }, {
+    0b00100000,                                     //
+    0b00000000,                                     //
+    0b00000000,                                     //
+    0b00000000                                      //
+  }, {
+    0b00010000,                                     //
+    0b00000000,                                     //
+    0b00000000,                                     //
+    0b00000000                                      //
+  }
 };
 
 TM1637TinyDisplay display(CLK, DIO);
@@ -42,17 +121,16 @@ void loop()
   delay(TEST_DELAY);
 
   display.clear();
-  display.setSegments(data+2, 2, 2);
+  display.setSegments(data + 2, 2, 2);
   delay(TEST_DELAY);
 
   display.clear();
-  display.setSegments(data+2, 2, 1);
+  display.setSegments(data + 2, 2, 1);
   delay(TEST_DELAY);
 
   display.clear();
-  display.setSegments(data+1, 3, 1);
+  display.setSegments(data + 1, 3, 1);
   delay(TEST_DELAY);
-
 
   // Show decimal numbers with/without leading zeros
   display.showNumberDec(0, false); // Expect: ___0
@@ -93,22 +171,22 @@ void loop()
   delay(TEST_DELAY);
 
   // Run through all the dots
-  for(k=0; k <= 4; k++) {
+  for (k = 0; k <= 4; k++) {
     display.showNumberDecEx(0, (0x80 >> k), true);
     delay(TEST_DELAY);
   }
 
   // Brightness Test
-  for(k = 0; k < 4; k++)
+  for (k = 0; k < 4; k++)
     data[k] = 0xff;
-  for(k = 0; k < 7; k++) {
+  for (k = 0; k < 7; k++) {
     display.setBrightness(k);
     display.setSegments(data);
     delay(TEST_DELAY);
   }
 
   // On/Off Examples
-  for(k = 0; k < 4; k++) {
+  for (k = 0; k < 4; k++) {
     display.setBrightness(7, false);  // Turn off
     display.setSegments(data);
     delay(TEST_DELAY);
@@ -134,9 +212,19 @@ void loop()
   display.showString("End");
   delay(TEST_DELAY);
 
+  // Animation sequence
+  for (int count = 0; count < 3; count++) {
+    for (int x = 0; x < 12; x++) {
+      display.setSegments(SEG_ANIMATION[x]);
+      delay(10);
+    }
+  }
+  display.clear();
+  delay(TEST_DELAY);
+
   // Done!
   display.setSegments(SEG_DONE);
 
   delay(TEST_DELAY * 5);
-  
+
 }
