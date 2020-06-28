@@ -2,12 +2,12 @@
 Arduino Library for the TM1637 Based LED Display Module
 
 ## Description
-This is an Arduino library for a 4-digit 7-segment display modules based on the TM1637 chip.
+This is an Arduino library for 4-digit 7-segment display modules based on the TM1637 chip. Connect the display's CLK and DIO pins to your Arduino GPIO pins, include this library, initialize TM1637TinyDisplay and call easy to use functions like showNumber(), showString(), showLevel() and showAnimation(). Runs well on many tiny controllers including the ATtiny85.
 
 ## Hardware 
 ![TM1637](examples/tm1637.png)
 
-Modules based on the TM1637 chip are available from [HiLetgo](https://www.amazon.com/gp/product/B01DKISMXK/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1), [DX](https://dx.com/p/0-36-led-4-digit-display-module-for-arduino-black-blue-works-with-official-arduino-boards-254978) and [SeeedStudio](https://www.digikey.com/products/en?keywords=tm1637). 
+Display modules based on the TM1637 chip are available from [HiLetgo](https://www.amazon.com/gp/product/B01DKISMXK/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1), [DX](https://dx.com/p/0-36-led-4-digit-display-module-for-arduino-black-blue-works-with-official-arduino-boards-254978) and [SeeedStudio](https://www.digikey.com/products/en?keywords=tm1637). 
 
 ![TM1637](examples/tm1637back.png)
 
@@ -18,10 +18,10 @@ The display has four connectors:
 * GND - Ground
 
 ## Installation
-Copy this repository into your Arduino library as defined by the Arduino IDE sketchbook location preferences (e.g. `~/Documents/Arduino/libraries`).  
+Copy this repository into your Arduino library folder as set by the Arduino IDE "sketchbook location" preferences (e.g. `~/Documents/Arduino/libraries`).  
 
 ## Usage
-The library provides a single class named TM1637TinyDisplay. An instance of this class provides the following functions:
+The library provides a single class named TM1637TinyDisplay with the following functions:
 
 * `showNumber` - Display an integer number (positive or negative)
 * `showNumberDec` - Display a number with ability to set decimal points or colon
