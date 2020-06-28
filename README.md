@@ -12,8 +12,8 @@ Modules based on the TM1637 chip are available from [HiLetgo](https://www.amazon
 ![TM1637](examples/tm1637back.png)
 
 The display has four connectors:
-* CLK - Clock - attach to any digital output on the Arduino
-* DIO - Data line - attach to any digital output on the Arduino
+* CLK - Clock - attach to any GPIO output on the Arduino
+* DIO - Data  - attach to any GPIO output on the Arduino
 * VCC - Power 5v
 * GND - Ground
 
@@ -23,7 +23,7 @@ Copy this repository into your Arduino library as defined by the Arduino IDE ske
 ## Usage
 The library provides a single class named TM1637TinyDisplay. An instance of this class provides the following functions:
 
-* `showNumber` - Display a integer number (positive or negative)
+* `showNumber` - Display an integer number (positive or negative)
 * `showNumberDec` - Display a number with ability to set decimal points or colon
 * `showNumberHex` - Display a number in hexadecimal format and set decimal point or colon
 * `showString` - Display a ASCII string of text with optional scrolling  
