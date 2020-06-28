@@ -1,5 +1,5 @@
 # TM1637 Tiny Display
-Arduino tiny library for TM1637 LED Display
+Arduino Library for the TM1637 Based LED Display Module
 
 ## Description
 This is an Arduino library for a 4-digit 7-segment display modules based on the TM1637 chip.
@@ -18,7 +18,7 @@ The display has four connectors:
 * GND - Ground
 
 ## Installation
-Copy this repository into your Arduino library as defined by the Arduino IDE sketchbook location preferences (e.g. `~/Arduino/libraries`).  
+Copy this repository into your Arduino library as defined by the Arduino IDE sketchbook location preferences (e.g. `~/Documents/Arduino/libraries`).  
 
 ## Usage
 The library provides a single class named TM1637TinyDisplay. An instance of this class provides the following functions:
@@ -29,7 +29,7 @@ The library provides a single class named TM1637TinyDisplay. An instance of this
 * `showString` - Display a ASCII string of text with scrolling  
 * `setBrightness` - Sets the brightness of the display
 
-Please refer to TM1637TinyDisplay.h for more information. An [example sketch](examples) is included which demonstrates the operation of the above functions.
+Please refer to [TM1637TinyDisplay.h](TM1637TinyDisplay.h) for more information. An [example sketch](examples) is included which demonstrates the operation of the above functions.
 
 ## References and Credit
 * This library is based on the great work by Avishay Orpaz - https://github.com/avishorp/TM1637

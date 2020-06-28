@@ -4,6 +4,6 @@ The TM1637Test.ino sketch will demonstrate the operation of the library function
 
 ## Module Images
 
-!(Front)[tm1637.png]
+![Front](tm1637.png)
 
-!(Back)[tm1637back.png]
+![Back](tm1637back.png)
