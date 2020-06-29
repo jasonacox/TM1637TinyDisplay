@@ -200,7 +200,7 @@ public:
   //! @param chr A character ASCII value 
   //! @return A code representing the 7 segment image of the digit (LSB - segment A;
   //!         bit 6 - segment G; bit 7 - always zero)
-  uint8_t TM1637TinyDisplay::encodeASCII(uint8_t chr);
+  uint8_t encodeASCII(uint8_t chr);
 
 protected:
    void bitDelay();
