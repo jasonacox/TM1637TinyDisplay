@@ -324,7 +324,7 @@ void TM1637TinyDisplay::showString(char s[], unsigned int scrollDelay,
   }
 }
 
-void TM1637TinyDisplay::showLevel(unsigned int level = 100, bool horizontal = true) 
+void TM1637TinyDisplay::showLevel(unsigned int level, bool horizontal) 
 {
   uint8_t digits[4] = {0,0,0,0};
   uint8_t digit = 0b00000000;
