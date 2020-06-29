@@ -2,8 +2,8 @@
 #include <TM1637TinyDisplay.h>
 
 // Module connection pins (Digital Pins)
-#define CLK 4
-#define DIO 5
+#define CLK 1
+#define DIO 2
 
 // The amount of time (in milliseconds) between tests
 #define TEST_DELAY   1000
@@ -221,19 +221,24 @@ void loop()
 
   // String Usage Examples
   display.clear();
-  display.showString("String Test 1234");
+  char stringa[] = "String Test 1234";
+  display.showString(stringa);
   delay(TEST_DELAY);
   display.clear();
-  display.showString("25\xB0\C");   // display 25 + degree symbol + C
+  char stringb[] = "25\xB0\x43";  // / display 25 + degree symbol + C
+  display.showString(stringb);   
   delay(TEST_DELAY);
   display.clear();
-  display.showString("abcdefghijklmnopqrstuvwxyz.-=ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+  char stringc[] = "abcdefghijklmnopqrstuvwxyz.-=ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  display.showString(stringc);
   delay(TEST_DELAY);
   display.clear();
-  display.showString("The");
+  char stringd[] = "The";
+  display.showString(stringd);
   delay(TEST_DELAY);
   display.clear();
-  display.showString("End");
+  char stringe[] = "End";
+  display.showString(stringe);
   delay(TEST_DELAY);
 
   // Animation sequence - Run 3 times
