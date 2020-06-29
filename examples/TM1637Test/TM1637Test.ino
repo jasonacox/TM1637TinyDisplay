@@ -225,7 +225,7 @@ void loop()
   display.showString(stringa);
   delay(TEST_DELAY);
   display.clear();
-  char stringb[] = "25\xB0\x43";  // / display 25 + degree symbol + C
+  char stringb[] = "25\xB0\x43";   // display 25 + degree symbol + C
   display.showString(stringb);   
   delay(TEST_DELAY);
   display.clear();
