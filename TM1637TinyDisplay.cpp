@@ -188,7 +188,7 @@ void TM1637TinyDisplay::setBrightness(uint8_t brightness, bool on)
 
 void TM1637TinyDisplay::setSegments(const uint8_t segments[], uint8_t length, uint8_t pos)
 {
-    // Write COMM1
+  // Write COMM1
 	start();
 	writeByte(TM1637_I2C_COMM1);
 	stop();
@@ -211,7 +211,7 @@ void TM1637TinyDisplay::setSegments(const uint8_t segments[], uint8_t length, ui
 
 void TM1637TinyDisplay::clear()
 {
-    uint8_t data[] = { 0, 0, 0, 0 };
+  uint8_t data[] = { 0, 0, 0, 0 };
 	setSegments(data);
 }
 
@@ -235,41 +235,33 @@ void TM1637TinyDisplay::showNumberHex(uint16_t num, uint8_t dots, bool leading_z
 void TM1637TinyDisplay::showNumberBaseEx(int8_t base, uint16_t num, uint8_t dots, bool leading_zero,
                                     uint8_t length, uint8_t pos)
 {
-    bool negative = false;
+  bool negative = false;
 	if (base < 0) {
-	    base = -base;
+	  base = -base;
 		negative = true;
 	}
 
-
-    uint8_t digits[4];
+  uint8_t digits[4];
 
 	if (num == 0 && !leading_zero) {
 		// Singular case - take care separately
-		for(uint8_t i = 0; i < (length-1); i++)
-			digits[i] = 0;
+		for(uint8_t i = 0; i < (length-1); i++) {
+      digits[i] = 0;
+    }
 		digits[length-1] = encodeDigit(0);
 	}
-	else {
-		//uint8_t i = length-1;
-		//if (negative) {
-		//	// Negative number, show the minus sign
-		//    digits[i] = minusSegments;
-		//	i--;
-		//}
-		
-		for(int i = length-1; i >= 0; --i)
-		{
+	else {		
+		for(int i = length-1; i >= 0; --i) {
 		    uint8_t digit = num % base;
 			
 			if (digit == 0 && num == 0 && leading_zero == false)
 			    // Leading zero is blank
 				digits[i] = 0;
 			else
-			    digits[i] = encodeDigit(digit);
+			  digits[i] = encodeDigit(digit);
 				
 			if (digit == 0 && num == 0 && negative) {
-			    digits[i] = minusSegments;
+			  digits[i] = minusSegments;
 				negative = false;
 			}
 
@@ -280,8 +272,8 @@ void TM1637TinyDisplay::showNumberBaseEx(int8_t base, uint16_t num, uint8_t dots
 		{
 			showDots(dots, digits);
 		}
-    }
-    setSegments(digits, length, pos);
+  }
+  setSegments(digits, length, pos);
 }
 
 void TM1637TinyDisplay::showString(char s[], unsigned int scrollDelay,
@@ -432,14 +424,13 @@ bool TM1637TinyDisplay::writeByte(uint8_t b)
   pinMode(m_pinClk, OUTPUT);
   pinMode(m_pinDIO, INPUT);
   bitDelay();
-
+ 
   // CLK to high
   pinMode(m_pinClk, INPUT);
   bitDelay();
   uint8_t ack = digitalRead(m_pinDIO);
   if (ack == 0)
     pinMode(m_pinDIO, OUTPUT);
-
 
   bitDelay();
   pinMode(m_pinClk, OUTPUT);
@@ -450,11 +441,11 @@ bool TM1637TinyDisplay::writeByte(uint8_t b)
 
 void TM1637TinyDisplay::showDots(uint8_t dots, uint8_t* digits)
 {
-    for(int i = 0; i < 4; ++i)
-    {
-        digits[i] |= (dots & 0x80);
-        dots <<= 1;
-    }
+  for(int i = 0; i < 4; ++i)
+  {
+      digits[i] |= (dots & 0x80);
+      dots <<= 1;
+  }
 }
 
 uint8_t TM1637TinyDisplay::encodeDigit(uint8_t digit)

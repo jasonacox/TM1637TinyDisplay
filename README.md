@@ -17,6 +17,8 @@ The display has four connectors:
 * VCC - Power 5v
 * GND - Ground
 
+Power Note: Steady clean power is important for circuit stability. If you are seeing display artifacts during high frequency updates or animation sequences, you may be experiencing power fluctuations that are impacting signal timing and communication with the TM1637. This is especially true with standalone microprocessor applications that lack any power conditioning (e.g. ATtiny85). You can add a polarized 100uF electrolytic capacitor across VCC and GND to help smooth out the spikes.
+
 ## Installation
 Copy this repository into your Arduino library folder as set by the Arduino IDE "sketchbook location" preferences (e.g. `~/Documents/Arduino/libraries`).  
 
@@ -32,7 +34,29 @@ The library provides a single class named TM1637TinyDisplay with the following f
 * `setSegments` - Directly set the value of the LED segments in each digit
 * `setBrightness` - Sets the brightness of the display
 
-Please refer to [TM1637TinyDisplay.h](TM1637TinyDisplay.h) for more information. An [example sketch](examples) is included which demonstrates the operation of the above functions.
+```cpp
+#include <Arduino.h>
+#include <TM1637TinyDisplay.h>
+
+// Define Digital Pins
+#define CLK 1
+#define DIO 2 
+
+// Initialize TM1637TinyDisplay Class
+TM1637TinyDisplay display(CLK, DIO);
+
+int x = -100;
+void setup() {
+  display.setBrightness(0x0f); 
+}
+
+// We can count!
+void loop() {
+  display.showNumber(x++); 
+}
+```
+
+Refer to [TM1637TinyDisplay.h](TM1637TinyDisplay.h) for more information. An [example sketch](examples) is included which demonstrates the operation of the above functions.
 
 ## References and Credit
 * This library is based on the great work by Avishay Orpaz - https://github.com/avishorp/TM1637
