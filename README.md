@@ -1,4 +1,6 @@
-# TM1637 Tiny Display
+# TM1637 Tiny Display # 
+[![Build Status](https://travis-ci.org/jasonacox/TM1637TinyDisplay.svg?branch=master)](https://travis-ci.org/github/jasonacox/TM1637TinyDisplay)
+
 Arduino Library for the TM1637 Based LED Display Module
 
 ## Description
