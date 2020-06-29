@@ -17,7 +17,7 @@ The display has four connectors:
 * VCC - Power 5v
 * GND - Ground
 
-Power Note: Steady clean power is important for circuit stability. If you are seeing display artifacts during high frequency updates or animation sequences, you may be experiencing power fluctuations that are impacting signal timing and communication with the TM1637. This is especially true with standalone microprocessor applications that lack any power conditioning (e.g. ATtiny85). You can add a polarized 100uF electrolytic capacitor across VCC and GND to help smooth out the spikes.
+Power Note: Steady clean power is important for circuit stability. If you are seeing display artifacts during high frequency updates or animation sequences, you may be experiencing power fluctuations that are impacting signal timing and communication with the TM1637. This is especially true with standalone microprocessor applications that lack any power conditioning (e.g. ATtiny85). A polarized 100uF electrolytic capacitor inserted across VCC and GND can help smooth out the spikes.
 
 ## Installation
 Copy this repository into your Arduino library folder as set by the Arduino IDE "sketchbook location" preferences (e.g. `~/Documents/Arduino/libraries`).  
@@ -42,10 +42,10 @@ The library provides a single class named TM1637TinyDisplay with the following f
 #define CLK 1
 #define DIO 2 
 
-// Initialize TM1637TinyDisplay Class
+// Initialize TM1637TinyDisplay
 TM1637TinyDisplay display(CLK, DIO);
-
 int x = -100;
+
 void setup() {
   display.setBrightness(0x0f); 
 }
