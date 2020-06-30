@@ -230,7 +230,7 @@ private:
 	uint8_t m_pinDIO;
 	uint8_t m_brightness;
 	unsigned int m_bitDelay;
-  unsigned int m_scrollDelay;
+	unsigned int m_scrollDelay;
 };
 
 #endif // __TM1637TINYDISPLAY__
