@@ -222,7 +222,7 @@ void loop()
   // Numbers and Strings using positions
   display.clear();
   char degree[] = "\xB0";
-  display.showString(degree, 200, 1, 3);
+  display.showString(degree, 1, 3);
   for (int x = -90; x < 200; x++) {
     display.showNumber(x, false, 3, 0);
     delay(10);
