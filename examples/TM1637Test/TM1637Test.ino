@@ -219,14 +219,24 @@ void loop()
     }
   }
 
+  // Numbers and Strings using positions
+  display.clear();
+  char degree[] = "\xB0";
+  display.showString(degree, 200, 1, 3);
+  for (int x = -90; x < 200; x++) {
+    display.showNumber(x, false, 3, 0);
+    delay(10);
+  }
+  delay(TEST_DELAY);
+
   // String Usage Examples
   display.clear();
   char stringa[] = "String Test 1234";
   display.showString(stringa);
   delay(TEST_DELAY);
   display.clear();
-  char stringb[] = "25\xB0\x43";   // display 25 + degree symbol + C
-  display.showString(stringb);   
+  char stringb[] = "25\xB0\x43";  // / display 25 + degree symbol + C
+  display.showString(stringb);
   delay(TEST_DELAY);
   display.clear();
   char stringc[] = "abcdefghijklmnopqrstuvwxyz.-=ABCDEFGHIJKLMNOPQRSTUVWXYZ";

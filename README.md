@@ -42,23 +42,52 @@ The library provides a single class named TM1637TinyDisplay with the following f
 
 // Define Digital Pins
 #define CLK 1
-#define DIO 2 
+#define DIO 2
 
 // Initialize TM1637TinyDisplay
 TM1637TinyDisplay display(CLK, DIO);
-int x = -100;
 
 void setup() {
-  display.setBrightness(0x0f); 
+  display.setBrightness(0x0f);
 }
 
-// We can count!
 void loop() {
-  display.showNumber(x++); 
+  // Say Hello
+  display.showString("HELLO");
+  delay(500);
+
+  // Clear Screen
+  display.clear();
+
+  // We can count!
+  for (int x = -100; x <= 100; x++) {
+    display.showNumber(x);
+  }
+
+  // Level indicator
+  for (int x = 0; x <= 100; x = x + 10) {
+    display.showLevel(x, false);
+    delay(20);
+  }
+  for (int x = 100; x >= 0; x = x - 10) {
+    display.showLevel(x, false);
+    delay(20);
+  }
+
+  // Split screen for temperature
+  display.showString("\xB0", 1, 3);        // Degree Mark, length=1, position=3 (right)
+  for (int x = -90; x < 200; x++) {
+    display.showNumber(x, false, 3, 0);    // Number, length=3, position=0 (left)
+    delay(10);
+  }
+
+  // The end
+  display.showString("End");
+  delay(1000);
 }
 ```
 
-Refer to [TM1637TinyDisplay.h](TM1637TinyDisplay.h) for more information. An [example sketch](examples) is included which demonstrates the operation of the above functions.
+Refer to [TM1637TinyDisplay.h](TM1637TinyDisplay.h) for information on available functions. See also the [TM1637Test sketch](examples) for a demonstration including animation.
 
 ## References and Credit
 * This library is based on the great work by Avishay Orpaz - https://github.com/avishorp/TM1637

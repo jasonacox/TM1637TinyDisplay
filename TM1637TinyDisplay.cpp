@@ -166,17 +166,18 @@ const uint8_t asciiToSegment[] = {
 static const uint8_t minusSegments = 0b01000000;
 static const uint8_t degreeSegments = 0b01100011;
 
-TM1637TinyDisplay::TM1637TinyDisplay(uint8_t pinClk, uint8_t pinDIO, unsigned int bitDelay)
+TM1637TinyDisplay::TM1637TinyDisplay(uint8_t pinClk, uint8_t pinDIO, unsigned int bitDelay, unsigned int scrollDelay)
 {
 	// Copy the pin numbers
 	m_pinClk = pinClk;
 	m_pinDIO = pinDIO;
 	m_bitDelay = bitDelay;
+  m_scrollDelay = scrollDelay;
 
 	// Set the pin direction and default value.
 	// Both pins are set as inputs, allowing the pull-up resistors to pull them up
-    pinMode(m_pinClk, INPUT);
-    pinMode(m_pinDIO,INPUT);
+  pinMode(m_pinClk, INPUT);
+  pinMode(m_pinDIO,INPUT);
 	digitalWrite(m_pinClk, LOW);
 	digitalWrite(m_pinDIO, LOW);
 }
@@ -184,6 +185,11 @@ TM1637TinyDisplay::TM1637TinyDisplay(uint8_t pinClk, uint8_t pinDIO, unsigned in
 void TM1637TinyDisplay::setBrightness(uint8_t brightness, bool on)
 {
 	m_brightness = (brightness & 0x7) | (on? 0x08 : 0x00);
+}
+
+void TM1637TinyDisplay::setScrolldelay(unsigned int scrollDelay)
+{
+	m_scrollDelay = scrollDelay;
 }
 
 void TM1637TinyDisplay::setSegments(const uint8_t segments[], uint8_t length, uint8_t pos)
@@ -276,8 +282,7 @@ void TM1637TinyDisplay::showNumberBaseEx(int8_t base, uint16_t num, uint8_t dots
   setSegments(digits, length, pos);
 }
 
-void TM1637TinyDisplay::showString(char s[], unsigned int scrollDelay,
-                                    uint8_t length, uint8_t pos)
+void TM1637TinyDisplay::showString(char s[], uint8_t length, uint8_t pos)
 {
   uint8_t digits[4] = {0,0,0,0};
 
@@ -303,7 +308,7 @@ void TM1637TinyDisplay::showString(char s[], unsigned int scrollDelay,
       digits[2] = digits[3];
       digits[3] = encodeASCII(s[x]);
       setSegments(digits, length, pos);
-      delay(scrollDelay);
+      delay(m_scrollDelay);
     }
     for (int x = 3; x < strlen(s); x++) { // scroll through string
       digits[0] = encodeASCII(s[x - 3]);
@@ -311,7 +316,7 @@ void TM1637TinyDisplay::showString(char s[], unsigned int scrollDelay,
       digits[2] = encodeASCII(s[x - 1]);
       digits[3] = encodeASCII(s[x]);
       setSegments(digits, length, pos);
-      delay(scrollDelay);
+      delay(m_scrollDelay);
     }
     for (int x = 0; x < 4; x++) {  // scroll message off
       digits[0] = digits[1];
@@ -319,7 +324,7 @@ void TM1637TinyDisplay::showString(char s[], unsigned int scrollDelay,
       digits[2] = digits[3];
       digits[3] = 0;
       setSegments(digits, length, pos);
-      delay(scrollDelay);
+      delay(m_scrollDelay);
     }
   }
 }

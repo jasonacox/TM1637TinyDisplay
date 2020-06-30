@@ -10,15 +10,16 @@ TM1637TinyDisplay		KEYWORD1
 
 setBrightness		KEYWORD2
 setSegments		KEYWORD2
+setScrolldelay		KEYWORD2
 clear			KEYWORD2
 showNumber		KEYWORD2
 showLevel		KEYWORD2
+showString		KEYWORD2
 showAnimation		KEYWORD2
 showNumberDec		KEYWORD2
 showNumberHex		KEYWORD2
-showString      KEYWORD2
 encodeDigit		KEYWORD2
-encodeASCII     KEYWORD2
+encodeASCII     	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)

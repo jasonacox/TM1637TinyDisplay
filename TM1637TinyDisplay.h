@@ -36,6 +36,7 @@
 #define SEG_DP  0b10000000
 
 #define DEFAULT_BIT_DELAY  100
+#define DEFAULT_SCROLL_DELAY  100
 
 class TM1637TinyDisplay {
 
@@ -47,7 +48,7 @@ public:
   //! @param pinDIO - The number of the digital pin connected to the DIO pin of the module
   //! @param bitDelay - The delay, in microseconds, between bit transition on the serial
   //!                   bus connected to the display
-  TM1637TinyDisplay(uint8_t pinClk, uint8_t pinDIO, unsigned int bitDelay = DEFAULT_BIT_DELAY);
+  TM1637TinyDisplay(uint8_t pinClk, uint8_t pinDIO, unsigned int bitDelay = DEFAULT_BIT_DELAY, unsigned int scrollDelay = DEFAULT_SCROLL_DELAY);
 
   //! Sets the brightness of the display.
   //!
@@ -57,6 +58,14 @@ public:
   //! @param brightness A number from 0 (lowest brightness) to 7 (highest brightness)
   //! @param on Turn display on or off
   void setBrightness(uint8_t brightness, bool on = true);
+
+  //! Sets the delay used to scroll string text (in ms).
+  //!
+  //! The setting takes effect when a showString() command send an argument with over
+  //! four characters.
+  //!
+  //! @param scrollDelay A number in milliseconds (default is 200)
+  void setScrolldelay(unsigned int scrollDelay = 200);
 
   //! Display arbitrary data on the module
   //!
@@ -157,7 +166,7 @@ public:
   //! @param scrollDelay  The delay, in microseconds to wait before scrolling to next frame
   //! @param length The number of digits to set. 
   //! @param pos The position of the most significant digit (0 - leftmost, 3 - rightmost)
-  void showString(char s[], unsigned int scrollDelay = 200, uint8_t length = 4, uint8_t pos = 0);
+  void showString(char s[], uint8_t length = 4, uint8_t pos = 0);
  
   //! Display a Level Indicator (both orientations)
   //!
@@ -221,6 +230,7 @@ private:
 	uint8_t m_pinDIO;
 	uint8_t m_brightness;
 	unsigned int m_bitDelay;
+  unsigned int m_scrollDelay;
 };
 
 #endif // __TM1637TINYDISPLAY__
