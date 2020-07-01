@@ -1,11 +1,12 @@
 # TM1637 Tiny Display # 
+[![arduino-library-badge](https://www.ardu-badge.com/badge/TM1637TinyDisplay.svg?)](https://www.ardu-badge.com/TM1637TinyDisplay)
 [![Build Status](https://travis-ci.org/jasonacox/TM1637TinyDisplay.svg?branch=master)](https://travis-ci.org/github/jasonacox/TM1637TinyDisplay)
 
 Arduino Library for the TM1637 Based LED Display Module
 
 ## Description
 This is an Arduino library for 4-digit 7-segment display modules based on the TM1637 chip. 
-Connect the TM1636 display CLK and DIO pins to your Arduino GPIO pins, include this library, initialize TM1637TinyDisplay and call easy to use functions like showNumber(), showString(), showLevel() and showAnimation(). Display will scroll text for larger strings. Functions support screen splitting for easy number + text formatting. Runs well on tiny controllers including the ATtiny85.
+Connect the TM1637 display CLK and DIO pins to your Arduino GPIO pins, include this library, initialize TM1637TinyDisplay and call easy to use functions like showNumber(), showString(), showLevel() and showAnimation(). Display will scroll text for larger strings. Functions support screen splitting for easy number + text formatting. Runs well on tiny controllers including the ATtiny85.
 
 ## Hardware 
 ![TM1637](examples/tm1637.png)
