@@ -291,6 +291,7 @@ div {
         document.body.removeChild(dummy);
     }
     function copyCode() {
+        formatData();
         var frame = 0;
         var frameNum = lastFrame() + 1;
         var buffer = "const uint8_t ANIMATION[";
