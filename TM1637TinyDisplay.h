@@ -1,11 +1,10 @@
 //  TM1637 Tiny Display
 //  Arduino tiny library for TM1637 LED Display
 //
-//  Author: Jason A. Cox - @jasonacox
+//  Author: Jason A. Cox - @jasonacox - https://github.com/jasonacox
 //  Date: 27 June 2020
 //
 //  Based on TM1637Display library at https://github.com/avishorp/TM1637
-//  Author: avishorp@gmail.com
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Lesser General Public
@@ -35,8 +34,26 @@
 #define SEG_G   0b01000000
 #define SEG_DP  0b10000000
 
-#define DEFAULT_BIT_DELAY  100
+#define BRIGHT_LOW  0x00
+#define BRIGHT_0    0x00
+#define BRIGHT_1    0x01
+#define BRIGHT_2    0x02
+#define BRIGHT_3    0x03
+#define BRIGHT_4    0x04
+#define BRIGHT_5    0x05
+#define BRIGHT_6    0x06
+#define BRIGHT_7    0x07
+#define BRIGHT_HIGH 0x0f
+
+#define ON    1
+#define OFF   0
+
+#define DEFAULT_BIT_DELAY     100
 #define DEFAULT_SCROLL_DELAY  100
+
+#define FRAMES(a)     sizeof(a)/4
+#define TIME_MS(t)    t
+#define TIME_S(t)     t*1000
 
 class TM1637TinyDisplay {
 
@@ -166,8 +183,8 @@ public:
   //! @param scrollDelay  The delay, in microseconds to wait before scrolling to next frame
   //! @param length The number of digits to set. 
   //! @param pos The position of the most significant digit (0 - leftmost, 3 - rightmost)
-  void showString(char s[], uint8_t length = 4, uint8_t pos = 0);
- 
+  void showString(const char s[], uint8_t length = 4, uint8_t pos = 0);
+
   //! Display a Level Indicator (both orientations)
   //!
   //! Illumiate LEDs to provide a visual indicator of level (horizontal or vertical orientation)

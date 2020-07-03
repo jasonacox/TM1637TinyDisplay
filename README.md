@@ -94,7 +94,7 @@ Refer to [TM1637TinyDisplay.h](TM1637TinyDisplay.h) for information on available
 ## Animation and Animator Tool
 The showAnimation() function projects a sequence of frames (patterns) onto the display.  This works by provide the function a multi-dimensional array of patterns.  
 
-I created a javascript interactive [7-Segment LED Animator Tool](https://jasonacox.com/7-segment-animator.html) to help build this data. The source code is in the [Examples](examples) folder.  This tool will let you set up the LED sequences you want, save each frame and copy the final code (a static array) directly into your sketch to use for the showAnimation() function.  Here is an example:
+You can use the javascript based interactive [7-Segment LED Animator Tool](https://jasonacox.github.io/TM1637TinyDisplay/examples/7-segment-animator.html) to help build your animation. The source code is in the [Examples](examples) folder.  This tool will let you set up the LED sequences you want, save each frame and copy the final code (a static array) directly into your sketch to use for the `showAnimation(data, frames, timing)` function.  Here is an example:
 
 ```cpp
 // Data from Animator Tool
@@ -114,7 +114,7 @@ const uint8_t ANIMATION[12][4] = {
 };
 
   // Display Animation sequence
-  display.showAnimation(ANIMATION, 12, 10);
+  display.showAnimation(ANIMATION, FRAMES(ANIMATION), TIME_MS(50));
 
 ```
 

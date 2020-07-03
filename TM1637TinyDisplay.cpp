@@ -1,12 +1,10 @@
-
 //  TM1637 Tiny Display
 //  Arduino tiny library for TM1637 LED Display
 //
-//  Author: Jason A. Cox - @jasonacox
+//  Author: Jason A. Cox - @jasonacox - https://github.com/jasonacox
 //  Date: 27 June 2020
 //
 //  Based on TM1637Display library at https://github.com/avishorp/TM1637
-//  Author: avishorp@gmail.com
 //
 //  This library is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU Lesser General Public
@@ -184,7 +182,7 @@ TM1637TinyDisplay::TM1637TinyDisplay(uint8_t pinClk, uint8_t pinDIO, unsigned in
 
 void TM1637TinyDisplay::setBrightness(uint8_t brightness, bool on)
 {
-	m_brightness = (brightness & 0x7) | (on? 0x08 : 0x00);
+	m_brightness = (brightness & 0x07) | (on? 0x08 : 0x00);
 }
 
 void TM1637TinyDisplay::setScrolldelay(unsigned int scrollDelay)
@@ -282,7 +280,7 @@ void TM1637TinyDisplay::showNumberBaseEx(int8_t base, uint16_t num, uint8_t dots
   setSegments(digits, length, pos);
 }
 
-void TM1637TinyDisplay::showString(char s[], uint8_t length, uint8_t pos)
+void TM1637TinyDisplay::showString(const char s[], uint8_t length, uint8_t pos)
 {
   uint8_t digits[4] = {0,0,0,0};
 
@@ -302,7 +300,7 @@ void TM1637TinyDisplay::showString(char s[], uint8_t length, uint8_t pos)
   }
   if (strlen(s) > 4) {
     // Scroll text on display if too long
-    for (int x = 0; x < 3; x++) {  // scroll message on
+    for (int x = 0; x < 3; x++) {  // Scroll message on
       digits[0] = digits[1];
       digits[1] = digits[2];
       digits[2] = digits[3];
@@ -310,7 +308,7 @@ void TM1637TinyDisplay::showString(char s[], uint8_t length, uint8_t pos)
       setSegments(digits, length, pos);
       delay(m_scrollDelay);
     }
-    for (int x = 3; x < strlen(s); x++) { // scroll through string
+    for (int x = 3; x < strlen(s); x++) { // Scroll through string
       digits[0] = encodeASCII(s[x - 3]);
       digits[1] = encodeASCII(s[x - 2]);
       digits[2] = encodeASCII(s[x - 1]);
@@ -318,7 +316,7 @@ void TM1637TinyDisplay::showString(char s[], uint8_t length, uint8_t pos)
       setSegments(digits, length, pos);
       delay(m_scrollDelay);
     }
-    for (int x = 0; x < 4; x++) {  // scroll message off
+    for (int x = 0; x < 4; x++) {  // Scroll message off
       digits[0] = digits[1];
       digits[1] = digits[2];
       digits[2] = digits[3];
@@ -339,7 +337,7 @@ void TM1637TinyDisplay::showLevel(unsigned int level, bool horizontal)
   if(horizontal) {
     // Must fit within 3 bars
     int bars = (int)((level*3)/100.0);
-    if(bars == 0 && level > 0) bars = 1; // only level=0 turns off display
+    if(bars == 0 && level > 0) bars = 1; // Only level=0 turns off display
     switch(bars) {
       case 1:
         digit = 0b00001000;
@@ -350,7 +348,7 @@ void TM1637TinyDisplay::showLevel(unsigned int level, bool horizontal)
       case 3:
         digit = 0b01001001;
         break;
-      default: // keep at zero
+      default: // Keep at zero
         break;
     }
     for(int x = 0; x < 4; x++) {
@@ -460,7 +458,7 @@ uint8_t TM1637TinyDisplay::encodeDigit(uint8_t digit)
 
 uint8_t TM1637TinyDisplay::encodeASCII(uint8_t chr)
 {
-  if(chr == 176) return degreeSegments;   // degree mark
-  if(chr > 127 || chr < 32) return 0;     // blank
+  if(chr == 176) return degreeSegments;   // Degree mark
+  if(chr > 127 || chr < 32) return 0;     // Blank
 	return asciiToSegment[chr - 32];
 }
