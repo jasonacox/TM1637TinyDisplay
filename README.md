@@ -16,8 +16,8 @@ Display modules based on the TM1637 chip are available from [HiLetgo](https://ww
 ![TM1637](examples/tm1637back.png)
 
 The display has four connectors:
-* CLK - Clock - attach to any GPIO output on the Arduino
-* DIO - Data  - attach to any GPIO output on the Arduino
+* CLK - Clock - attach to any GPIO output 
+* DIO - Data  - attach to any GPIO output 
 * VCC - Power 5v
 * GND - Ground
 
@@ -26,7 +26,7 @@ Power Note: Steady clean power is important for circuit stability. If you are se
 ## Installation
 This library is available via the Arduino IDE.  Install this library via `Tools`, `Manage Libraries`, search for "TM1637TinyDisplay" and click `Install`.
 
-Alternatively, you can install this manually by cloning this repo into your Arduino library folder which is set by the Arduino IDE "sketchbook location" preferences (e.g. `~/Documents/Arduino/libraries`).  
+Alternatively, you can install this manually by cloning this repo into your Arduino library folder (e.g. `~/Documents/Arduino/libraries`).  
 
 ## Usage
 The library provides a single class named TM1637TinyDisplay with the following functions:
@@ -92,12 +92,12 @@ void loop() {
 }
 ```
 
-Refer to [TM1637TinyDisplay.h](TM1637TinyDisplay.h) for information on available functions. See also the [TM1637Test sketch](examples) for a demonstration including animation.
+Refer to [TM1637TinyDisplay.h](TM1637TinyDisplay.h) for information on available functions. See also [Examples](examples) for more demonstration.
 
 ## Animation and Animator Tool
-The showAnimation() function projects a sequence of frames (patterns) onto the display.  This works by provide the function a multi-dimensional array of patterns.  
+The showAnimation() function projects a sequence of frames (patterns) onto the display.  This works by defining the animation sequence through a multi-dimensional array of patterns.  
 
-You can use the javascript based interactive [7-Segment LED Animator Tool](https://jasonacox.github.io/TM1637TinyDisplay/examples/7-segment-animator.html) to help build your animation. The source code is in the [Examples](examples) folder.  This tool will let you set up the LED sequences you want, save each frame and copy the final code (a static array) directly into your sketch to use for the `showAnimation(data, frames, timing)` function.  Here is an example:
+You can use the included javascript based interactive [7-Segment LED Animator Tool](https://jasonacox.github.io/TM1637TinyDisplay/examples/7-segment-animator.html) to help build your animation. The source code is in the [Examples](examples) folder.  This tool will let you set up the LED sequences you want, save each frame and copy the final code (a static array) directly into your sketch to use for the `showAnimation(data, frames, timing)` function.  Here is an example:
 
 ```cpp
 // Data from Animator Tool
