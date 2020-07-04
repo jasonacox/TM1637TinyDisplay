@@ -5,7 +5,7 @@ The [TM1637Test.ino](TM1637Test/TM1637Test.ino) sketch will test the library fun
 ## Demo Sketch
 
 The [TM1637Demo.ino](TM1637Demo/TM1637Demo.ino) sketch will demonstrate the library functions
-and play an extended set of animation sequences.  The animations were built with the `Animator Tool` referenced below.
+and play an extended set of animation sequences.  The animations were built with the [Animator Tool](https://jasonacox.github.io/TM1637TinyDisplay/examples/7-segment-animator.html) referenced below.
 
 ## Animation 
 

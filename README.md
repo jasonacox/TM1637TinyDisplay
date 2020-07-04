@@ -6,7 +6,7 @@ Arduino Library for the TM1637 Based LED Display Module
 
 ## Description
 This is an Arduino library for 4-digit 7-segment display modules based on the TM1637 chip. 
-Connect the TM1637 display CLK and DIO pins to your Arduino GPIO pins, include this library, initialize TM1637TinyDisplay and call easy to use functions like showNumber(), showString(), showLevel() and showAnimation(). Display will scroll text for larger strings. Functions support screen splitting for easy number + text formatting. Runs well on tiny controllers including the ATtiny85.
+Connect the TM1637 display CLK and DIO pins to your Arduino GPIO pins, include this library, initialize TM1637TinyDisplay and call easy to use functions like showNumber(), showString(), showLevel() and showAnimation(). Display will scroll text for larger strings. Functions support screen splitting for easy number + text formatting. Library also runs well on tiny controllers including the ATtiny85.
 
 ## Hardware 
 ![TM1637](examples/tm1637.png)
@@ -24,7 +24,9 @@ The display has four connectors:
 Power Note: Steady clean power is important for circuit stability. If you are seeing display artifacts during high frequency updates or animation sequences, you may be experiencing power fluctuations that are impacting signal timing and communication with the TM1637. This is especially true with standalone microprocessor applications that lack any power conditioning (e.g. ATtiny85). A polarized 100uF electrolytic capacitor inserted across VCC and GND can help smooth out the spikes.
 
 ## Installation
-Copy this repository into your Arduino library folder as set by the Arduino IDE "sketchbook location" preferences (e.g. `~/Documents/Arduino/libraries`).  
+This library is available via the Arduino IDE.  Copy this repository into your Arduino.  Got to `Tools`, `Manage Libraries`, and search for "TM1637TinyDisplay".
+
+Alternatively you can install this manually by cloning this repo into your Arduino library folder which is set by the Arduino IDE "sketchbook location" preferences (e.g. `~/Documents/Arduino/libraries`).  
 
 ## Usage
 The library provides a single class named TM1637TinyDisplay with the following functions:
