@@ -12,8 +12,8 @@
         animation sequence which will show up in the "Animation Data" section below 
         the controls. The user can then PLAY back the animation on the display. Once
         complete, the user can COPY the code to their clipboard and paste the data
-        into their sketch.  This use the Arduino TM1637TinyDisplay library available
-        for download int he Arduino IDE or via GitHub: 
+        into their sketch.  Designed for the Arduino TM1637TinyDisplay library available
+        for download in the Arduino IDE or via GitHub: 
             https://github.com/jasonacox/TM1637TinyDisplay
 
     Date: 1 July 2020
@@ -231,7 +231,8 @@ div {
     <div id="help"><b>Instructions:</b> Click segments above to toggle LED state and 
         click "Save" to record frame. Data for the
         animation will be generated below.  Click the "Copy Code" button and paste
-        the data definition into your sketch.
+        the data definition into your sketch.  See Arduino library 
+        <a href="https://github.com/jasonacox/TM1637TinyDisplay" target="_blank" >TM1637TinyDisplay</a>. 
     </div> 
 </div>
 <br>
@@ -253,8 +254,8 @@ div {
 <script>
     // globals
     var delayTime = 100;    // time between animation frames in ms
-    var currentFrame = 0;   // TODO 
-    var binaryorder = 1;    // Segment to Bin Map 1=HGFEDCBA and 2=ABCDEFGH
+    var currentFrame = 0;   // TODO - Edit Frames
+    var binaryorder = 1;    // TODO - Segment to Bin Map 1=HGFEDCBA and 2=ABCDEFGH
 
     // functions
     function toggleMap() {
@@ -424,17 +425,6 @@ div {
         else frameNum = 0;
         $('#codeOutput').text(''.concat(output,"{ ",d1,", ",d2,", ",d3,", ",d4," },  // Frame ",frameNum.toString()));
         $('#frame').text("Frame = ".concat(frameNum.toString()));
-    }
-    function typeIt( string, target ) {
-        var hold = [];
-        var step = 1;
-        var tick = setInterval(function() {
-            if(step == string.length) { clearInterval(tick) };
-            hold.push(string.slice(step - 1, step));
-            step += 1;
-            $(target).text(hold.join(''));
-		 // document.getElementById('box').innerHTML = hold.join('');
-        }, 150);
     }
     function lastFrame() {
         var lines = $('#codeOutput').text().split("\n");
