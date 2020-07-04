@@ -11,7 +11,7 @@ and play an extended set of animation sequences.  The animations were built with
 
 ### 7-Segment LED Display Animator Tool
 
-[![Animator Tool](AnimatorToolThumb.png =350x)](https://jasonacox.github.io/TM1637TinyDisplay/examples/7-segment-animator.html)
+![Animator Tool](AnimatorToolThumb.png =300x)
 
 This tool will allow the user to visually toggle on/off LEDs in a 4-digit
 7-segment display to create a pattern.  It calculates the hexadecimal and binary
