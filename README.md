@@ -24,9 +24,9 @@ The display has four connectors:
 Power Note: Steady clean power is important for circuit stability. If you are seeing display artifacts during high frequency updates or animation sequences, you may be experiencing power fluctuations that are impacting signal timing and communication with the TM1637. This is especially true with standalone microprocessor applications that lack any power conditioning (e.g. ATtiny85). A polarized 100uF electrolytic capacitor inserted across VCC and GND can help smooth out the spikes.
 
 ## Installation
-This library is available via the Arduino IDE.  Copy this repository into your Arduino.  Got to `Tools`, `Manage Libraries`, and search for "TM1637TinyDisplay".
+This library is available via the Arduino IDE.  Install this library via `Tools`, `Manage Libraries`, search for "TM1637TinyDisplay" and click `Install`.
 
-Alternatively you can install this manually by cloning this repo into your Arduino library folder which is set by the Arduino IDE "sketchbook location" preferences (e.g. `~/Documents/Arduino/libraries`).  
+Alternatively, you can install this manually by cloning this repo into your Arduino library folder which is set by the Arduino IDE "sketchbook location" preferences (e.g. `~/Documents/Arduino/libraries`).  
 
 ## Usage
 The library provides a single class named TM1637TinyDisplay with the following functions:
@@ -39,6 +39,7 @@ The library provides a single class named TM1637TinyDisplay with the following f
 * `showAnimation` - Display a sequence of frames to render an animation
 * `setSegments` - Directly set the value of the LED segments in each digit
 * `setBrightness` - Sets the brightness of the display
+* `setScrolldelay` - Sets the speed for text scrolling
 
 ```cpp
 #include <Arduino.h>
