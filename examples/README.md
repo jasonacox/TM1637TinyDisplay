@@ -11,7 +11,7 @@ and play an extended set of animation sequences.  The animations were built with
 
 ### 7-Segment LED Display Animator Tool
 
-![Animator Tool](AnimatorToolThumb.png =300x)
+![Animator Tool](AnimatorToolThumb.png)
 
 This tool will allow the user to visually toggle on/off LEDs in a 4-digit
 7-segment display to create a pattern.  It calculates the hexadecimal and binary
