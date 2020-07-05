@@ -1,13 +1,17 @@
-//  TM1637TinyDisplay DEMO Sketch
+//  TM1637TinyDisplay DEMO Sketch for ATtiny85
 //  This is a demo sketch for the Arduino TM1637TinyDisplay LED Display library
+//  Designed for small memory processors like the ATtiny85
 //
 //  Author: Jason A. Cox - @jasonacox
 //  Date: 2 July 2020
+//
+//  Based on TM1637Display library at https://github.com/avishorp/TM1637
 //
 
 // Includes
 #include <Arduino.h>
 #include <TM1637TinyDisplay.h>
+#include <avr/pgmspace.h>
 
 // Define Digital Pins
 #define CLK 4
@@ -16,7 +20,10 @@
 // Initialize TM1637TinyDisplay
 TM1637TinyDisplay display(CLK, DIO);
 
-// Animations created with Tool https://jasonacox.github.io/TM1637TinyDisplay/examples/7-segment-animator.html
+// Animation data below was created with the Animator Tool located here:
+// https://jasonacox.github.io/TM1637TinyDisplay/examples/7-segment-animator.html
+// To save RAM space, we store the animation sequences in PROGMEM read-only flash memory.
+// This requires using the showAnimation_P() function to read from PROGMEM memory space.
 
 const uint8_t ANIMATION1[40][4] PROGMEM = {
   { 0x00, 0x00, 0x00, 0x00 },  // Frame 0
@@ -318,12 +325,13 @@ const uint8_t ANIMATION3[218][4] PROGMEM = {
   { 0x00, 0x00, 0x00, 0x00 }   // Frame 217
 };
 
+const PROGMEM char FlashString[] = "Flash Test - 1234567890"; // Must be globally defined for PROGMEM space
+const PROGMEM char FlashString2[] = "good";
+
 void setup() {
   display.setBrightness(BRIGHT_7);
-  display.showNumber(1234);
-  delay(1000);
-
 }
+
 void loop() {
 
   // Say Hello
@@ -373,20 +381,23 @@ void loop() {
 
   // Demo split screen for temperature
   display.showString("\xB0", 1, 3);        // Degree Mark, length=1, position=3 (right)
-  for (int x = -90; x < 200; x++) {
+  for (int x = -50; x < 150; x++) {
     display.showNumber(x, false, 3, 0);    // Number, length=3, position=0 (left)
     delay(10);
   }
   delay(1000);
 
+  // Test PROGMEM flash memory
+  display.showString_P(FlashString);
+  delay(1000);
+  display.showString_P(FlashString2);
+  delay(1000);
+
   // Animation sequences - All in PROGMEM flash memory
   display.clear();
-  display.showString("For Fun");
-  delay(1000);
   display.showAnimation_P(ANIMATION1, FRAMES(ANIMATION1), TIME_MS(50));
   display.showAnimation_P(ANIMATION2, FRAMES(ANIMATION2), TIME_MS(50));
   display.showAnimation_P(ANIMATION3, FRAMES(ANIMATION3), TIME_MS(50));
 
-  delay(5000);
-
+  delay(1000);
 }

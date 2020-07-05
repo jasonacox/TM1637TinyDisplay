@@ -41,6 +41,12 @@ The library provides a single class named TM1637TinyDisplay with the following f
 * `setBrightness` - Sets the brightness of the display
 * `setScrolldelay` - Sets the speed for text scrolling
 
+PROGMEM functions: Large string or animation data can be left in Flash instead of being loaded in to SRAM to save memory. 
+
+* `showAnimation_P` - Display a sequence of frames to render an animation (in PROGMEM)
+* `showString_P` - Display a ASCII string of text with optional scrolling for long strings (in PROGMEM)
+
+## Example Code
 ```cpp
 #include <Arduino.h>
 #include <TM1637TinyDisplay.h>

@@ -148,7 +148,7 @@ const uint8_t asciiToSegment[] = {
    0b01010000, // 114 r
    0b01101101, // 115 s
    0b01111000, // 116 t
-   0b00111110, // 117 u
+   0b00011100, // 117 u
    0b00011100, // 118 v
    0b00101010, // 119 w
    0b01110110, // 120 x
@@ -327,6 +327,53 @@ void TM1637TinyDisplay::showString(const char s[], uint8_t length, uint8_t pos)
   }
 }
 
+void TM1637TinyDisplay::showString_P(const PROGMEM char s[], uint8_t length, uint8_t pos) 
+{
+  uint8_t digits[4] = {0,0,0,0};
+
+  if (strlen_P(s) <= 4) {
+    switch (strlen_P(s)) {
+      case 4:
+        digits[3] = encodeASCII(pgm_read_byte(&s[3]));
+      case 3:
+        digits[2] = encodeASCII(pgm_read_byte(&s[2]));
+      case 2:
+        digits[1] = encodeASCII(pgm_read_byte(&s[1]));
+      case 1:
+        digits[0] = encodeASCII(pgm_read_byte(&s[0]));
+      case 0:
+        setSegments(digits, length, pos);
+    }
+  }
+  else {
+    // Scroll text on display if too long
+    for (int x = 0; x < 3; x++) {  // Scroll message on
+      digits[0] = digits[1];
+      digits[1] = digits[2];
+      digits[2] = digits[3];
+      digits[3] = encodeASCII(pgm_read_byte(&s[x]));
+      setSegments(digits, length, pos);
+      delay(m_scrollDelay);
+    }
+    for (int x = 3; x < strlen_P(s); x++) { // Scroll through string
+      digits[0] = encodeASCII(pgm_read_byte(&s[x - 3]));
+      digits[1] = encodeASCII(pgm_read_byte(&s[x - 2]));
+      digits[2] = encodeASCII(pgm_read_byte(&s[x - 1]));
+      digits[3] = encodeASCII(pgm_read_byte(&s[x]));
+      setSegments(digits, length, pos);
+      delay(m_scrollDelay);
+    }
+    for (int x = 0; x < 4; x++) {  // Scroll message off
+      digits[0] = digits[1];
+      digits[1] = digits[2];
+      digits[2] = digits[3];
+      digits[3] = 0;
+      setSegments(digits, length, pos);
+      delay(m_scrollDelay);
+    }
+  }
+}
+
 void TM1637TinyDisplay::showLevel(unsigned int level, bool horizontal) 
 {
   uint8_t digits[4] = {0,0,0,0};
@@ -373,6 +420,19 @@ void TM1637TinyDisplay::showAnimation(const uint8_t data[][4], unsigned int fram
   // Animation sequence
   for (int x = 0; x < frames; x++) {
     setSegments(data[x]);
+    delay(ms);
+  }
+}
+
+void TM1637TinyDisplay::showAnimation_P(const PROGMEM uint8_t data[][4], unsigned int frames, unsigned int ms)
+{
+  // Animation sequence for data stored in PROGMEM flash memory
+  uint8_t digits[4] = {0,0,0,0};
+  for (int x = 0; x < frames; x++) {
+    for(int a = 0; a < 4; a++) {
+          digits[a] = pgm_read_byte(&(data[x][a]));
+    }
+    setSegments(digits);
     delay(ms);
   }
 }

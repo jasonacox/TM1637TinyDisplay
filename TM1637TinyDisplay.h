@@ -24,6 +24,7 @@
 #define __TM1637TINYDISPLAY__
 
 #include <inttypes.h>
+#include <avr/pgmspace.h>
 
 #define SEG_A   0b00000001
 #define SEG_B   0b00000010
@@ -183,7 +184,9 @@ public:
   //! @param scrollDelay  The delay, in microseconds to wait before scrolling to next frame
   //! @param length The number of digits to set. 
   //! @param pos The position of the most significant digit (0 - leftmost, 3 - rightmost)
+  //! The _P function is for reading PROGMEM read-only flash memory space instead of RAM
   void showString(const char s[], uint8_t length = 4, uint8_t pos = 0);
+  void showString_P(const PROGMEM char s[], uint8_t length = 4, uint8_t pos = 0);
 
   //! Display a Level Indicator (both orientations)
   //!
@@ -215,7 +218,9 @@ public:
   //! @param data A multi-dimensional array containing the LED segment - data[frames][4]
   //! @param frames Number of frames in the sequence to animate
   //! @param ms Time to delay between each frame
+  //! The _P function is for reading PROGMEM read-only flash memory space instead of RAM
   void showAnimation(const uint8_t data[][4], unsigned int frames = 0, unsigned int ms = 10);
+  void showAnimation_P(const PROGMEM uint8_t data[][4], unsigned int frames = 0, unsigned int ms = 10);
 
   //! Translate a single ASCII character into 7 segment code
   //!
