@@ -186,7 +186,7 @@ public:
   //! @param pos The position of the most significant digit (0 - leftmost, 3 - rightmost)
   //! The _P function is for reading PROGMEM read-only flash memory space instead of RAM
   void showString(const char s[], uint8_t length = 4, uint8_t pos = 0);
-  void showString_P(const PROGMEM char s[], uint8_t length = 4, uint8_t pos = 0);
+  void showString_P(const char s[], uint8_t length = 4, uint8_t pos = 0);
 
   //! Display a Level Indicator (both orientations)
   //!
@@ -220,7 +220,7 @@ public:
   //! @param ms Time to delay between each frame
   //! The _P function is for reading PROGMEM read-only flash memory space instead of RAM
   void showAnimation(const uint8_t data[][4], unsigned int frames = 0, unsigned int ms = 10);
-  void showAnimation_P(const PROGMEM uint8_t data[][4], unsigned int frames = 0, unsigned int ms = 10);
+  void showAnimation_P(const uint8_t data[][4], unsigned int frames = 0, unsigned int ms = 10);
 
   //! Translate a single ASCII character into 7 segment code
   //!

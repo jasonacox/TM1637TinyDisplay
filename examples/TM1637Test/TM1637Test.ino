@@ -10,7 +10,6 @@
 // Includes
 #include <Arduino.h>
 #include <TM1637TinyDisplay.h>
-#include <avr/pgmspace.h>
 
 // Module connection pins (Digital Pins)
 #define CLK 4

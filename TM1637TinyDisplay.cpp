@@ -327,7 +327,7 @@ void TM1637TinyDisplay::showString(const char s[], uint8_t length, uint8_t pos)
   }
 }
 
-void TM1637TinyDisplay::showString_P(const PROGMEM char s[], uint8_t length, uint8_t pos) 
+void TM1637TinyDisplay::showString_P(const char s[], uint8_t length, uint8_t pos) 
 {
   uint8_t digits[4] = {0,0,0,0};
 
@@ -424,7 +424,7 @@ void TM1637TinyDisplay::showAnimation(const uint8_t data[][4], unsigned int fram
   }
 }
 
-void TM1637TinyDisplay::showAnimation_P(const PROGMEM uint8_t data[][4], unsigned int frames, unsigned int ms)
+void TM1637TinyDisplay::showAnimation_P(const uint8_t data[][4], unsigned int frames, unsigned int ms)
 {
   // Animation sequence for data stored in PROGMEM flash memory
   uint8_t digits[4] = {0,0,0,0};
