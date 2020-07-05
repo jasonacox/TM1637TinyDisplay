@@ -15,7 +15,9 @@ clear	KEYWORD2
 showNumber	KEYWORD2
 showLevel	KEYWORD2
 showString	KEYWORD2
+showString_P	KEYWORD2
 showAnimation	KEYWORD2
+showAnimation_P	KEYWORD2
 showNumberDec	KEYWORD2
 showNumberHex	KEYWORD2
 encodeDigit	KEYWORD2
