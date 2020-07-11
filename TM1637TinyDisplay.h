@@ -23,8 +23,16 @@
 #ifndef __TM1637TINYDISPLAY__
 #define __TM1637TINYDISPLAY__
 
+// Include PROGMEM Support
 #include <inttypes.h>
+#ifdef __AVR__
 #include <avr/pgmspace.h>
+#elif defined(ESP8266) || defined(ESP32)
+#include <pgmspace.h>
+#else
+#define pgm_read_byte(addr)                                                    \
+  (*(const unsigned char *)(addr)) // workaround for non-AVR
+#endif
 
 #define SEG_A   0b00000001
 #define SEG_B   0b00000010
