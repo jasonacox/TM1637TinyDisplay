@@ -594,8 +594,11 @@ div {
     }
 
     // Warn user before leaving page
-    $(window).bind('beforeunload', function(){
-        return 'Warning: Are you sure you want to leave?';
+    $(window).bind('beforeunload', function(e){
+        if($('#codeOutput').text().length > 39) {
+            return("Animation data will be list - Proceed?");
+        }
+        else e=null;    
     });
 
     // Detect user interactions
