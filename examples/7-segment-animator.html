@@ -59,7 +59,7 @@ div {
     margin-bottom: 5px;
     border:1px solid #4e4e4e;
     font:15px Arial, Serif;
-    /* overflow:auto; */
+    /* overflow:auto; uncomment to turn on scrolling */
     background-color: white;
 }
 #controls {
@@ -242,9 +242,9 @@ div {
         <div id="controlsleft"><b>Animation Data</b></div> 
         <div id="controlsright">
         <button onclick="copyCode()">Copy Code</button>
-        <button onclick="clearData()">Clear Data</button>
+        <button onclick="if(confirmErase('This will clear current animation - Proceed?')) clearData()">Clear Data</button>
         <button onclick="formatData()">Format Data</button>
-        <button onclick="exampleData()">Example</button>
+        <button onclick="if(confirmErase('This will replace current animation - Proceed?')) exampleData()">Example</button>
         </div>
     </div>
     <pre id="codeOutput" contentEditable="true">
@@ -252,28 +252,60 @@ div {
 </div>
 
 <script>
-    // globals
-    var delayTime = 100;    // time between animation frames in ms
-    var currentFrame = 0;   // TODO - Edit Frames
-    var binaryorder = 1;    // TODO - Segment to Bin Map 1=HGFEDCBA and 2=ABCDEFGH
+    // Globals //
 
-    // functions
+    var delayTime = 100;    // Time between animation frames in ms
+    var currentFrame = 0;   // TODO - Allow editing of frames
+    var HGFEDCBA = true;    // Binary Map - True=HGFEDCBA and False=ABCDEFGH
+
+    // Functions //
+
+    // Popup to ask user msg to confirm 
+    function confirmErase(msg) {
+        console.log("size: " + $('#codeOutput').text().length);
+        if($('#codeOutput').text().length > 39) {
+            return(window.confirm(msg));
+        }
+        else return(true);
+    }
+    
+    // Flip binary order to change mapping
+    function flipByte(digitbin) { 
+        var ret = 0b00000000;
+        console.log("digitbin: ".concat(digitbin," ret: ", ret));
+        if((digitbin & 0b00000001)>0) ret += 0b10000000;
+        if((digitbin & 0b00000010)>0) ret += 0b01000000;
+        if((digitbin & 0b00000100)>0) ret += 0b00100000;
+        if((digitbin & 0b00001000)>0) ret += 0b00010000;
+        if((digitbin & 0b00010000)>0) ret += 0b00001000;
+        if((digitbin & 0b00100000)>0) ret += 0b00000100;
+        if((digitbin & 0b01000000)>0) ret += 0b00000010;
+        if((digitbin & 0b10000000)>0) ret += 0b00000001;
+        return(ret);
+    }
+
+    // Toggle binary order for segment map
     function toggleMap() {
-        if(binaryorder == 1) {
-            binaryorder = 2;
+        if(HGFEDCBA) {
+            HGFEDCBA = false;
             $('#map').text("ABCDEFGH");
         }
         else {
-            binaryorder = 1;
+            HGFEDCBA = true;
             $('#map').text("HGFEDCBA");
         }
+        formatData(true);
+        updateValues();
     }
+
+    // Refresh button frame number indicator to last frame
     function updateFrame() {
         formatData();
         var last = lastFrame();
         showFrame(last);
-        // $('#frame').text("Frame = "+last.toString());
     }
+
+    // Toggle through speed options
     function updateSpeed() {
         switch(delayTime) {
             case 200:
@@ -294,6 +326,8 @@ div {
         }
         $('#delay').text("Delay = ".concat(delayTime.toString()));
     }
+
+    // Copy animation data to users clipboard
     function textToClipboard (text) {
         var dummy = document.createElement("textarea");
         dummy.setAttribute('readonly', '');
@@ -305,12 +339,16 @@ div {
         document.execCommand("copy");
         document.body.removeChild(dummy);
     }
+
+    // Generate code from animation data and update code output div
     function copyCode() {
         formatData();
         var frame = 0;
         var frameNum = lastFrame() + 1;
-        var buffer = "const uint8_t ANIMATION[";
-        buffer = buffer.concat(frameNum,"][4] = {");
+        var buffer = "/* Animation Data - ";
+        if(HGFEDCBA) buffer = buffer + "HGFEDCBA Map */\n";
+        else buffer = buffer + "ABCDEFGH Map */\n";
+        buffer = buffer.concat("const uint8_t ANIMATION[",frameNum,"][4] = {");
         // Copy data into code format and add to clipboard
         var lines = $('#codeOutput').text().split("\n");
         while(frame < lines.length) {
@@ -330,20 +368,23 @@ div {
         $('#codeOutput').text((buffer.concat(" ")).trim());
         $("#outputblock").css("background-color","green");
     }
+
+    // Erase all animation data 
     function clearData() {
         $('#codeOutput').text('');
         $('#frame').text("Frame = 0");
         $("#outputblock").css("background-color","salmon");
     }
+
+    // Load en example animation
     function exampleData() {
         var data = "  { 0x08, 0x00, 0x00, 0x00 },\n  { 0x00, 0x08, 0x00, 0x00 },\n  { 0x00, 0x00, 0x08, 0x00 },\n  { 0x00, 0x00, 0x00, 0x08 },\n  { 0x00, 0x00, 0x00, 0x04 },\n  { 0x00, 0x00, 0x00, 0x02 },\n  { 0x00, 0x00, 0x00, 0x01 },\n  { 0x00, 0x00, 0x01, 0x00 },\n  { 0x00, 0x01, 0x00, 0x00 },\n  { 0x01, 0x00, 0x00, 0x00 },\n  { 0x20, 0x00, 0x00, 0x00 },\n  { 0x10, 0x00, 0x00, 0x00 },";
-        if(binaryorder==2) {
-            // TO DO reverse binary
-        }
         $('#codeOutput').text(data);
         $("#outputblock").css("background-color","salmon");
-        formatData();
+        formatData(!HGFEDCBA);
     }
+
+    // Return the value of digit dig
     function grabValue(dig) { 
         // Compute binary value based on segment LEDs
         var digitbin = 0;
@@ -355,8 +396,12 @@ div {
         if($(dig.concat(" #f")).attr("class") == "on") digitbin += 0b00100000;
         if($(dig.concat(" #g")).attr("class") == "on") digitbin += 0b01000000;
         if($(dig.concat(" #h")).attr("class") == "on") digitbin += 0b10000000;
-        return(digitbin);
+        // Note: the svg LED segment values use HGFEDCBA map
+        if(!HGFEDCBA) return(flipByte(digitbin)); // flip if ABCDEFGH map
+        else return(digitbin);
     }
+
+    // Clear all digits 
     function clearDisplay(){
         resetZero(".digit1");
         resetZero(".digit2");
@@ -366,6 +411,8 @@ div {
         $('#frame').text("Frame = ".concat(frameNum.toString()));
         $("#outputblock").css("background-color","salmon");
     }
+
+    // Clear a single digit dig
     function resetZero(dig) {
         $(dig.concat(" #a")).attr("class","off");
         $(dig.concat(" #b")).attr("class","off");
@@ -376,13 +423,16 @@ div {
         $(dig.concat(" #g")).attr("class","off");
         $(dig.concat(" #h")).attr("class","off");
     }
-    function setDigit(dig, digitbin) { 
-        // Set segment LEDs based on digitbin
+
+    // Set digit dig segment LEDs based on d
+    function setDigit(dig, d) { 
         resetZero(dig);
-        // console.log("digitbin: ".concat(digitbin," dig: ", dig));
+        var digitbin = d;
+        // Note: the svg LED segment values always use HGFEDCBA map
+        if(!HGFEDCBA) digitbin = flipByte(d);  // flip if ABCDEFGH
         if((digitbin & 0b00000001) > 0) 
             $(dig.concat(" #a")).attr("class","on");
-        if((digitbin & 0b00000010)> 0) 
+        if((digitbin & 0b00000010) > 0) 
             $(dig.concat(" #b")).attr("class","on");
         if((digitbin & 0b00000100) > 0) 
             $(dig.concat(" #c")).attr("class","on");
@@ -398,8 +448,9 @@ div {
             $(dig.concat(" #h")).attr("class","on");
         updateValues();
     }
+
+    // Compute digit values and display values below digits
     function updateValues() {
-        // Compute digit values and display
         digit1bin = grabValue(".digit1");
         $('#hex1').html('0x'.concat(digit1bin.toString(16).padStart(2, '0')));    
         $('#bin1').html('0b'.concat(digit1bin.toString(2).padStart(8, '0')));  
@@ -413,6 +464,8 @@ div {
         $('#hex4').html('0x'.concat(digit4bin.toString(16).padStart(2, '0')));    
         $('#bin4').html('0b'.concat(digit4bin.toString(2).padStart(8, '0')));           
     }
+
+    // Capture digit values as a new frame and add to animation data
     function saveFrame() {
         formatData(); // Clean up data before adding new frame
         var frameNum = lastFrame() + 1;
@@ -426,10 +479,14 @@ div {
         $('#codeOutput').text(''.concat(output,"{ ",d1,", ",d2,", ",d3,", ",d4," },  // Frame ",frameNum.toString()));
         $('#frame').text("Frame = ".concat(frameNum.toString()));
     }
+
+    // Return the number of frames
     function lastFrame() {
         var lines = $('#codeOutput').text().split("\n");
         return(lines.length - 1);
     }
+
+    // Playback the animation data on digits
     function playAnimation() {
         formatData(); // clean up data first
         var frame = 0;
@@ -461,11 +518,14 @@ div {
            frame++;
         }, delayTime);
     }
-    function formatData() {
+
+    // Clean up the animation data
+    function formatData(flip = false) {
         var frame = 0;
         var lines = $('#codeOutput').text().split("\n");
         var step = 1;
         var buffer = [];
+        var dirty = false;
         while(frame < lines.length) {
             var line = lines[frame];
             if(line.length > 19) {
@@ -479,6 +539,12 @@ div {
                     if(isNaN(d2)) d2=0;
                     if(isNaN(d3)) d3=0;
                     if(isNaN(d4)) d4=0;
+                    if(flip) {
+                        d1 = flipByte(d1);
+                        d2 = flipByte(d2);
+                        d3 = flipByte(d3);
+                        d4 = flipByte(d4);
+                    }
                     var nd1 = '0x'.concat(d1.toString(16).padStart(2, '0'));
                     var nd2 = '0x'.concat(d2.toString(16).padStart(2, '0'));
                     var nd3 = '0x'.concat(d3.toString(16).padStart(2, '0'));
@@ -486,18 +552,24 @@ div {
                     buffer = "".concat(buffer,"{ ",nd1,", ",nd2,", ",nd3,", ",nd4," },  // Frame ",frame.toString());
                     if(frame < (lines.length-1)) buffer = buffer + "\n";
                 }
-                else console.log("Format Frame: ".concat(frame," - Invalid Field Number"));
+                else {
+                    console.log("Format Frame: ".concat(frame," - Invalid Field Number"));
+                    dirty = true;
+                }
             }
             else {
                 console.log("Format Frame: ".concat(frame," - Data Missing"));
+                dirty = true;
             }
            frame++;
         }
-        // console.log("buffer: ".concat(buffer));
         $('#codeOutput').text((" ".concat(buffer)).trim());
         $('#frame').text("Frame = ".concat(lastFrame().toString()));
         $("#outputblock").css("background-color","salmon");
+        if(dirty) formatData(); // We threw away lines during formatting, run again
     }
+
+    // Load a single frame into digits
     function showFrame(frame) {
         var lines = $('#codeOutput').text().split("\n");
         if((lines.length-1)<frame) return;
@@ -522,33 +594,35 @@ div {
         }
     }
 
+    // Warn user before leaving page
+    $(window).bind('beforeunload', function(){
+        return 'Warning: Are you sure you want to leave?';
+    });
+
+    // Detect user interactions
     $(document).ready(function() {
-        $(".digit1 polygon").click(function() {
-            //$(this).toggleClass("on");        
+        // Intercept LED mouse clicks and toggle LED
+        $(".digit1 polygon").click(function() {     
             var sSegClass = $(this).attr("class") === "off" ? "on" : "off";            
             $(this).attr("class", sSegClass);
-            // var seg = ($(this).attr('id'));
-            //$('#val1').text(seg);
             updateValues();        
         });
-        $(".digit2 polygon").click(function() {
-            //$(this).toggleClass("on");        
+        $(".digit2 polygon").click(function() {     
             var sSegClass = $(this).attr("class") === "off" ? "on" : "off";            
             $(this).attr("class", sSegClass);
             updateValues();  
         });
-        $(".digit3 polygon").click(function() {
-            //$(this).toggleClass("on");        
+        $(".digit3 polygon").click(function() {      
             var sSegClass = $(this).attr("class") === "off" ? "on" : "off";            
             $(this).attr("class", sSegClass);
             updateValues();  
         });
-        $(".digit4 polygon").click(function() {
-            //$(this).toggleClass("on");        
+        $(".digit4 polygon").click(function() {     
             var sSegClass = $(this).attr("class") === "off" ? "on" : "off";            
             $(this).attr("class", sSegClass);
             updateValues();  
         });
+        // Intercept mouse clicks in output section and load frame selected
         $( "#codeOutput" ).mousedown(function( event ) {
             var line = parseInt(event.offsetY/17);
             console.log("Line: "+ line);
