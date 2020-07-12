@@ -336,6 +336,7 @@ void loop() {
   // We can count!
   for (int x = -100; x <= 100; x++) {
     display.showNumber(x);
+    yield(); // Keep watchdog timer happy
   }
 
   // Demo Brightness Levels
