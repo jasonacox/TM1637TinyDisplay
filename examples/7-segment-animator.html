@@ -596,7 +596,7 @@ div {
     // Warn user before leaving page
     $(window).bind('beforeunload', function(e){
         if($('#codeOutput').text().length > 39) {
-            return("Animation data will be list - Proceed?");
+            return("Animation data will be lost - Proceed?");
         }
         else e=null;    
     });
