@@ -23,6 +23,8 @@ The display has four connectors:
 
 Power Note: Steady clean power is important for circuit stability. If you are seeing display artifacts during high frequency updates or animation sequences, you may be experiencing power fluctuations that are impacting signal timing and communication with the TM1637. This is especially true with standalone microprocessor applications that lack any power conditioning (e.g. ATtiny85). A polarized 100uF electrolytic capacitor inserted across VCC and GND can help smooth out the spikes.
 
+Decimals and Colons: Some TM1637 displays come equipped with a middle colon LED (as shown above) as used in digital clocks but with no decimal points. Some displays come with decimal point LEDS for each digit. Some come with both but often the decimal point LEDs are not connected. These extra LEDs are activated by setting the upper bit (0x80) for the digit next to the dot. This library will handle setting that for you via the showNumber() function when you specify floating point numbers or via the showNumberDec() function where you can set the decimal point manually.
+
 ## Installation
 This library is available via the Arduino IDE.  Install this library via `Tools`, `Manage Libraries`, search for "TM1637TinyDisplay" and click `Install`.
 
@@ -31,8 +33,8 @@ Alternatively, you can install this manually by cloning this repo into your Ardu
 ## Usage
 The library provides a single class named TM1637TinyDisplay with the following functions:
 
-* `showNumber` - Display an integer number (positive or negative)
-* `showNumberDec` - Display a number with ability to set decimal points or colon
+* `showNumber` - Display an integer and floating point numbers (positive or negative)
+* `showNumberDec` - Display a number with ability to manually set decimal points or colon
 * `showNumberHex` - Display a number in hexadecimal format and set decimal point or colon
 * `showString` - Display a ASCII string of text with optional scrolling for long strings
 * `showLevel` - Use display LEDs to simulate a level indicator (vertical or horizontal)  
