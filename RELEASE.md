@@ -9,3 +9,6 @@
 
 ## v1.1.1
 - Added yield() call to example Demo sketch for esp8266 watchdog timer.
+
+## v1.2.0
+- Added floating number support to showNumber() for TM1637 displays with decimal points.
