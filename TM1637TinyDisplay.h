@@ -123,6 +123,20 @@ public:
   //! @param pos The position of the most significant digit (0 - leftmost, 3 - rightmost)
   void showNumber(int num, bool leading_zero = false, uint8_t length = 4, uint8_t pos = 0);
 
+  //! Display a decimal number with floating point
+  //!
+  //! Display the given argument as a decimal number. Decimal point will only show up on displays
+  //! that support decimal point.
+  //!
+  //! @param num The number to be shown
+  //! @param decimal_length Format to show only this number of digits after the decimal point.
+  //!        NOTE: Anything over 4 will do best fit.
+  //! @param length The number of digits to set. The user must ensure that the number to be shown
+  //!        fits to the number of digits requested (for example, if two digits are to be displayed,
+  //!        the number must be between 0 to 99)
+  //! @param pos The position of the most significant digit (0 - leftmost, 3 - rightmost)
+  void showNumber(double num, uint8_t decimal_length = 4, uint8_t length = 4, uint8_t pos = 0);
+
   //! Display a decimal number, with dot control
   //!
   //! Display the given argument as a decimal number. The dots between the digits (or colon)
@@ -135,6 +149,7 @@ public:
   //!        * 0.000 (0b10000000)
   //!        * 00.00 (0b01000000)
   //!        * 000.0 (0b00100000)
+  //!        * 0000. (0b00010000)
   //!        * 0.0.0.0 (0b11100000)
   //!        For displays with just a colon:
   //!        * 00:00 (0b01000000)
@@ -160,6 +175,7 @@ public:
   //!        * 0.000 (0b10000000)
   //!        * 00.00 (0b01000000)
   //!        * 000.0 (0b00100000)
+  //!        * 0000. (0b00010000)
   //!        * 0.0.0.0 (0b11100000)
   //!        For displays with just a colon:
   //!        * 00:00 (0b01000000)
@@ -194,6 +210,17 @@ public:
   //! @param pos The position of the most significant digit (0 - leftmost, 3 - rightmost)
   //! The _P function is for reading PROGMEM read-only flash memory space instead of RAM
   void showString(const char s[], uint8_t length = 4, uint8_t pos = 0);
+
+  //! Display a string (PROGMEM space)
+  //!
+  //! Display the given string and if more than 4 characters, will scroll message on display
+  //! This function is for reading PROGMEM read-only flash memory space instead of RAM
+  //!
+  //! @param s The string to be shown
+  //! @param scrollDelay  The delay, in microseconds to wait before scrolling to next frame
+  //! @param length The number of digits to set. 
+  //! @param pos The position of the most significant digit (0 - leftmost, 3 - rightmost)
+  //! The _P function is for reading PROGMEM read-only flash memory space instead of RAM
   void showString_P(const char s[], uint8_t length = 4, uint8_t pos = 0);
 
   //! Display a Level Indicator (both orientations)
@@ -228,6 +255,30 @@ public:
   //! @param ms Time to delay between each frame
   //! The _P function is for reading PROGMEM read-only flash memory space instead of RAM
   void showAnimation(const uint8_t data[][4], unsigned int frames = 0, unsigned int ms = 10);
+
+  //! Display a sequence of raw LED segment data to create an animation (PROGMEM)
+  //!
+  //! Play thorugh an array of raw LED segment data to create a moving pattern.  
+  //! This function is for reading PROGMEM read-only flash memory space instead of RAM
+  //!
+  //! const uint8_t Example[2][4] = 
+  //! {
+  //!  {                // frame 1
+  //!   0b00001000,                                     // digit 1
+  //!   0b00000000,                                     // digit 2
+  //!   0b00000000,                                     // digit 3
+  //!   0b00000000                                      // digit 4
+  //!  },
+  //!  {                // frame 2
+  //!   0b00000000,                                     // digit 1
+  //!   0b00001000,                                     // digit 2
+  //!   0b00000000,                                     // digit 3
+  //!   0b00000000                                      // digit 4
+  //!  }
+  //! }
+  //! @param data A multi-dimensional array containing the LED segment - data[frames][4]
+  //! @param frames Number of frames in the sequence to animate
+  //! @param ms Time to delay between each frame
   void showAnimation_P(const uint8_t data[][4], unsigned int frames = 0, unsigned int ms = 10);
 
   //! Translate a single ASCII character into 7 segment code
@@ -253,7 +304,6 @@ protected:
    void showDots(uint8_t dots, uint8_t* digits);
    
    void showNumberBaseEx(int8_t base, uint16_t num, uint8_t dots = 0, bool leading_zero = false, uint8_t length = 4, uint8_t pos = 0);
-
 
 private:
 	uint8_t m_pinClk;

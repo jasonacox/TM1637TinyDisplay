@@ -339,6 +339,12 @@ void loop() {
     yield(); // Keep watchdog timer happy
   }
 
+  // Floating point counting!
+  for (int x = -100; x < 100; x = x + 1) { 
+    display.showNumber((float)x / 10.0);
+    yield(); // Keep watchdog timer happy
+  }
+
   // Demo Brightness Levels
   char string[10];
   for (int x = 0; x < 8; x++) {

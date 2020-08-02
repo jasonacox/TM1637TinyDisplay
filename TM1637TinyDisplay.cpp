@@ -224,6 +224,77 @@ void TM1637TinyDisplay::showNumber(int num, bool leading_zero, uint8_t length, u
   showNumberDec(num, 0, leading_zero, length, pos);
 }
 
+void TM1637TinyDisplay::showNumber(double num, uint8_t decimal_length, uint8_t length, uint8_t pos)
+{
+  int num_len = 0;              
+  int inum = abs((int)num);  
+  int decimal_places = 0;       
+  double value = 0.0;
+  bool negative = false; 
+  bool leading_zero = false; 
+  uint8_t digits[4] = {0,0,0,0};  // output array to render
+
+  // determine length of whole number part of num
+  while(inum != 0) {  
+    inum = inum / 10;
+    num_len++;
+  }
+  if(num < 0) {
+    num_len++; // make space for negative
+    negative = true;
+  }
+  if(abs(num)<1) {
+    num_len++; // make space for 0. prefix
+    leading_zero = true;
+  }
+  // make sure we can display number otherwise show overflow
+  if(num_len > length) {
+    showString("----", length, pos); // overflow symbol
+    return;
+  }
+  // how many decimal places can we show?
+  decimal_places = length - num_len; 
+  if(decimal_places > decimal_length) {
+    decimal_places = decimal_length;
+  }
+  // construct whole number representation of num
+  value = num;
+  for(int x=0; x < decimal_places; x++) {
+    value = value * 10.00;
+  }
+  if(num>0) value = value + 0.5; // round up
+  if(num<0) value = value - 0.5; // round down
+  inum = abs((int)value);
+
+  // render display array
+	if (inum == 0 && !leading_zero) {
+		digits[length-1] = encodeDigit(0);
+	}
+	else {		
+    int decimal_pos = length - 1 - decimal_places + pos;
+		for(int i = length-1; i >= 0; --i) {
+		  uint8_t digit = inum % 10;
+			
+			if (digit == 0 && inum == 0 && 
+           (leading_zero == false || (i < decimal_pos))
+         )
+			    // Blank out any leading zeros except for 0.x case
+				digits[i] = 0;
+			else
+			  digits[i] = encodeDigit(digit);
+			if(i == decimal_pos && decimal_length > 0) {
+        digits[i] += 0b10000000; // add decimal point
+      }
+      inum /= 10;
+		}
+  }
+  // add negative sign for negative number
+  if(negative) {
+    digits[pos] = minusSegments;
+  }
+  setSegments(digits, length, pos);
+}
+
 void TM1637TinyDisplay::showNumberDec(int num, uint8_t dots, bool leading_zero,
                                     uint8_t length, uint8_t pos)
 {
@@ -271,11 +342,9 @@ void TM1637TinyDisplay::showNumberBaseEx(int8_t base, uint16_t num, uint8_t dots
 
 			num /= base;
 		}
-
-		if(dots != 0)
-		{
-			showDots(dots, digits);
-		}
+  }
+  if(dots != 0) {
+    showDots(dots, digits);
   }
   setSegments(digits, length, pos);
 }

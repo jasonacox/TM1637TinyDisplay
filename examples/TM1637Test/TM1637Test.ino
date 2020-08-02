@@ -95,7 +95,7 @@ const uint8_t ANIMATION2[40][4] PROGMEM = {
 // This requires using the showString_P() function to read from PROGMEM memory space.
 // PROGMEM space strings are globally defined.
 
-const PROGMEM char FlashString[] = "Flash Test - 1234567890"; 
+const PROGMEM char FlashString[] = "Flash Test - 1234567890";
 const PROGMEM char FlashString2[] = "good";
 
 TM1637TinyDisplay display(CLK, DIO);
@@ -114,7 +114,7 @@ void loop()
   // Announce Testing
   display.showString("Test");
   delay(TEST_DELAY);
-  
+
   // All segments on
   display.setSegments(data);
   delay(TEST_DELAY);
@@ -175,6 +175,42 @@ void loop()
   display.clear();
   display.showNumberHex(0xd1, 0, true, 2); // Expect: d1__
   delay(TEST_DELAY);
+
+  // Floating point tests
+  display.showNumber(1.234);  // Floating point number
+  delay(TEST_DELAY);
+
+  display.showNumber(1.234, 2); // Format to 2 decimal places
+  delay(TEST_DELAY);
+
+  display.showNumber(-1.234); // Negative floating point number
+  delay(TEST_DELAY);
+
+  display.showNumber(-0.5); // Zero prefix floating point number
+  delay(TEST_DELAY);
+
+  display.showNumber(0.4);
+  delay(TEST_DELAY);
+
+  display.showNumber(1005.3);
+  delay(TEST_DELAY);
+
+  display.showNumber(10005.3);  // Overflow test
+  delay(TEST_DELAY);
+
+  display.showNumber(0.52345, 1);
+  delay(TEST_DELAY);
+
+  display.showNumber(0.255, 2); // Test rounding up
+  delay(TEST_DELAY);
+  
+  display.showString("\xB0", 1, 3);   // Test with suffix
+  display.showNumber(12.3, 4, 3, 0); 
+  delay(TEST_DELAY);
+
+  for (int x = -100; x < 100; x = x + 1) {  // Count
+    display.showNumber((float)x / 10.0);
+  }
 
   // Test all the dots
   for (k = 0; k <= 4; k++) {
