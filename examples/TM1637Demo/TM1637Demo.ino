@@ -334,16 +334,17 @@ void loop() {
   display.clear();
 
   // We can count!
-  for (int x = -100; x <= 100; x++) {
+  for (int x = -110; x <= 100; x++) {
     display.showNumber(x);
     yield(); // Keep watchdog timer happy
   }
+  delay(500);
 
-  // Floating point counting!
-  for (int x = -100; x < 100; x = x + 1) { 
+  for (int x = -100; x < 100; x = x + 1) {
     display.showNumber((float)x / 10.0);
     yield(); // Keep watchdog timer happy
   }
+  delay(500);
 
   // Demo Brightness Levels
   char string[10];
