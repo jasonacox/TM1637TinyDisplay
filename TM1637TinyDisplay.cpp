@@ -41,7 +41,7 @@ extern "C" {
 //  E |   | C
 //     ---
 //      D
-const uint8_t digitToSegment[] = {
+const uint8_t digitToSegment[] PROGMEM = {
  // XGFEDCBA
   0b00111111,    // 0
   0b00000110,    // 1
@@ -62,7 +62,7 @@ const uint8_t digitToSegment[] = {
   };
 
 // ASCII Map - Index 0 starts at ASCII 32
-const uint8_t asciiToSegment[] = {
+const uint8_t asciiToSegment[] PROGMEM = {
    0b00000000, // 032 (Space)
    0b00110000, // 033 !
    0b00100010, // 034 "
@@ -582,12 +582,14 @@ void TM1637TinyDisplay::showDots(uint8_t dots, uint8_t* digits)
 
 uint8_t TM1637TinyDisplay::encodeDigit(uint8_t digit)
 {
-	return digitToSegment[digit & 0x0f];
+	// return digitToSegment[digit & 0x0f] using PROGMEM
+  return pgm_read_byte(digitToSegment + (digit & 0x0f));
 }
 
 uint8_t TM1637TinyDisplay::encodeASCII(uint8_t chr)
 {
   if(chr == 176) return degreeSegments;   // Degree mark
   if(chr > 127 || chr < 32) return 0;     // Blank
-	return asciiToSegment[chr - 32];
+	// return asciiToSegment[chr - 32] using PROGMEM
+  return pgm_read_byte(asciiToSegment + (chr - 32));
 }

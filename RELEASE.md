@@ -12,3 +12,6 @@
 
 ## v1.2.0
 - Added floating number support to showNumber() for TM1637 displays with decimal points.
+
+## v1.3.0
+- Converted global digitToSegment[] and asciiToSegment[] lookup tables to PROGMEM space to save RAM.
