@@ -377,7 +377,7 @@ void TM1637TinyDisplay::showString(const char s[], uint8_t length, uint8_t pos)
       setSegments(digits, length, pos);
       delay(m_scrollDelay);
     }
-    for (int x = 3; x < strlen(s); x++) { // Scroll through string
+    for (size_t x = 3; x < strlen(s); x++) { // Scroll through string
       digits[0] = encodeASCII(s[x - 3]);
       digits[1] = encodeASCII(s[x - 2]);
       digits[2] = encodeASCII(s[x - 1]);
