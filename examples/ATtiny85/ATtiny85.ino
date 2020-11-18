@@ -347,11 +347,10 @@ void loop() {
   }
 
   // Demo Brightness Levels
-  char string[10];
   for (int x = 0; x < 8; x++) {
     display.setBrightness(x);
-    sprintf(string, "On %d", x);
-    display.showString(string);
+    display.showString("On ");
+    display.showNumber(x, false, 1, 3);
     delay(1000);
   }
 
