@@ -15,3 +15,5 @@
 
 ## v1.3.0
 - Converted global digitToSegment[] and asciiToSegment[] lookup tables to PROGMEM space to save RAM.
+- Fixed comparison between signed and unsigned integer expressions warning #5 
+- Saves ~1.5kB in the ATtiny85 example by using showNumber() instead of sprintf()
