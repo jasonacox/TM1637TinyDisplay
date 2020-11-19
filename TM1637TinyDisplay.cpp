@@ -166,57 +166,57 @@ static const uint8_t degreeSegments = 0b01100011;
 
 TM1637TinyDisplay::TM1637TinyDisplay(uint8_t pinClk, uint8_t pinDIO, unsigned int bitDelay, unsigned int scrollDelay)
 {
-	// Copy the pin numbers
-	m_pinClk = pinClk;
-	m_pinDIO = pinDIO;
-	m_bitDelay = bitDelay;
+  // Copy the pin numbers
+  m_pinClk = pinClk;
+  m_pinDIO = pinDIO;
+  m_bitDelay = bitDelay;
   m_scrollDelay = scrollDelay;
 
-	// Set the pin direction and default value.
-	// Both pins are set as inputs, allowing the pull-up resistors to pull them up
+  // Set the pin direction and default value.
+  // Both pins are set as inputs, allowing the pull-up resistors to pull them up
   pinMode(m_pinClk, INPUT);
   pinMode(m_pinDIO,INPUT);
-	digitalWrite(m_pinClk, LOW);
-	digitalWrite(m_pinDIO, LOW);
+  digitalWrite(m_pinClk, LOW);
+  digitalWrite(m_pinDIO, LOW);
 }
 
 void TM1637TinyDisplay::setBrightness(uint8_t brightness, bool on)
 {
-	m_brightness = (brightness & 0x07) | (on? 0x08 : 0x00);
+  m_brightness = (brightness & 0x07) | (on? 0x08 : 0x00);
 }
 
 void TM1637TinyDisplay::setScrolldelay(unsigned int scrollDelay)
 {
-	m_scrollDelay = scrollDelay;
+  m_scrollDelay = scrollDelay;
 }
 
 void TM1637TinyDisplay::setSegments(const uint8_t segments[], uint8_t length, uint8_t pos)
 {
   // Write COMM1
-	start();
-	writeByte(TM1637_I2C_COMM1);
-	stop();
+  start();
+  writeByte(TM1637_I2C_COMM1);
+  stop();
 
-	// Write COMM2 + first digit address
-	start();
-	writeByte(TM1637_I2C_COMM2 + (pos & 0x03));
+  // Write COMM2 + first digit address
+  start();
+  writeByte(TM1637_I2C_COMM2 + (pos & 0x03));
 
-	// Write the data bytes
-	for (uint8_t k=0; k < length; k++)
-	  writeByte(segments[k]);
+  // Write the data bytes
+  for (uint8_t k=0; k < length; k++)
+    writeByte(segments[k]);
 
-	stop();
+  stop();
 
-	// Write COMM3 + brightness
-	start();
-	writeByte(TM1637_I2C_COMM3 + (m_brightness & 0x0f));
-	stop();
+  // Write COMM3 + brightness
+  start();
+  writeByte(TM1637_I2C_COMM3 + (m_brightness & 0x0f));
+  stop();
 }
 
 void TM1637TinyDisplay::clear()
 {
   uint8_t data[] = { 0, 0, 0, 0 };
-	setSegments(data);
+  setSegments(data);
 }
 
 void TM1637TinyDisplay::showNumber(int num, bool leading_zero, uint8_t length, uint8_t pos)
@@ -267,26 +267,26 @@ void TM1637TinyDisplay::showNumber(double num, uint8_t decimal_length, uint8_t l
   inum = abs((int)value);
 
   // render display array
-	if (inum == 0 && !leading_zero) {
-		digits[length-1] = encodeDigit(0);
-	}
-	else {		
+  if (inum == 0 && !leading_zero) {
+    digits[length-1] = encodeDigit(0);
+  }
+  else {		
     int decimal_pos = length - 1 - decimal_places + pos;
-		for(int i = length-1; i >= 0; --i) {
-		  uint8_t digit = inum % 10;
-			
-			if (digit == 0 && inum == 0 && 
+    for(int i = length-1; i >= 0; --i) {
+      uint8_t digit = inum % 10;
+      
+      if (digit == 0 && inum == 0 && 
            (leading_zero == false || (i < decimal_pos))
          )
-			    // Blank out any leading zeros except for 0.x case
-				digits[i] = 0;
-			else
-			  digits[i] = encodeDigit(digit);
-			if(i == decimal_pos && decimal_length > 0) {
+          // Blank out any leading zeros except for 0.x case
+        digits[i] = 0;
+      else
+        digits[i] = encodeDigit(digit);
+      if(i == decimal_pos && decimal_length > 0) {
         digits[i] += 0b10000000; // add decimal point
       }
       inum /= 10;
-		}
+    }
   }
   // add negative sign for negative number
   if(negative) {
@@ -311,37 +311,37 @@ void TM1637TinyDisplay::showNumberBaseEx(int8_t base, uint16_t num, uint8_t dots
                                     uint8_t length, uint8_t pos)
 {
   bool negative = false;
-	if (base < 0) {
-	  base = -base;
-		negative = true;
-	}
+  if (base < 0) {
+    base = -base;
+    negative = true;
+  }
 
   uint8_t digits[4];
 
-	if (num == 0 && !leading_zero) {
-		// Singular case - take care separately
-		for(uint8_t i = 0; i < (length-1); i++) {
+  if (num == 0 && !leading_zero) {
+    // Singular case - take care separately
+    for(uint8_t i = 0; i < (length-1); i++) {
       digits[i] = 0;
     }
-		digits[length-1] = encodeDigit(0);
-	}
-	else {		
-		for(int i = length-1; i >= 0; --i) {
-		    uint8_t digit = num % base;
-			
-			if (digit == 0 && num == 0 && leading_zero == false)
-			    // Leading zero is blank
-				digits[i] = 0;
-			else
-			  digits[i] = encodeDigit(digit);
-				
-			if (digit == 0 && num == 0 && negative) {
-			  digits[i] = minusSegments;
-				negative = false;
-			}
+    digits[length-1] = encodeDigit(0);
+  }
+  else {		
+    for(int i = length-1; i >= 0; --i) {
+      uint8_t digit = num % base;
 
-			num /= base;
-		}
+      if (digit == 0 && num == 0 && leading_zero == false)
+          // Leading zero is blank
+        digits[i] = 0;
+      else
+        digits[i] = encodeDigit(digit);
+        
+      if (digit == 0 && num == 0 && negative) {
+        digits[i] = minusSegments;
+        negative = false;
+      }
+
+      num /= base;
+    }
   }
   if(dots != 0) {
     showDots(dots, digits);
@@ -508,7 +508,7 @@ void TM1637TinyDisplay::showAnimation_P(const uint8_t data[][4], unsigned int fr
 
 void TM1637TinyDisplay::bitDelay()
 {
-	delayMicroseconds(m_bitDelay);
+  delayMicroseconds(m_bitDelay);
 }
 
 void TM1637TinyDisplay::start()
@@ -519,12 +519,12 @@ void TM1637TinyDisplay::start()
 
 void TM1637TinyDisplay::stop()
 {
-	pinMode(m_pinDIO, OUTPUT);
-	bitDelay();
-	pinMode(m_pinClk, INPUT);
-	bitDelay();
-	pinMode(m_pinDIO, INPUT);
-	bitDelay();
+  pinMode(m_pinDIO, OUTPUT);
+  bitDelay();
+  pinMode(m_pinClk, INPUT);
+  bitDelay();
+  pinMode(m_pinDIO, INPUT);
+  bitDelay();
 }
 
 bool TM1637TinyDisplay::writeByte(uint8_t b)
@@ -537,7 +537,7 @@ bool TM1637TinyDisplay::writeByte(uint8_t b)
     pinMode(m_pinClk, OUTPUT);
     bitDelay();
 
-	// Set data bit
+    // Set data bit
     if (data & 0x01)
       pinMode(m_pinDIO, INPUT);
     else
@@ -545,7 +545,7 @@ bool TM1637TinyDisplay::writeByte(uint8_t b)
 
     bitDelay();
 
-	// CLK high
+    // CLK high
     pinMode(m_pinClk, INPUT);
     bitDelay();
     data = data >> 1;
@@ -582,7 +582,7 @@ void TM1637TinyDisplay::showDots(uint8_t dots, uint8_t* digits)
 
 uint8_t TM1637TinyDisplay::encodeDigit(uint8_t digit)
 {
-	// return digitToSegment[digit & 0x0f] using PROGMEM
+  // return digitToSegment[digit & 0x0f] using PROGMEM
   return pgm_read_byte(digitToSegment + (digit & 0x0f));
 }
 
@@ -590,6 +590,6 @@ uint8_t TM1637TinyDisplay::encodeASCII(uint8_t chr)
 {
   if(chr == 176) return degreeSegments;   // Degree mark
   if(chr > 127 || chr < 32) return 0;     // Blank
-	// return asciiToSegment[chr - 32] using PROGMEM
+  // return asciiToSegment[chr - 32] using PROGMEM
   return pgm_read_byte(asciiToSegment + (chr - 32));
 }
