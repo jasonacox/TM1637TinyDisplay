@@ -335,7 +335,7 @@ void setup() {
 void loop() {
 
   // Say Hello
-  display.showString("HELLO");
+  display.showString_P(PSTR("HELLO"));
   delay(500);
 
   // Clear Screen
@@ -349,7 +349,7 @@ void loop() {
   // Demo Brightness Levels
   for (int x = 0; x < 8; x++) {
     display.setBrightness(x);
-    display.showString("On ");
+    display.showString_P(PSTR("On "));
     display.showNumber(x, false, 1, 3);
     delay(1000);
   }
@@ -379,7 +379,7 @@ void loop() {
   delay(1000);
 
   // Demo split screen for temperature
-  display.showString("\xB0", 1, 3);        // Degree Mark, length=1, position=3 (right)
+  display.showString_P(PSTR("\xB0"), 1, 3);        // Degree Mark, length=1, position=3 (right)
   for (int x = -50; x < 150; x++) {
     display.showNumber(x, false, 3, 0);    // Number, length=3, position=0 (left)
     delay(10);
