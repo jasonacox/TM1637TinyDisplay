@@ -3,11 +3,14 @@
 ## Test Sketch
 The [TM1637Test.ino](TM1637Test/TM1637Test.ino) sketch will test the library functions.
 
+## Test Sketch for 6-Digit Display
+The [TM1637-6Digit-Test.ino](TM1637Test/TM1637-6Digit-Test.ino) sketch will test the library functions.
+
 ## Demo Sketch
 The [TM1637Demo.ino](TM1637Demo/TM1637Demo.ino) sketch will demonstrate the library functions
 and play an extended set of animation sequences.  The animations were built with the [Animator Tool](https://jasonacox.github.io/TM1637TinyDisplay/examples/7-segment-animator.html) referenced below.
 
-## Animation 
+## Animation
 
 ### 7-Segment LED Display Animator Tool
 ![Animator Tool](AnimatorToolThumb.png)
