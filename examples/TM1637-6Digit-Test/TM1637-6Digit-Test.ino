@@ -7,7 +7,7 @@
 
 // Includes
 #include <Arduino.h>
-#include <TM1637TinyDisplay.h>
+#include <TM1637TinyDisplay6.h>
 
 // Module connection pins (Digital Pins)
 #define CLK 4
@@ -96,18 +96,12 @@ const uint8_t ANIMATION2[40][4] PROGMEM = {
 const PROGMEM char FlashString[] = "Flash Test - 1234567890";
 const PROGMEM char FlashString2[] = "good";
 
-TM1637TinyDisplay display(CLK, DIO);
+TM1637TinyDisplay6 display(CLK, DIO);
 
 void setup()
 {
   display.setBrightness(BRIGHT_HIGH);
   display.clear();
-  display.showString("digits");
-  delay(1000);
-  display.showNumber(1234567);
-  delay(1000);
-  display.showNumber(123.456);
-  delay(1000);
 }
 
 void loop()
@@ -118,18 +112,28 @@ void loop()
   display.setBrightness(BRIGHT_HIGH);
 
   // Announce Testing
-  display.showString("test");
+  display.showString("TEST");
   delay(TEST_DELAY);
+
+  // Test Basics
+  display.showString("digits"); // 6 digits
+  delay(1000);
+  display.showNumber(1234567);  // overflow
+  delay(1000);
+  display.showNumber(123.456);  // decimal
+  delay(1000);
 
   // All segments on
   display.setSegments(data);
   delay(TEST_DELAY);
 
   // Test setting different digits
-  data[0] = display.encodeDigit(0);
-  data[1] = display.encodeDigit(1);
-  data[2] = display.encodeDigit(2);
-  data[3] = display.encodeDigit(3);
+  data[0] = display.encodeDigit(1);
+  data[1] = display.encodeDigit(2);
+  data[2] = display.encodeDigit(3);
+  data[3] = display.encodeDigit(4);
+  data[4] = display.encodeDigit(5);
+  data[5] = display.encodeDigit(6);
   display.setSegments(data);
   delay(TEST_DELAY);
 
@@ -157,6 +161,12 @@ void loop()
   delay(TEST_DELAY);
   display.showNumber(301, true);        // Expect: 0301
   delay(TEST_DELAY);
+  display.showNumber(3001, false);      // Expect: 3001
+  delay(TEST_DELAY);
+  display.showNumber(30001, false);     // Expect: 30001
+  delay(TEST_DELAY);
+  display.showNumber(300001, false);    // Expect: 300001
+  delay(TEST_DELAY);
   display.clear();
   display.showNumber(14, false, 2, 1);  // Expect: _14_
   delay(TEST_DELAY);
@@ -168,6 +178,10 @@ void loop()
   display.showNumber(-12);              // Expect: _-12
   delay(TEST_DELAY);
   display.showNumber(-999);             // Expect: -999
+  delay(TEST_DELAY);
+  display.showNumber(-9999);            // Expect: -9999
+  delay(TEST_DELAY);
+  display.showNumber(-99999);           // Expect: -99999
   delay(TEST_DELAY);
   display.clear();
   display.showNumber(-5, false, 3, 0);  // Expect: _-5_
@@ -211,8 +225,8 @@ void loop()
   delay(TEST_DELAY);
 
   display.clear();
-  display.showString("\xB0", 1, 3);   // Test with suffix
-  display.showNumber(12.3, 4, 3, 0);
+  display.showString("\xB0", 1, 5);   // Test with suffix
+  display.showNumber(12.3456, 4, 5, 0);
   delay(TEST_DELAY);
 
   for (int x = -100; x < 100; x = x + 1) {  // Count
@@ -220,13 +234,13 @@ void loop()
   }
 
   // Test all the dots
-  for (k = 0; k <= 4; k++) {
+  for (k = 0; k <= 6; k++) {
     display.showNumberDec(0, (0x80 >> k), true);
     delay(TEST_DELAY);
   }
 
   // Test Brightness Levels
-  for (k = 0; k < 4; k++)
+  for (k = 0; k < 6; k++)
     data[k] = 0xff;
   for (k = 0; k < 7; k++) {
     display.setBrightness(k);
@@ -270,9 +284,9 @@ void loop()
   // Test Numbers and Strings  Using Positions
   display.clear();
   char degree[] = "\xB0";
-  display.showString(degree, 1, 3);     // Position 3 (right) and 1 char length
-  for (int x = -50; x < 150; x++) {
-    display.showNumber(x, false, 3, 0); // Postion 0 (left) and 3 char length
+  display.showString(degree, 1, 5);     // Position 5 (right) and 1 char length
+  for (int x = -50; x < 1500; x = x + 5) {
+    display.showNumber(x, false, 5, 0); // Postion 0 (left) and 5 char length
     delay(10);
   }
   delay(TEST_DELAY);
