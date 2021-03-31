@@ -18,3 +18,9 @@
 - Fixed comparison between signed and unsigned integer expressions warning #5 
 - Saves ~1.5kB in the ATtiny85 example by using showNumber() instead of sprintf() #6
 - Fixed implicit case fallthrough and signed/unsigned comparison warnings #7
+
+## v1.4.0 
+- Added support for 6-digit displays using `TM1637TinyDisplay6` class (see [README](https://github.com/jasonacox/TM1637TinyDisplay#tm1637-6-digit-display---tm1637tinydisplay6))
+- Update showString() for variable display size and optimized code.
+- Created global digits[] scratch storage for all functions.
+- Update showNumber() to handle long integers.
