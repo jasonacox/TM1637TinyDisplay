@@ -591,7 +591,7 @@ bool TM1637TinyDisplay6::writeByte(uint8_t b)
 
 void TM1637TinyDisplay6::showDots(uint8_t dots, uint8_t* digits)
 {
-  for(int i = 0; i < 4; ++i)
+  for(int i = 0; i < MAXDIGITS; ++i)
   {
       digits[i] |= (dots & 0x80);
       dots <<= 1;
