@@ -5,7 +5,7 @@
 Arduino Library for the TM1637 Based LED Display Module
 
 ## Description
-This is an Arduino library for 4-digit 7-segment display modules based on the TM1637 chip. 
+This is an Arduino library for 4 and 6 digit 7-segment LED display modules based on the TM1637 chip.
 Connect the TM1637 display CLK and DIO pins to your Arduino GPIO pins, include this library, initialize TM1637TinyDisplay and call easy to use functions like showNumber(), showString(), showLevel() and showAnimation(). Display will scroll text for larger strings. Functions support screen splitting for easy number + text formatting. Library also runs well on tiny controllers including the ATtiny85.
 
 ## Hardware 
@@ -128,9 +128,45 @@ const uint8_t ANIMATION[12][4] = {
   display.showAnimation(ANIMATION, FRAMES(ANIMATION), TIME_MS(50));
 
 ```
+## TM1637 6-Digit Display - TM1637TinyDisplay6
+
+![TM1637-6](examples/tm1637-6.png)
+
+6-Digit Display modules based on the TM1637 chip are available from [Amazon](https://smile.amazon.com/diymore-Display-Digital-Decimal-Segments/dp/B08G4BYR2B/ref=sr_1_2?crid=2ZNMBUFWRVDIL&dchild=1&keywords=tm1637%2B6%2Bdigit&qid=1617163070&sprefix=tm1637%2B%2Caps%2C218&sr=8-2&th=1) and [AliExpress](https://www.aliexpress.com/item/1005002060120661.html?spm=a2g0s.9042311.0.0.47454c4dYpnXsR). 
+
+![TM1637](examples/tm1637-6back.png)
+
+This library now supports the 6-digit display as well as the 4-digit display.  The 6-digit display requires additional handling.  Specifically, the display digits are not sequential (requires a map) and the 7-segment LED data must be uploaded in reverse order.  
+
+TM1637TinyDisplay6 handles this for you but you if you use initialize the display using the TM1637TinyDisplay6 class:
+
+```cpp
+// Includes
+#include <Arduino.h>
+#include <TM1637TinyDisplay6.h>       // Include 6-Digit Display Class Header
+
+// Define Digital Pins
+#define CLK 1
+#define DIO 2
+
+TM1637TinyDisplay6 display(CLK, DIO); // 6-Digit Display Class
+
+void setup()
+{
+  display.setBrightness(BRIGHT_HIGH);
+  display.clear();
+  display.showString("digits");
+  delay(1000);
+  display.showNumber(123456);
+  delay(1000);
+  display.showNumber(123.456);
+  delay(1000);
+}
+```
 
 ## References and Credit
 * This library is based on the great work by Avishay Orpaz - https://github.com/avishorp/TM1637
 * SevenSegmentTM1637 Arduino Library by Bram Harmsen - https://github.com/bremme/arduino-tm1637 
 * Arduino - https://playground.arduino.cc/Main/TM1637/
+* MCI Electronics Datasheet for TM1637 - https://www.mcielectronics.cl/website_MCI/static/documents/Datasheet_TM1637.pdf
 

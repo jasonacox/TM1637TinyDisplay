@@ -13,8 +13,10 @@
 #define CLK 4
 #define DIO 5
 
-// Initialize TM1637TinyDisplay
+// Initialize TM1637TinyDisplay - 4 Digit Display
 TM1637TinyDisplay display(CLK, DIO);
+// Initialize TM1637TinyDisplay - 6 Digit Display
+// TM1637TinyDisplay6 display(CLK, DIO);
 
 // Animations created with Tool https://jasonacox.github.io/TM1637TinyDisplay/examples/7-segment-animator.html
 

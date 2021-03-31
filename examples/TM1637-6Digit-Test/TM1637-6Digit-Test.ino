@@ -1,10 +1,8 @@
-//  TM1637TinyDisplay TEST Sketch
+//  TM1637TinyDisplay TEST Sketch for 6-Digit Display
 //  This is a test sketch for the Arduino TM1637TinyDisplay LED Display library
 //
 //  Author: Jason A. Cox - @jasonacox - https://github.com/jasonacox
-//  Date: 2 July 2020
-//
-//  Based on TM1637Display library at https://github.com/avishorp/TM1637
+//  Date: 29 March 2021
 //
 
 // Includes
@@ -98,13 +96,18 @@ const uint8_t ANIMATION2[40][4] PROGMEM = {
 const PROGMEM char FlashString[] = "Flash Test - 1234567890";
 const PROGMEM char FlashString2[] = "good";
 
-// Initialize TM1637TinyDisplay - 4 Digit Display
 TM1637TinyDisplay display(CLK, DIO);
-// Initialize TM1637TinyDisplay - 6 Digit Display
-// TM1637TinyDisplay6 display(CLK, DIO);
 
 void setup()
 {
+  display.setBrightness(BRIGHT_HIGH);
+  display.clear();
+  display.showString("digits");
+  delay(1000);
+  display.showNumber(1234567);
+  delay(1000);
+  display.showNumber(123.456);
+  delay(1000);
 }
 
 void loop()
@@ -115,7 +118,7 @@ void loop()
   display.setBrightness(BRIGHT_HIGH);
 
   // Announce Testing
-  display.showString("Test");
+  display.showString("test");
   delay(TEST_DELAY);
 
   // All segments on
@@ -186,7 +189,7 @@ void loop()
   display.showNumber(1.234, 2); // Format to 2 decimal places
   delay(TEST_DELAY);
 
-  display.showNumber(-1.234); // Negative floating point number
+  display.showNumber(-1.23456); // Negative floating point number
   delay(TEST_DELAY);
 
   display.showNumber(-0.5); // Zero prefix floating point number
@@ -198,7 +201,7 @@ void loop()
   display.showNumber(1005.3);
   delay(TEST_DELAY);
 
-  display.showNumber(10005.3);  // Overflow test
+  display.showNumber(1000005.3);  // Overflow test
   delay(TEST_DELAY);
 
   display.showNumber(0.52345, 1);
@@ -206,10 +209,10 @@ void loop()
 
   display.showNumber(0.255, 2); // Test rounding up
   delay(TEST_DELAY);
-  
+
   display.clear();
   display.showString("\xB0", 1, 3);   // Test with suffix
-  display.showNumber(12.3, 4, 3, 0); 
+  display.showNumber(12.3, 4, 3, 0);
   delay(TEST_DELAY);
 
   for (int x = -100; x < 100; x = x + 1) {  // Count

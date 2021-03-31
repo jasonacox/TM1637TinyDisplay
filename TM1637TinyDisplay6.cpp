@@ -26,9 +26,11 @@ extern "C" {
   #include <inttypes.h>
 }
 
-#include <TM1637TinyDisplay.h>
+#include <TM1637TinyDisplay6.h>
 #include <Arduino.h>
 
+// Digit sequence map for 6 digit displays
+const uint8_t digitmap[] = { 2, 1, 0, 5, 4, 3 }; 
 
 //
 //      A
@@ -161,7 +163,7 @@ const uint8_t asciiToSegment[] PROGMEM = {
 static const uint8_t minusSegments = 0b01000000;
 static const uint8_t degreeSegments = 0b01100011;
 
-TM1637TinyDisplay::TM1637TinyDisplay(uint8_t pinClk, uint8_t pinDIO, unsigned int bitDelay, unsigned int scrollDelay)
+TM1637TinyDisplay6::TM1637TinyDisplay6(uint8_t pinClk, uint8_t pinDIO, unsigned int bitDelay, unsigned int scrollDelay)
 {
   // Pin settings
   m_pinClk = pinClk;
@@ -178,18 +180,23 @@ TM1637TinyDisplay::TM1637TinyDisplay(uint8_t pinClk, uint8_t pinDIO, unsigned in
   digitalWrite(m_pinDIO, LOW);
 }
 
-void TM1637TinyDisplay::setBrightness(uint8_t brightness, bool on)
+void TM1637TinyDisplay6::setBrightness(uint8_t brightness, bool on)
 {
   m_brightness = (brightness & 0x07) | (on? 0x08 : 0x00);
 }
 
-void TM1637TinyDisplay::setScrolldelay(unsigned int scrollDelay)
+void TM1637TinyDisplay6::setScrolldelay(unsigned int scrollDelay)
 {
   m_scrollDelay = scrollDelay;
 }
 
-void TM1637TinyDisplay::setSegments(const uint8_t segments[], uint8_t length, uint8_t pos)
+void TM1637TinyDisplay6::setSegments(const uint8_t segments[], uint8_t length, uint8_t pos)
 {
+  // Adjust pos for 6 digit display
+  int index = pos + length - 1;
+  if (index > MAXDIGITS) index = index - MAXDIGITS;
+  pos = digitmap[index];
+
   // Write COMM1
   start();
   writeByte(TM1637_I2C_COMM1);
@@ -201,7 +208,8 @@ void TM1637TinyDisplay::setSegments(const uint8_t segments[], uint8_t length, ui
 
   // Write the data bytes
   for (uint8_t k=0; k < length; k++) {
-    writeByte(segments[k]);
+    // 6 digit display - send in reverse order
+    writeByte(segments[length - 1 - k]); 
   }
   stop();
 
@@ -211,24 +219,24 @@ void TM1637TinyDisplay::setSegments(const uint8_t segments[], uint8_t length, ui
   stop();
 }
 
-void TM1637TinyDisplay::clear()
+void TM1637TinyDisplay6::clear()
 {
   // digits[MAXDIGITS] output array to render
   memset(digits,0,sizeof(digits));
   setSegments(digits);
 }
 
-void TM1637TinyDisplay::showNumber(int num, bool leading_zero, uint8_t length, uint8_t pos)
+void TM1637TinyDisplay6::showNumber(int num, bool leading_zero, uint8_t length, uint8_t pos)
 {
   showNumberDec(num, 0, leading_zero, length, pos);
 }
 
-void TM1637TinyDisplay::showNumber(long num, bool leading_zero, uint8_t length, uint8_t pos)
+void TM1637TinyDisplay6::showNumber(long num, bool leading_zero, uint8_t length, uint8_t pos)
 {
   showNumber(double(num), 0, length, pos);
 }
 
-void TM1637TinyDisplay::showNumber(double num, uint8_t decimal_length, uint8_t length, uint8_t pos)
+void TM1637TinyDisplay6::showNumber(double num, uint8_t decimal_length, uint8_t length, uint8_t pos)
 {
   int num_len = 0;              
   long inum = abs((long)num);  
@@ -254,7 +262,7 @@ void TM1637TinyDisplay::showNumber(double num, uint8_t decimal_length, uint8_t l
   }
   // make sure we can display number otherwise show overflow
   if(num_len > length) {
-    showString("----", length, pos); // overflow symbol
+    showString("------", length, pos); // overflow symbol
     return;
   }
   // how many decimal places can we show?
@@ -300,19 +308,19 @@ void TM1637TinyDisplay::showNumber(double num, uint8_t decimal_length, uint8_t l
   setSegments(digits, length, pos);
 }
 
-void TM1637TinyDisplay::showNumberDec(int num, uint8_t dots, bool leading_zero,
+void TM1637TinyDisplay6::showNumberDec(int num, uint8_t dots, bool leading_zero,
                                     uint8_t length, uint8_t pos)
 {
   showNumberBaseEx(num < 0? -10 : 10, num < 0? -num : num, dots, leading_zero, length, pos);
 }
 
-void TM1637TinyDisplay::showNumberHex(uint16_t num, uint8_t dots, bool leading_zero,
+void TM1637TinyDisplay6::showNumberHex(uint16_t num, uint8_t dots, bool leading_zero,
                                     uint8_t length, uint8_t pos)
 {
   showNumberBaseEx(16, num, dots, leading_zero, length, pos);
 }
 
-void TM1637TinyDisplay::showNumberBaseEx(int8_t base, uint16_t num, uint8_t dots, bool leading_zero,
+void TM1637TinyDisplay6::showNumberBaseEx(int8_t base, uint16_t num, uint8_t dots, bool leading_zero,
                                     uint8_t length, uint8_t pos)
 {
   bool negative = false;
@@ -320,6 +328,8 @@ void TM1637TinyDisplay::showNumberBaseEx(int8_t base, uint16_t num, uint8_t dots
     base = -base;
     negative = true;
   }
+
+  // uint8_t digits[MAXDIGITS];
 
   if (num == 0 && !leading_zero) {
     // Singular case - take care separately
@@ -352,7 +362,7 @@ void TM1637TinyDisplay::showNumberBaseEx(int8_t base, uint16_t num, uint8_t dots
   setSegments(digits, length, pos);
 }
 
-void TM1637TinyDisplay::showString(const char s[], uint8_t length, uint8_t pos)
+void TM1637TinyDisplay6::showString(const char s[], uint8_t length, uint8_t pos)
 {
   // digits[MAXDIGITS] output array to render
   memset(digits,0,sizeof(digits));
@@ -400,7 +410,7 @@ void TM1637TinyDisplay::showString(const char s[], uint8_t length, uint8_t pos)
   }
 }
 
-void TM1637TinyDisplay::showString_P(const char s[], uint8_t length, uint8_t pos) 
+void TM1637TinyDisplay6::showString_P(const char s[], uint8_t length, uint8_t pos) 
 {
   // digits[MAXDIGITS] output array to render
   memset(digits,0,sizeof(digits));
@@ -449,7 +459,7 @@ void TM1637TinyDisplay::showString_P(const char s[], uint8_t length, uint8_t pos
   }
 }
 
-void TM1637TinyDisplay::showLevel(unsigned int level, bool horizontal) 
+void TM1637TinyDisplay6::showLevel(unsigned int level, bool horizontal) 
 {
   // digits[MAXDIGITS] output array to render
   memset(digits,0,sizeof(digits));
@@ -492,41 +502,40 @@ void TM1637TinyDisplay::showLevel(unsigned int level, bool horizontal)
   setSegments(digits);
 }
 
-void TM1637TinyDisplay::showAnimation(const uint8_t data[][4], unsigned int frames, unsigned int ms)
+void TM1637TinyDisplay6::showAnimation(const uint8_t data[][4], unsigned int frames, unsigned int ms)
 {
   // Animation sequence
   for (unsigned int x = 0; x < frames; x++) {
-    setSegments(data[x]);
+    setSegments(data[x],4,1);
     delay(ms);
   }
 }
 
-void TM1637TinyDisplay::showAnimation_P(const uint8_t data[][4], unsigned int frames, unsigned int ms)
+void TM1637TinyDisplay6::showAnimation_P(const uint8_t data[][4], unsigned int frames, unsigned int ms)
 {
   // Animation sequence for data stored in PROGMEM flash memory
-  // digits[MAXDIGITS] output array to render
-  memset(digits,0,sizeof(digits));
+  uint8_t digits[6] = {0,0,0,0,0,0};
   for (unsigned int x = 0; x < frames; x++) {
     for(unsigned int a = 0; a < 4; a++) {
           digits[a] = pgm_read_byte(&(data[x][a]));
     }
-    setSegments(digits);
+    setSegments(digits,4,1);
     delay(ms);
   }
 }
 
-void TM1637TinyDisplay::bitDelay()
+void TM1637TinyDisplay6::bitDelay()
 {
   delayMicroseconds(m_bitDelay);
 }
 
-void TM1637TinyDisplay::start()
+void TM1637TinyDisplay6::start()
 {
   pinMode(m_pinDIO, OUTPUT);
   bitDelay();
 }
 
-void TM1637TinyDisplay::stop()
+void TM1637TinyDisplay6::stop()
 {
   pinMode(m_pinDIO, OUTPUT);
   bitDelay();
@@ -536,7 +545,7 @@ void TM1637TinyDisplay::stop()
   bitDelay();
 }
 
-bool TM1637TinyDisplay::writeByte(uint8_t b)
+bool TM1637TinyDisplay6::writeByte(uint8_t b)
 {
   uint8_t data = b;
 
@@ -580,7 +589,7 @@ bool TM1637TinyDisplay::writeByte(uint8_t b)
   return ack;
 }
 
-void TM1637TinyDisplay::showDots(uint8_t dots, uint8_t* digits)
+void TM1637TinyDisplay6::showDots(uint8_t dots, uint8_t* digits)
 {
   for(int i = 0; i < 4; ++i)
   {
@@ -589,13 +598,13 @@ void TM1637TinyDisplay::showDots(uint8_t dots, uint8_t* digits)
   }
 }
 
-uint8_t TM1637TinyDisplay::encodeDigit(uint8_t digit)
+uint8_t TM1637TinyDisplay6::encodeDigit(uint8_t digit)
 {
   // return digitToSegment[digit & 0x0f] using PROGMEM
   return pgm_read_byte(digitToSegment + (digit & 0x0f));
 }
 
-uint8_t TM1637TinyDisplay::encodeASCII(uint8_t chr)
+uint8_t TM1637TinyDisplay6::encodeASCII(uint8_t chr)
 {
   if(chr == 176) return degreeSegments;   // Degree mark
   if(chr > 127 || chr < 32) return 0;     // Blank

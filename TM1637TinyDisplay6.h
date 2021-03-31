@@ -20,8 +20,8 @@
 //  License along with this library; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-#ifndef __TM1637TINYDISPLAY__
-#define __TM1637TINYDISPLAY__
+#ifndef __TM1637TINYDISPLAY6__
+#define __TM1637TINYDISPLAY6__
 
 // Include PROGMEM Support
 #include <inttypes.h>
@@ -104,7 +104,7 @@
 #define TM1637_I2C_COMM2    0xC0  // CmdSetAddress    0b11000000
 #define TM1637_I2C_COMM3    0x80  // CmdDisplay       0b10000000
 
-#define MAXDIGITS           4     // Total number of digits   
+#define MAXDIGITS           6     // The number of digits in display   
 
 #define DEFAULT_BIT_DELAY     100
 #define DEFAULT_SCROLL_DELAY  100
@@ -113,7 +113,7 @@
 #define TIME_MS(t)    t
 #define TIME_S(t)     t*1000
 
-class TM1637TinyDisplay {
+class TM1637TinyDisplay6 {
 
 public:
   //! Initialize a TM1637TinyDisplay object, setting the clock and
@@ -123,7 +123,7 @@ public:
   //! @param pinDIO - The number of the digital pin connected to the DIO pin of the module
   //! @param bitDelay - The delay, in microseconds, between bit transition on the serial
   //!                   bus connected to the display
-  TM1637TinyDisplay(uint8_t pinClk, uint8_t pinDIO, unsigned int bitDelay = DEFAULT_BIT_DELAY, unsigned int scrollDelay = DEFAULT_SCROLL_DELAY);
+  TM1637TinyDisplay6(uint8_t pinClk, uint8_t pinDIO, unsigned int bitDelay = DEFAULT_BIT_DELAY, unsigned int scrollDelay = DEFAULT_SCROLL_DELAY);
 
   //! Sets the brightness of the display.
   //!
@@ -172,6 +172,7 @@ public:
   //! @param pos The position of the most significant digit (0 - leftmost, 3 - rightmost)
   void showNumber(int num, bool leading_zero = false, uint8_t length = MAXDIGITS, uint8_t pos = 0);
 
+
   //! Display a decimal number
   //!
   //! Display the given argument as a decimal number.
@@ -184,6 +185,7 @@ public:
   //!        the number must be between 0 to 99)
   //! @param pos The position of the most significant digit (0 - leftmost, 3 - rightmost)
   void showNumber(long num, bool leading_zero = false, uint8_t length = MAXDIGITS, uint8_t pos = 0);
+
 
   //! Display a decimal number with floating point
   //!
@@ -365,15 +367,15 @@ protected:
 
    void showDots(uint8_t dots, uint8_t* digits);
    
-   void showNumberBaseEx(int8_t base, uint16_t num, uint8_t dots = 0, bool leading_zero = false, uint8_t length = MAXDIGITS, uint8_t pos = 0);
+   void showNumberBaseEx(int8_t base, uint16_t num, uint8_t dots = 0, bool leading_zero = false, uint8_t length = 4, uint8_t pos = 0);
 
 private:
   uint8_t m_pinClk;
   uint8_t m_pinDIO;
-  uint8_t m_brightness;
   unsigned int m_bitDelay;
   unsigned int m_scrollDelay;
   uint8_t digits[MAXDIGITS];
+  uint8_t m_brightness;
 };
 
-#endif // __TM1637TINYDISPLAY__
+#endif // __TM1637TINYDISPLAY6__

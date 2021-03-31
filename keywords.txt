@@ -3,6 +3,7 @@
 #######################################
 
 TM1637TinyDisplay	KEYWORD1
+TM1637TinyDisplay6	KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
