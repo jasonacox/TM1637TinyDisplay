@@ -1,7 +1,7 @@
 {
   "name": "TM1637TinyDisplay",
   "keywords": "TM1637, tiny, LED, display",
-  "description": "A simple library to display numbers, text and animation on a 4-digit 7-segment TM1637 based display module.",
+  "description": "A simple library to display numbers, text and animation on a 4 and 6 digit 7-segment TM1637 based display modules.",
   "repository": {
     "type": "git",
     "url": "https://github.com/jasonacox/TM1637TinyDisplay.git"
