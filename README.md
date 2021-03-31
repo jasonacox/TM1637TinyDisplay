@@ -134,11 +134,11 @@ const uint8_t ANIMATION[12][4] = {
 
 6-Digit Display modules based on the TM1637 chip are available from [Amazon](https://smile.amazon.com/diymore-Display-Digital-Decimal-Segments/dp/B08G4BYR2B/ref=sr_1_2?crid=2ZNMBUFWRVDIL&dchild=1&keywords=tm1637%2B6%2Bdigit&qid=1617163070&sprefix=tm1637%2B%2Caps%2C218&sr=8-2&th=1) and [AliExpress](https://www.aliexpress.com/item/1005002060120661.html?spm=a2g0s.9042311.0.0.47454c4dYpnXsR). 
 
-![TM1637](examples/tm1637-6back.png)
+![TM1637-6-Back](examples/tm1637-6back.png)
 
 This library now supports the 6-digit display as well as the 4-digit display.  The 6-digit display requires additional handling.  Specifically, the display digits are not sequential (requires a map) and the 7-segment LED data must be uploaded in reverse order.  
 
-TM1637TinyDisplay6 handles this for you but you if you use initialize the display using the TM1637TinyDisplay6 class:
+TM1637TinyDisplay6 handles this for you but you if you initialize the display using the TM1637TinyDisplay6 class:
 
 ```cpp
 // Includes
