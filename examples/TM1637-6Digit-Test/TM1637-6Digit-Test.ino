@@ -326,7 +326,7 @@ void loop()
   display.clear();
   display.showString("The");
   delay(TEST_DELAY);
-  display.showString("End");
+  display.showString("   End");
   delay(TEST_DELAY);
   display.setSegments(SEG_DONE);
   delay(TEST_DELAY * 5);
