@@ -112,16 +112,22 @@ void loop()
   display.setBrightness(BRIGHT_HIGH);
 
   // Announce Testing
-  display.showString("TEST");
+  display.showString("test");
   delay(TEST_DELAY);
 
   // Test Basics
   display.showString("digits"); // 6 digits
-  delay(1000);
+  delay(TEST_DELAY);
   display.showNumber(1234567);  // overflow
-  delay(1000);
+  delay(TEST_DELAY);
   display.showNumber(123.456);  // decimal
-  delay(1000);
+  delay(TEST_DELAY);
+  display.showNumber(123456.0); // decimal
+  delay(TEST_DELAY);
+  display.showNumber(1234567.0);// decimal
+  delay(TEST_DELAY);
+  display.showNumber(PI);       // decimal
+  delay(TEST_DELAY);
 
   // All segments on
   display.setSegments(data);
@@ -236,6 +242,16 @@ void loop()
   // Test all the dots
   for (k = 0; k <= 6; k++) {
     display.showNumberDec(0, (0x80 >> k), true);
+    delay(TEST_DELAY);
+  }
+  uint8_t dots = 0b10101000;
+  for (int x = 0; x < 8; x++) {
+    display.showNumberDec(987654, dots >> x, false);       // Expect: 3.03.03.
+    delay(TEST_DELAY);
+  }
+  dots = 0b11111100;
+  for (int x = 0; x < 8; x++) {
+    display.showNumberDec(123456, dots << x, false);       // Expect: 1.2.3.4.5.6.
     delay(TEST_DELAY);
   }
 

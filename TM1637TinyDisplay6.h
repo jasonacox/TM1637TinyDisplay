@@ -225,7 +225,7 @@ public:
   //!        fits to the number of digits requested (for example, if two digits are to be displayed,
   //!        the number must be between 0 to 99)
   //! @param pos The position of the most significant digit (0 - leftmost, 3 - rightmost)
-  void showNumberDec(int num, uint8_t dots = 0, bool leading_zero = false, uint8_t length = MAXDIGITS, uint8_t pos = 0);
+  void showNumberDec(long num, uint8_t dots = 0, bool leading_zero = false, uint8_t length = MAXDIGITS, uint8_t pos = 0);
 
   //! Display a hexadecimal number, with dot control
   //!
@@ -367,7 +367,7 @@ protected:
 
    void showDots(uint8_t dots, uint8_t* digits);
    
-   void showNumberBaseEx(int8_t base, uint16_t num, uint8_t dots = 0, bool leading_zero = false, uint8_t length = 4, uint8_t pos = 0);
+   void showNumberBaseEx(int8_t base, uint32_t num, uint8_t dots = 0, bool leading_zero = false, uint8_t length = 4, uint8_t pos = 0);
 
 private:
   uint8_t m_pinClk;

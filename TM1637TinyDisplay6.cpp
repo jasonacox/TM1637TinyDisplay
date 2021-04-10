@@ -308,7 +308,7 @@ void TM1637TinyDisplay6::showNumber(double num, uint8_t decimal_length, uint8_t 
   setSegments(digits, length, pos);
 }
 
-void TM1637TinyDisplay6::showNumberDec(int num, uint8_t dots, bool leading_zero,
+void TM1637TinyDisplay6::showNumberDec(long num, uint8_t dots, bool leading_zero,
                                     uint8_t length, uint8_t pos)
 {
   showNumberBaseEx(num < 0? -10 : 10, num < 0? -num : num, dots, leading_zero, length, pos);
@@ -320,7 +320,7 @@ void TM1637TinyDisplay6::showNumberHex(uint16_t num, uint8_t dots, bool leading_
   showNumberBaseEx(16, num, dots, leading_zero, length, pos);
 }
 
-void TM1637TinyDisplay6::showNumberBaseEx(int8_t base, uint16_t num, uint8_t dots, bool leading_zero,
+void TM1637TinyDisplay6::showNumberBaseEx(int8_t base, uint32_t num, uint8_t dots, bool leading_zero,
                                     uint8_t length, uint8_t pos)
 {
   bool negative = false;

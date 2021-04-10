@@ -24,3 +24,11 @@
 - Update showString() for variable display size and optimized code.
 - Created global digits[] scratch storage for all functions.
 - Update showNumber() to handle long integers.
+
+## v.1.4.1
+- Bug Fix for 6-digit display - Changed to `long num` for showNumberDec() and `uint32_t num` showNumberBaseEx() to display values > 32,768.  See Issue #10
+- Updated 6-digit test to include > 32,768 value tests with decimal settings.
+```python
+  display.showNumberDec(987654, 0b10101000, false);       // Expect: 3.03.03.
+  display.showNumberDec(123456, 0b11111100, false);       // Expect: 1.2.3.4.5.6.
+```
