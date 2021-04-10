@@ -11,6 +11,8 @@ install:
   - ln -s $PWD /usr/local/share/arduino/libraries/TM1637TinyDisplay
 script:
   - arduino --verify --board arduino:avr:uno --pref sketchbook.path="$PWD" $PWD/examples/TM1637Test/TM1637Test.ino
+  - arduino --verify --board arduino:avr:uno --pref sketchbook.path="$PWD" $PWD/examples/TM1637-6Digit-Test/TM1637-6Digit-Test.ino
+  - arduino --verify --board arduino:avr:uno --pref sketchbook.path="$PWD" $PWD/examples/ATtiny85/ATtiny85.ino
 notifications:
   email:
     on_success: change
