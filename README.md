@@ -139,7 +139,7 @@ const uint8_t ANIMATION[12][4] = {
 
 This library now supports the 6-digit display as well as the 4-digit display.  The 6-digit display requires additional handling.  Specifically, the display digits are not sequential (requires a map) and the 7-segment LED data must be uploaded in reverse order.  
 
-TM1637TinyDisplay6 handles this for you but you if you initialize the display using the TM1637TinyDisplay6 class:
+TM1637TinyDisplay6 handles this for you but you must initialize the display using the TM1637TinyDisplay6 class:
 
 ```cpp
 // Includes
