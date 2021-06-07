@@ -12,7 +12,7 @@ and play an extended set of animation sequences.  The animations were built with
 
 ## Countdown Timer
 * [TM1637-Countdown.ino](TM1637-Countdown/TM1637-Countdown.ino) sketch is an example of using the library for a countdown timer. Works with 4-Digit and 6-Digit displays.
-* [TM1637-Countdown-Buttons.ino](TM1637-Countdown/TM1637-Countdown-Buttons.ino) same as the above but adds buttons and interactive logic to set countdown time.
+* [TM1637-Countdown-Buttons.ino](TM1637-Countdown-Buttons/TM1637-Countdown-Buttons.ino) same as the above but adds buttons and interactive logic to set countdown time.
 
 ## Animation
 
