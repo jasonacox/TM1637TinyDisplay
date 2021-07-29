@@ -1,6 +1,6 @@
 # TM1637 Tiny Display # 
 [![arduino-library-badge](https://www.ardu-badge.com/badge/TM1637TinyDisplay.svg?)](https://www.ardu-badge.com/TM1637TinyDisplay)
-[![Build Status](https://travis-ci.org/jasonacox/TM1637TinyDisplay.svg?branch=master)](https://travis-ci.org/github/jasonacox/TM1637TinyDisplay)
+[![Build Status](https://travis-ci.com/jasonacox/TM1637TinyDisplay.svg?branch=master)](https://travis-ci.com/jasonacox/TM1637TinyDisplay)
 
 Arduino Library for the TM1637 Based LED Display Module
 
