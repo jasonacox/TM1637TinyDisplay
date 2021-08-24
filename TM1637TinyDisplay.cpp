@@ -352,7 +352,7 @@ void TM1637TinyDisplay::showNumberBaseEx(int8_t base, uint16_t num, uint8_t dots
   setSegments(digits, length, pos);
 }
 
-void TM1637TinyDisplay::showString(const char s[], uint8_t length, uint8_t pos, uint8_t dots = 0)
+void TM1637TinyDisplay::showString(const char s[], uint8_t length, uint8_t pos, uint8_t dots)
 {
   // digits[MAXDIGITS] output array to render
   memset(digits,0,sizeof(digits));
@@ -403,7 +403,7 @@ void TM1637TinyDisplay::showString(const char s[], uint8_t length, uint8_t pos, 
   }
 }
 
-void TM1637TinyDisplay::showString_P(const char s[], uint8_t length, uint8_t pos, uint8_t dots = 0) 
+void TM1637TinyDisplay::showString_P(const char s[], uint8_t length, uint8_t pos, uint8_t dots) 
 {
   // digits[MAXDIGITS] output array to render
   memset(digits,0,sizeof(digits));
