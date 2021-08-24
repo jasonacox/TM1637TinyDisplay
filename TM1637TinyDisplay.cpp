@@ -352,7 +352,7 @@ void TM1637TinyDisplay::showNumberBaseEx(int8_t base, uint16_t num, uint8_t dots
   setSegments(digits, length, pos);
 }
 
-void TM1637TinyDisplay::showString(const char s[], uint8_t length, uint8_t pos)
+void TM1637TinyDisplay::showString(const char s[], uint8_t length, uint8_t pos, uint8_t dots = 0)
 {
   // digits[MAXDIGITS] output array to render
   memset(digits,0,sizeof(digits));
@@ -361,6 +361,9 @@ void TM1637TinyDisplay::showString(const char s[], uint8_t length, uint8_t pos)
   if (strlen(s) <= MAXDIGITS) {
     for (int x = 0; x < strlen(s); x++) {
       digits[x] = encodeASCII(s[x]);
+    }
+    if(dots != 0) {
+      showDots(dots, digits);
     }
     setSegments(digits, length, pos);
   }
@@ -400,7 +403,7 @@ void TM1637TinyDisplay::showString(const char s[], uint8_t length, uint8_t pos)
   }
 }
 
-void TM1637TinyDisplay::showString_P(const char s[], uint8_t length, uint8_t pos) 
+void TM1637TinyDisplay::showString_P(const char s[], uint8_t length, uint8_t pos, uint8_t dots = 0) 
 {
   // digits[MAXDIGITS] output array to render
   memset(digits,0,sizeof(digits));
@@ -409,6 +412,9 @@ void TM1637TinyDisplay::showString_P(const char s[], uint8_t length, uint8_t pos
   if (strlen_P(s) <= MAXDIGITS) {
     for (int x = 0; x < strlen_P(s); x++) {
       digits[x] = encodeASCII(pgm_read_byte(&s[x]));
+    }
+    if(dots != 0) {
+      showDots(dots, digits);
     }
     setSegments(digits, length, pos);
   }
