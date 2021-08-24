@@ -210,15 +210,16 @@ public:
   //! @param dots Dot/Colon enable. The argument is a bitmask, with each bit corresponding to a dot
   //!        between the digits (or colon mark, as implemented by each module). i.e.
   //!        For displays with dots between each digit:
-  //!        * 0.000 (0b10000000)
-  //!        * 00.00 (0b01000000)
-  //!        * 000.0 (0b00100000)
-  //!        * 0000. (0b00010000)
-  //!        * 0.0.0.0 (0b11100000)
-  //!        For displays with just a colon:
-  //!        * 00:00 (0b01000000)
-  //!        For displays with dots and colons colon:
-  //!        * 0.0:0.0 (0b11100000)
+  //!        * 00.0000  (0b01000000)
+  //!        * 0.00000  (0b10000000)
+  //!        * 00.0000  (0b01000000)
+  //!        * 000.000  (0b00100000)
+  //!        * 0000.00  (0b00010000)
+  //!        * 00000.0  (0b00001000)
+  //!        * 000000.  (0b00000100)
+  //!        * 00.00.00 (0b01010000)
+  //!        For displays with just a colons:
+  //!        * 00:00:00 (0b01010000)  
   //! @param leading_zero When true, leading zeros are displayed. Otherwise unnecessary digits are
   //!        blank. NOTE: leading zero is not supported with negative numbers.
   //! @param length The number of digits to set. The user must ensure that the number to be shown
@@ -236,15 +237,16 @@ public:
   //! @param dots Dot/Colon enable. The argument is a bitmask, with each bit corresponding to a dot
   //!        between the digits (or colon mark, as implemented by each module). i.e.
   //!        For displays with dots between each digit:
-  //!        * 0.000 (0b10000000)
-  //!        * 00.00 (0b01000000)
-  //!        * 000.0 (0b00100000)
-  //!        * 0000. (0b00010000)
-  //!        * 0.0.0.0 (0b11100000)
-  //!        For displays with just a colon:
-  //!        * 00:00 (0b01000000)
-  //!        For displays with dots and colons colon:
-  //!        * 0.0:0.0 (0b11100000)
+  //!        * 00.0000  (0b01000000)
+  //!        * 0.00000  (0b10000000)
+  //!        * 00.0000  (0b01000000)
+  //!        * 000.000  (0b00100000)
+  //!        * 0000.00  (0b00010000)
+  //!        * 00000.0  (0b00001000)
+  //!        * 000000.  (0b00000100)
+  //!        * 00.00.00 (0b01010000)
+  //!        For displays with just a colons:
+  //!        * 00:00:00 (0b01010000)  
   //! @param leading_zero When true, leading zeros are displayed. Otherwise unnecessary digits are
   //!        blank
   //! @param length The number of digits to set. The user must ensure that the number to be shown
@@ -272,8 +274,21 @@ public:
   //! @param scrollDelay  The delay, in microseconds to wait before scrolling to next frame
   //! @param length The number of digits to set. 
   //! @param pos The position of the most significant digit (0 - leftmost, 3 - rightmost)
-  //! The _P function is for reading PROGMEM read-only flash memory space instead of RAM
-  void showString(const char s[], uint8_t length = MAXDIGITS, uint8_t pos = 0);
+  //! @param dots Dot/Colon enable. The argument is a bitmask, with each bit corresponding to a dot
+  //!        between the digits (or colon mark, as implemented by each module). i.e.
+  //!        For displays with dots between each digit:
+  //!        * 00.0000  (0b01000000)
+  //!        * 0.00000  (0b10000000)
+  //!        * 00.0000  (0b01000000)
+  //!        * 000.000  (0b00100000)
+  //!        * 0000.00  (0b00010000)
+  //!        * 00000.0  (0b00001000)
+  //!        * 000000.  (0b00000100)
+  //!        * 00.00.00 (0b01010000)
+  //!        For displays with just a colons:
+  //!        * 00:00:00 (0b01010000)  
+  //! Use showString_P function for reading PROGMEM read-only flash memory space instead of RAM
+  void showString(const char s[], uint8_t length = MAXDIGITS, uint8_t pos = 0, uint8_t dots = 0);
 
   //! Display a string (PROGMEM space)
   //!
@@ -284,8 +299,21 @@ public:
   //! @param scrollDelay  The delay, in microseconds to wait before scrolling to next frame
   //! @param length The number of digits to set. 
   //! @param pos The position of the most significant digit (0 - leftmost, 3 - rightmost)
-  //! The _P function is for reading PROGMEM read-only flash memory space instead of RAM
-  void showString_P(const char s[], uint8_t length = MAXDIGITS, uint8_t pos = 0);
+  //! @param dots Dot/Colon enable. The argument is a bitmask, with each bit corresponding to a dot
+  //!        between the digits (or colon mark, as implemented by each module). i.e.
+  //!        For displays with dots between each digit:
+  //!        * 00.0000  (0b01000000)
+  //!        * 0.00000  (0b10000000)
+  //!        * 00.0000  (0b01000000)
+  //!        * 000.000  (0b00100000)
+  //!        * 0000.00  (0b00010000)
+  //!        * 00000.0  (0b00001000)
+  //!        * 000000.  (0b00000100)
+  //!        * 00.00.00 (0b01010000)
+  //!        For displays with just a colons:
+  //!        * 00:00:00 (0b01010000)  
+  //! This function is for reading PROGMEM read-only flash memory space instead of RAM
+  void showString_P(const char s[], uint8_t length = MAXDIGITS, uint8_t pos = 0, uint8_t dots = 0);
 
   //! Display a Level Indicator (both orientations)
   //!

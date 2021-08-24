@@ -32,3 +32,12 @@
   display.showNumberDec(987654, 0b10101000, false);       // Expect: 3.03.03.
   display.showNumberDec(123456, 0b11111100, false);       // Expect: 1.2.3.4.5.6.
 ```
+
+## v.1.4.2
+- Added dots parameter to showString() and showString_P() functions.
+```python
+  // void showString(const char s[], uint8_t length = MAXDIGITS, uint8_t pos = 0, uint8_t dots = 0);
+  
+  display.showString("HHSS",4,0,0b01000000);  // Expect: HH:SS or HH.SS
+  display.showString("1234",4,0,0b01000000);  // Expect: 12:34 or 12.34
+```

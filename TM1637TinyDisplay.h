@@ -307,7 +307,7 @@ public:
   //!        For displays with dots and colons colon:
   //!        * 0.0:0.0 (0b11100000)
   //! This function is for reading PROGMEM read-only flash memory space instead of RAM
-  void showString_P(const char s[], uint8_t length = MAXDIGITS, uint8_t pos = 0, , uint8_t dots = 0);
+  void showString_P(const char s[], uint8_t length = MAXDIGITS, uint8_t pos = 0, uint8_t dots = 0);
 
   //! Display a Level Indicator (both orientations)
   //!
