@@ -508,24 +508,24 @@ void TM1637TinyDisplay6::showLevel(unsigned int level, bool horizontal)
   setSegments(digits);
 }
 
-void TM1637TinyDisplay6::showAnimation(const uint8_t data[][4], unsigned int frames, unsigned int ms)
+void TM1637TinyDisplay6::showAnimation(const uint8_t data[][6], unsigned int frames, unsigned int ms)
 {
   // Animation sequence
   for (unsigned int x = 0; x < frames; x++) {
-    setSegments(data[x],4,1);
+    setSegments(data[x],6,1);
     delay(ms);
   }
 }
 
-void TM1637TinyDisplay6::showAnimation_P(const uint8_t data[][4], unsigned int frames, unsigned int ms)
+void TM1637TinyDisplay6::showAnimation_P(const uint8_t data[][6], unsigned int frames, unsigned int ms)
 {
   // Animation sequence for data stored in PROGMEM flash memory
   uint8_t digits[6] = {0,0,0,0,0,0};
   for (unsigned int x = 0; x < frames; x++) {
-    for(unsigned int a = 0; a < 4; a++) {
+    for(unsigned int a = 0; a < 6; a++) {
           digits[a] = pgm_read_byte(&(data[x][a]));
     }
-    setSegments(digits,4,1);
+    setSegments(digits,6,1);
     delay(ms);
   }
 }

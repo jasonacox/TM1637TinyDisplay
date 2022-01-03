@@ -109,7 +109,7 @@
 #define DEFAULT_BIT_DELAY     100
 #define DEFAULT_SCROLL_DELAY  100
 
-#define FRAMES(a)     sizeof(a)/4
+#define FRAMES(a)     sizeof(a)/6
 #define TIME_MS(t)    t
 #define TIME_S(t)     t*1000
 
@@ -327,51 +327,40 @@ public:
   //!
   //! Play thorugh an array of raw LED segment data to create a moving pattern.  
   //!
-  //! const uint8_t Example[2][4] = 
+  //! const uint8_t Example[2][6] = 
   //! {
   //!  {                // frame 1
   //!   0b00001000,                                     // digit 1
   //!   0b00000000,                                     // digit 2
   //!   0b00000000,                                     // digit 3
-  //!   0b00000000                                      // digit 4
+  //!   0b00000000,                                     // digit 4
+  //!   0b00000000,                                     // digit 5
+  //!   0b00000000                                      // digit 6
   //!  },
   //!  {                // frame 2
   //!   0b00000000,                                     // digit 1
   //!   0b00001000,                                     // digit 2
   //!   0b00000000,                                     // digit 3
-  //!   0b00000000                                      // digit 4
+  //!   0b00000000,                                     // digit 4
+  //!   0b00000000,                                     // digit 5
+  //!   0b00000000                                      // digit 6
   //!  }
   //! }
   //! @param data A multi-dimensional array containing the LED segment - data[frames][4]
   //! @param frames Number of frames in the sequence to animate
   //! @param ms Time to delay between each frame
   //! The _P function is for reading PROGMEM read-only flash memory space instead of RAM
-  void showAnimation(const uint8_t data[][4], unsigned int frames = 0, unsigned int ms = 10);
+  void showAnimation(const uint8_t data[][6], unsigned int frames = 0, unsigned int ms = 10);
 
   //! Display a sequence of raw LED segment data to create an animation (PROGMEM)
   //!
   //! Play thorugh an array of raw LED segment data to create a moving pattern.  
   //! This function is for reading PROGMEM read-only flash memory space instead of RAM
   //!
-  //! const uint8_t Example[2][4] = 
-  //! {
-  //!  {                // frame 1
-  //!   0b00001000,                                     // digit 1
-  //!   0b00000000,                                     // digit 2
-  //!   0b00000000,                                     // digit 3
-  //!   0b00000000                                      // digit 4
-  //!  },
-  //!  {                // frame 2
-  //!   0b00000000,                                     // digit 1
-  //!   0b00001000,                                     // digit 2
-  //!   0b00000000,                                     // digit 3
-  //!   0b00000000                                      // digit 4
-  //!  }
-  //! }
   //! @param data A multi-dimensional array containing the LED segment - data[frames][4]
   //! @param frames Number of frames in the sequence to animate
   //! @param ms Time to delay between each frame
-  void showAnimation_P(const uint8_t data[][4], unsigned int frames = 0, unsigned int ms = 10);
+  void showAnimation_P(const uint8_t data[][6], unsigned int frames = 0, unsigned int ms = 10);
 
   //! Translate a single ASCII character into 7 segment code
   //!
