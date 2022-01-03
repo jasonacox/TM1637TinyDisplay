@@ -512,7 +512,7 @@ void TM1637TinyDisplay6::showAnimation(const uint8_t data[][6], unsigned int fra
 {
   // Animation sequence
   for (unsigned int x = 0; x < frames; x++) {
-    setSegments(data[x],6,1);
+    setSegments(data[x],6,0);
     delay(ms);
   }
 }
@@ -525,7 +525,7 @@ void TM1637TinyDisplay6::showAnimation_P(const uint8_t data[][6], unsigned int f
     for(unsigned int a = 0; a < 6; a++) {
           digits[a] = pgm_read_byte(&(data[x][a]));
     }
-    setSegments(digits,6,1);
+    setSegments(digits,6,0);
     delay(ms);
   }
 }
