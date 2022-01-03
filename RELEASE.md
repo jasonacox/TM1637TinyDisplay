@@ -25,19 +25,45 @@
 - Created global digits[] scratch storage for all functions.
 - Update showNumber() to handle long integers.
 
-## v.1.4.1
+## v1.4.1
 - Bug Fix for 6-digit display - Changed to `long num` for showNumberDec() and `uint32_t num` showNumberBaseEx() to display values > 32,768.  See Issue #10
 - Updated 6-digit test to include > 32,768 value tests with decimal settings.
-```python
+```cpp
   display.showNumberDec(987654, 0b10101000, false);       // Expect: 3.03.03.
   display.showNumberDec(123456, 0b11111100, false);       // Expect: 1.2.3.4.5.6.
 ```
 
-## v.1.4.2
+## v1.4.2
 - Added dots parameter to showString() and showString_P() functions.
-```python
+```cpp
   // void showString(const char s[], uint8_t length = MAXDIGITS, uint8_t pos = 0, uint8_t dots = 0);
   
   display.showString("HHSS",4,0,0b01000000);  // Expect: HH:SS or HH.SS
   display.showString("1234",4,0,0b01000000);  // Expect: 12:34 or 12.34
+```
+
+## v1.4.3
+- Updated `TM1637TinyDisplay6` to support 6-digit animation.
+- Added interactive [Animator Tool](https://jasonacox.github.io/TM1637TinyDisplay/examples/7-segment-animator6.html) for 6-Digit Display's showAnimation() function (See [Link](https://jasonacox.github.io/TM1637TinyDisplay/examples/7-segment-animator6.html))
+```cpp
+const uint8_t ANIMATION[16][6] = {
+  { 0x08, 0x00, 0x00, 0x00, 0x00, 0x00 },  // Frame 0
+  { 0x00, 0x08, 0x00, 0x00, 0x00, 0x00 },  // Frame 1
+  { 0x00, 0x00, 0x08, 0x00, 0x00, 0x00 },  // Frame 2
+  { 0x00, 0x00, 0x00, 0x08, 0x00, 0x00 },  // Frame 3
+  { 0x00, 0x00, 0x00, 0x00, 0x08, 0x00 },  // Frame 4
+  { 0x00, 0x00, 0x00, 0x00, 0x00, 0x08 },  // Frame 5
+  { 0x00, 0x00, 0x00, 0x00, 0x00, 0x04 },  // Frame 6
+  { 0x00, 0x00, 0x00, 0x00, 0x00, 0x02 },  // Frame 7
+  { 0x00, 0x00, 0x00, 0x00, 0x00, 0x01 },  // Frame 8
+  { 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 },  // Frame 9
+  { 0x00, 0x00, 0x00, 0x01, 0x00, 0x00 },  // Frame 10
+  { 0x00, 0x00, 0x01, 0x00, 0x00, 0x00 },  // Frame 11
+  { 0x00, 0x01, 0x00, 0x00, 0x00, 0x00 },  // Frame 12
+  { 0x01, 0x00, 0x00, 0x00, 0x00, 0x00 },  // Frame 13
+  { 0x20, 0x00, 0x00, 0x00, 0x00, 0x00 },  // Frame 14
+  { 0x10, 0x00, 0x00, 0x00, 0x00, 0x00 }   // Frame 15
+};
+
+display.showAnimation(ANIMATION, FRAMES(ANIMATION), TIME_MS(10));
 ```
