@@ -284,7 +284,7 @@ void TM1637TinyDisplay6::showNumber(double num, uint8_t decimal_length, uint8_t 
     digits[length-1] = encodeDigit(0);
   }
   else {		
-    int decimal_pos = length - 1 - decimal_places + pos;
+    int decimal_pos = length - 1 - decimal_places;
     for(int i = length-1; i >= 0; --i) {
       uint8_t digit = inum % 10;
       

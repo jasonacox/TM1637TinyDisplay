@@ -67,3 +67,11 @@ const uint8_t ANIMATION[16][6] = {
 
 display.showAnimation(ANIMATION, FRAMES(ANIMATION), TIME_MS(10));
 ```
+
+## v1.4.4
+- Bug Fix for showNumber() for floating point numbers where position is greater than zero.  Fix for TM1637TinyDisplay and TM1637TinyDisplay6.
+```cpp
+  // showNumber(num, decimal_length, length, pos)
+  display.showNumber(9.87, 2, 3, 0);
+  display.showNumber(1.23, 2, 3, 3);
+```
