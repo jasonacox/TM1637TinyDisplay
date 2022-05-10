@@ -75,3 +75,11 @@ display.showAnimation(ANIMATION, FRAMES(ANIMATION), TIME_MS(10));
   display.showNumber(9.87, 2, 3, 0);
   display.showNumber(1.23, 2, 3, 3);
 ```
+
+## v1.5.0 (Beta)
+- Added support for device orientation, flipping display upside down if selected during
+initialization or through a function call (4-Digit in Beta)
+```cpp
+  // Flip display
+  display.flipDisplay(true);
+```

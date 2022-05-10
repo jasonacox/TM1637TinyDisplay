@@ -23,6 +23,7 @@ showNumberDec	KEYWORD2
 showNumberHex	KEYWORD2
 encodeDigit	KEYWORD2
 encodeASCII	KEYWORD2
+flipDisplay	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)

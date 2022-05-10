@@ -161,7 +161,7 @@ const uint8_t asciiToSegment[] PROGMEM = {
 static const uint8_t minusSegments = 0b01000000;
 static const uint8_t degreeSegments = 0b01100011;
 
-TM1637TinyDisplay::TM1637TinyDisplay(uint8_t pinClk, uint8_t pinDIO, unsigned int bitDelay, unsigned int scrollDelay)
+TM1637TinyDisplay::TM1637TinyDisplay(uint8_t pinClk, uint8_t pinDIO, unsigned int bitDelay, unsigned int scrollDelay, bool flip)
 {
   // Pin settings
   m_pinClk = pinClk;
@@ -169,6 +169,8 @@ TM1637TinyDisplay::TM1637TinyDisplay(uint8_t pinClk, uint8_t pinDIO, unsigned in
   // Timing configurations
   m_bitDelay = bitDelay;
   m_scrollDelay = scrollDelay;
+  // Flip 
+  m_flipDisplay = flip;
   
   // Set the pin direction and default value.
   // Both pins are set as inputs, allowing the pull-up resistors to pull them up
@@ -176,6 +178,11 @@ TM1637TinyDisplay::TM1637TinyDisplay(uint8_t pinClk, uint8_t pinDIO, unsigned in
   pinMode(m_pinDIO, INPUT);
   digitalWrite(m_pinClk, LOW);
   digitalWrite(m_pinDIO, LOW);
+}
+
+void TM1637TinyDisplay::flipDisplay(bool flip)
+{
+  m_flipDisplay = flip;
 }
 
 void TM1637TinyDisplay::setBrightness(uint8_t brightness, bool on)
@@ -190,6 +197,8 @@ void TM1637TinyDisplay::setScrolldelay(unsigned int scrollDelay)
 
 void TM1637TinyDisplay::setSegments(const uint8_t segments[], uint8_t length, uint8_t pos)
 {
+  uint8_t dot = 0;
+
   // Write COMM1
   start();
   writeByte(TM1637_I2C_COMM1);
@@ -197,11 +206,26 @@ void TM1637TinyDisplay::setSegments(const uint8_t segments[], uint8_t length, ui
 
   // Write COMM2 + first digit address
   start();
+  if(m_flipDisplay) pos = MAXDIGITS - pos - length;
   writeByte(TM1637_I2C_COMM2 + (pos & 0x07));
 
   // Write the data bytes
-  for (uint8_t k=0; k < length; k++) {
-    writeByte(segments[k]);
+  if(m_flipDisplay) {
+    for (uint8_t k=0; k < length; k++) {
+      dot = 0;
+      if((length - k - 2) >= 0) {
+        dot = segments[length - k - 2] & 0b10000000;
+      }
+      uint8_t orig = segments[length - k - 1];
+      uint8_t flip = ((orig >> 3) & 0b00000111) + 
+        ((orig << 3) & 0b00111000) + (orig & 0b01000000) + dot;
+      writeByte(flip);
+    }
+  }
+  else {
+    for (uint8_t k=0; k < length; k++) {
+      writeByte(segments[k]);
+    }
   }
   stop();
 
