@@ -108,6 +108,7 @@
 
 #define DEFAULT_BIT_DELAY     100
 #define DEFAULT_SCROLL_DELAY  100
+#define DEFAULT_FLIP          false
 
 #define FRAMES(a)     sizeof(a)/4
 #define TIME_MS(t)    t
@@ -123,7 +124,17 @@ public:
   //! @param pinDIO - The number of the digital pin connected to the DIO pin of the module
   //! @param bitDelay - The delay, in microseconds, between bit transition on the serial
   //!                   bus connected to the display
-  TM1637TinyDisplay(uint8_t pinClk, uint8_t pinDIO, unsigned int bitDelay = DEFAULT_BIT_DELAY, unsigned int scrollDelay = DEFAULT_SCROLL_DELAY);
+  //! @param flip - Flip display orientation (default=false)
+  TM1637TinyDisplay(uint8_t pinClk, uint8_t pinDIO, unsigned int bitDelay = DEFAULT_BIT_DELAY, 
+    unsigned int scrollDelay = DEFAULT_SCROLL_DELAY, bool flip=DEFAULT_FLIP);
+
+  //! Sets the orientation of the display.
+  //!
+  //! Setting this parameter to true will cause the rendering on digits to be displayed
+  //! upside down.
+  //!
+  //! @param flip Flip display upside down true/false
+  void flipDisplay(bool flip = true);
 
   //! Sets the brightness of the display.
   //!
@@ -397,6 +408,7 @@ private:
   uint8_t m_brightness;
   unsigned int m_bitDelay;
   unsigned int m_scrollDelay;
+  bool m_flipDisplay;
   uint8_t digits[MAXDIGITS];
 };
 
