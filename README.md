@@ -43,6 +43,7 @@ The library provides a single class named TM1637TinyDisplay with the following f
 * `setSegments` - Directly set the value of the LED segments in each digit
 * `setBrightness` - Sets the brightness of the display
 * `setScrolldelay` - Sets the speed for text scrolling
+* `flipDisplay` - Sets/flips the orientation of the display
 
 PROGMEM functions: Large string or animation data can be left in Flash instead of being loaded in to SRAM to save memory. 
 

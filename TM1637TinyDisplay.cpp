@@ -161,7 +161,8 @@ const uint8_t asciiToSegment[] PROGMEM = {
 static const uint8_t minusSegments = 0b01000000;
 static const uint8_t degreeSegments = 0b01100011;
 
-TM1637TinyDisplay::TM1637TinyDisplay(uint8_t pinClk, uint8_t pinDIO, unsigned int bitDelay, unsigned int scrollDelay, bool flip)
+TM1637TinyDisplay::TM1637TinyDisplay(uint8_t pinClk, uint8_t pinDIO, unsigned int bitDelay, 
+  unsigned int scrollDelay, bool flip)
 {
   // Pin settings
   m_pinClk = pinClk;
