@@ -166,6 +166,10 @@ void setup()
 }
 ```
 
+## Arduino Library
+* Library: https://www.arduinolibraries.info/libraries/tm1637-tiny-display
+* Scan Logs: http://downloads.arduino.cc/libraries/logs/github.com/jasonacox/TM1637TinyDisplay/
+
 ## References and Credit
 * This library is based on the great work by Avishay Orpaz - https://github.com/avishorp/TM1637
 * SevenSegmentTM1637 Arduino Library by Bram Harmsen - https://github.com/bremme/arduino-tm1637 
