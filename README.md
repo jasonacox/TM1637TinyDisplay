@@ -175,4 +175,5 @@ void setup()
 * SevenSegmentTM1637 Arduino Library by Bram Harmsen - https://github.com/bremme/arduino-tm1637 
 * Arduino - https://playground.arduino.cc/Main/TM1637/
 * MCI Electronics Datasheet for TM1637 - https://www.mcielectronics.cl/website_MCI/static/documents/Datasheet_TM1637.pdf
+* TM16xx - Library for entire TM16xx chip family include maxint-rd's own [display-modules](https://github.com/maxint-rd/arduino-modules#display-modules) - https://github.com/maxint-rd/TM16xx
 
