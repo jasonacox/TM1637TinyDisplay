@@ -27,7 +27,7 @@ jobs:
 
       # Set up environment
       - name: Set Up Environment
-        run: export DISPLAY=:1.0
+        run: echo Good
 
       # Download and Install Arduino Compiler
       - name: Install Arduino Compiler
@@ -40,7 +40,8 @@ jobs:
       # Compile and Run Tests
       - name: Compile and Run Tests
         run: |
-          export DISPLAY=:1.0
+          export DISPLAY=:99
+          sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &
           ln -s $GITHUB_WORKSPACE /usr/local/share/arduino/libraries/TM1637TinyDisplay
           arduino --verify --board arduino:avr:uno --pref sketchbook.path="$PWD" $PWD/examples/TM1637Test/TM1637Test.ino
           arduino --verify --board arduino:avr:uno --pref sketchbook.path="$PWD" $PWD/examples/TM1637-6Digit-Test/TM1637-6Digit-Test.ino
