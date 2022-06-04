@@ -254,12 +254,17 @@ void TM1637TinyDisplay6::clear()
 
 void TM1637TinyDisplay6::showNumber(int num, bool leading_zero, uint8_t length, uint8_t pos)
 {
-  showNumberDec(num, 0, leading_zero, length, pos);
+  showNumber(long(num), leading_zero, length, pos);
 }
 
 void TM1637TinyDisplay6::showNumber(long num, bool leading_zero, uint8_t length, uint8_t pos)
 {
-  showNumber(double(num), 0, length, pos);
+  if(leading_zero) {
+    showNumberDec(num, 0, leading_zero, length, pos);
+  }
+  else {
+    showNumber(double(num), 0, length, pos);
+  }
 }
 
 void TM1637TinyDisplay6::showNumber(double num, uint8_t decimal_length, uint8_t length, uint8_t pos)
@@ -305,7 +310,7 @@ void TM1637TinyDisplay6::showNumber(double num, uint8_t decimal_length, uint8_t 
   if(num<0) value = value - 0.5; // round down
   inum = abs((long)value);
 
-  // render display array
+// render display array
   if (inum == 0 && !leading_zero) {
     digits[length-1] = encodeDigit(0);
   }
@@ -314,11 +319,17 @@ void TM1637TinyDisplay6::showNumber(double num, uint8_t decimal_length, uint8_t 
     for(int i = length-1; i >= 0; --i) {
       uint8_t digit = inum % 10;
       
-      if (digit == 0 && inum == 0 && 
-           (leading_zero == false || (i < decimal_pos))
-         )
-          // Blank out any leading zeros except for 0.x case
+      if (digit == 0 && inum == 0 &&
+        (leading_zero == false || (i < decimal_pos))) {
+        // Blank out any leading zeros except for 0.x case
         digits[i] = 0;
+
+        // Add negative sign for negative number
+        if (negative) {
+          digits[i] = minusSegments;
+          negative = false;
+        }
+      }
       else
         digits[i] = encodeDigit(digit);
       if(i == decimal_pos && decimal_length > 0) {
@@ -326,10 +337,6 @@ void TM1637TinyDisplay6::showNumber(double num, uint8_t decimal_length, uint8_t 
       }
       inum /= 10;
     }
-  }
-  // add negative sign for negative number
-  if(negative) {
-    digits[pos] = minusSegments;
   }
   setSegments(digits, length, pos);
 }

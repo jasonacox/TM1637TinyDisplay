@@ -83,3 +83,16 @@ initialization or through a function call.
   // Flip display
   display.flipDisplay(true);
 ```
+
+## v1.5.1
+- Fix showNumber() but for negative numbers.  Solves issues #17 (thanks to @otpfiste).
+- Fix showNumber() overflow condition for numbers (positive and negative) that do not fit within display length.
+```cpp
+  // Example of negative case that did not render correctly
+  display.showNumber(-3.1, 1, 3, 1);  // (float num, decimal length, length, position)
+
+  // Overflow Examples - will render a dash display e.g. "----" 
+  display.showNumber(-1000);
+  display.showNumber(10000000);
+  display.showNumber(-333.1, 1, 3, 1);
+```
