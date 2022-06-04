@@ -3,29 +3,29 @@
 ## v1.0.0
 - Initial Release.
 
-## v1.1.0 
+## v1.1.0 - Animation Tool
 - Added interactive [Animator Tool](https://jasonacox.github.io/TM1637TinyDisplay/examples/7-segment-animator.html) to create frame data for the showAnimation() function.
 - Added demo sketch to showcase functions and animation features.
 
 ## v1.1.1
 - Added yield() call to example Demo sketch for esp8266 watchdog timer.
 
-## v1.2.0
+## v1.2.0 - Floating Point Numbers
 - Added floating number support to showNumber() for TM1637 displays with decimal points.
 
-## v1.3.0
+## v1.3.0 - Lookup Tables PROGMEM
 - Converted global digitToSegment[] and asciiToSegment[] lookup tables to PROGMEM space to save RAM.
 - Fixed comparison between signed and unsigned integer expressions warning #5 
 - Saves ~1.5kB in the ATtiny85 example by using showNumber() instead of sprintf() #6
 - Fixed implicit case fallthrough and signed/unsigned comparison warnings #7
 
-## v1.4.0 
+## v1.4.0 - 6-Digit Display Support
 - Added support for 6-digit displays using `TM1637TinyDisplay6` class (see [README](https://github.com/jasonacox/TM1637TinyDisplay#tm1637-6-digit-display---tm1637tinydisplay6))
 - Update showString() for variable display size and optimized code.
 - Created global digits[] scratch storage for all functions.
 - Update showNumber() to handle long integers.
 
-## v1.4.1
+## v1.4.1 - Large Number Display Fix
 - Bug Fix for 6-digit display - Changed to `long num` for showNumberDec() and `uint32_t num` showNumberBaseEx() to display values > 32,768.  See Issue #10
 - Updated 6-digit test to include > 32,768 value tests with decimal settings.
 ```cpp
@@ -33,7 +33,7 @@
   display.showNumberDec(123456, 0b11111100, false);       // Expect: 1.2.3.4.5.6.
 ```
 
-## v1.4.2
+## v1.4.2 - Add Dots Param to showString
 - Added dots parameter to showString() and showString_P() functions.
 ```cpp
   // void showString(const char s[], uint8_t length = MAXDIGITS, uint8_t pos = 0, uint8_t dots = 0);
@@ -42,7 +42,7 @@
   display.showString("1234",4,0,0b01000000);  // Expect: 12:34 or 12.34
 ```
 
-## v1.4.3
+## v1.4.3 - Added 6-Digit Animation Support
 - Updated `TM1637TinyDisplay6` to support 6-digit animation.
 - Added interactive [Animator Tool](https://jasonacox.github.io/TM1637TinyDisplay/examples/7-segment-animator6.html) for 6-Digit Display's showAnimation() function (See [Link](https://jasonacox.github.io/TM1637TinyDisplay/examples/7-segment-animator6.html))
 ```cpp
@@ -68,7 +68,7 @@ const uint8_t ANIMATION[16][6] = {
 display.showAnimation(ANIMATION, FRAMES(ANIMATION), TIME_MS(10));
 ```
 
-## v1.4.4
+## v1.4.4 - Bug Fix for showNumber Floating Point Placement
 - Bug Fix for showNumber() for floating point numbers where position is greater than zero.  Fix for TM1637TinyDisplay and TM1637TinyDisplay6.
 ```cpp
   // showNumber(num, decimal_length, length, pos)
@@ -76,7 +76,7 @@ display.showAnimation(ANIMATION, FRAMES(ANIMATION), TIME_MS(10));
   display.showNumber(1.23, 2, 3, 3);
 ```
 
-## v1.5.0
+## v1.5.0 - Added flipDisplay Function for Device Orientation
 - Added support for device orientation, flipping display upside down if selected during
 initialization or through a function call.
 ```cpp
@@ -84,7 +84,8 @@ initialization or through a function call.
   display.flipDisplay(true);
 ```
 
-## v1.5.1
+## v1.5.1 - Bug Fix for showNumber Negative Numbers
+Fix
 - Fix showNumber() but for negative numbers.  Solves issues #17 (thanks to @otpfiste).
 - Fix showNumber() overflow condition for numbers (positive and negative) that do not fit within display length.
 ```cpp
