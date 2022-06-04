@@ -85,7 +85,6 @@ initialization or through a function call.
 ```
 
 ## v1.5.1 - Bug Fix for showNumber Negative Numbers
-Fix
 - Fix showNumber() but for negative numbers.  Solves issues #17 (thanks to @otpfiste).
 - Fix showNumber() overflow condition for numbers (positive and negative) that do not fit within display length.
 ```cpp
