@@ -40,6 +40,7 @@ jobs:
       # Compile and Run Tests
       - name: Compile and Run Tests
         run: |
+          export DISPLAY=:1.0
           ln -s $GITHUB_WORKSPACE /usr/local/share/arduino/libraries/TM1637TinyDisplay
           arduino --verify --board arduino:avr:uno --pref sketchbook.path="$PWD" $PWD/examples/TM1637Test/TM1637Test.ino
           arduino --verify --board arduino:avr:uno --pref sketchbook.path="$PWD" $PWD/examples/TM1637-6Digit-Test/TM1637-6Digit-Test.ino
