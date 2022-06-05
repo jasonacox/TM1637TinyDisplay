@@ -1,5 +1,5 @@
-# Test TM1637TinyDisplay Library
-name: Compile Example Sketch
+# Test Arduino Library
+name: Compile Example Sketches
 
 # The workflow will run on every push and pull request to the repository
 on:
@@ -10,18 +10,26 @@ jobs:
   compile-sketch:
     runs-on: ubuntu-latest
 
+    # Boards to test
+    strategy:
+      matrix:
+        fqbn:
+          - arduino:avr:uno
+          
     steps:
       # This step makes the contents of the repository available to the workflow
       - name: Checkout repository
         uses: actions/checkout@v2
 
       # For more information: https://github.com/arduino/compile-sketches#readme
-      - name: Compile sketch
+      - name: Compile example sketches
         uses: arduino/compile-sketches@v1
         with:
+          # Board type to test
+          fqbn: ${{ matrix.fqbn }}
           # The default is to compile for the Arduino Uno board. If you want to compile for other boards, use the `fqbn` input.
           sketch-paths: |
-            # Configure the action to search all folders under the root of the repository for sketches and compile them.
+            # Search all files under the examples path in the repository for sketches and compile them.
             # This is formatted as a YAML list, which makes it possible to have multiple sketch paths if needed.
             - ./examples
 
