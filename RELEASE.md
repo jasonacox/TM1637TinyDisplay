@@ -84,7 +84,7 @@ initialization or through a function call.
   display.flipDisplay(true);
 ```
 
-## v1.5.1 - Bug Fix for showNumber Negative Numbers
+## v1.5.2 - Bug Fix for showNumber Negative Numbers
 - Fix showNumber() but for negative numbers.  Solves issues #17 (thanks to @otpfiste).
 - Fix showNumber() overflow condition for numbers (positive and negative) that do not fit within display length.
 ```cpp
