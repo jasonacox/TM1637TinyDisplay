@@ -1,4 +1,5 @@
 # TM1637TinyDisplay Examples
+[![Build Status](https://github.com/jasonacox/TM1637TinyDisplay/actions/workflows/sketch.yml/badge.svg)](https://github.com/jasonacox/TM1637TinyDisplay/actions/workflows/sketch.yml)
 
 ## Test Sketch
 * [TM1637Test.ino](TM1637Test/TM1637Test.ino) sketch will test the library functions.
