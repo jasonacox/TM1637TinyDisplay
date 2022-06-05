@@ -31,7 +31,8 @@ jobs:
       - name: Install libraries
         run: |
           arduino-cli lib install SD Ethernet
-          ln -s $GITHUB_WORKSPACE /usr/local/share/arduino/libraries/TM1637TinyDisplay
+          ls .
+          ls $GITHUB_WORKSPACE
       - name: Build Test
         run: arduino-cli compile --library . --warnings all -b arduino:avr:uno "examples/TM1637Test/TM1637Test.ino"
       - name: Build Test
