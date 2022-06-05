@@ -12,7 +12,7 @@ jobs:
     steps:
       # This step makes the contents of the repository available to the workflow
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
       # For more information: https://github.com/arduino/compile-sketches#readme
       - name: Compile sketch
@@ -22,8 +22,5 @@ jobs:
           sketch-paths: |
             # Configure the action to search all folders under the root of the repository for sketches and compile them.
             # This is formatted as a YAML list, which makes it possible to have multiple sketch paths if needed.
-            - ./
-          libraries: |
-            # The "blink" sketch being compiled in this demo doesn't use any libraries, so just use an empty list
-            - source-path $GITHUB_WORKSPACE
+            - ./examples
 
