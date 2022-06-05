@@ -1,4 +1,5 @@
-name: Compile Sketch
+# Test TM1637TinyDisplay Library
+name: Compile Example Sketch
 
 # The workflow will run on every push and pull request to the repository
 on:

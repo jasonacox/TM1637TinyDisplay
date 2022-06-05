@@ -1,5 +1,4 @@
 # Test TM1637TinyDisplay Library
-
 name: BuildTest
 
 on:
