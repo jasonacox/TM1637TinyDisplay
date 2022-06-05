@@ -1,8 +1,8 @@
 # Test TM1637TinyDisplay Library
 name: BuildTest
 
+# Triggers the workflow on push or pull request events 
 on:
-  # Triggers the workflow on push or pull request events 
   - push
   - pull_request
 
