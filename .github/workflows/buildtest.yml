@@ -22,25 +22,19 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
-
-      # Set up environment
-      - name: Set Up Environment
-        run: echo Good
-
-      # Download and Install Arduino Compiler
-      - name: Install Arduino Compiler
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install arduino-cli
+        run: brew update && brew install arduino-cli
+      - name: Install core
+        run: arduino-cli core install arduino:avr
+      - name: Install libraries
         run: |
-          wget https://downloads.arduino.cc/arduino-1.6.8-linux64.tar.xz
-          tar xf arduino-1.6.8-linux64.tar.xz
-          sudo mv arduino-1.6.8 /usr/local/share/arduino
-          sudo ln -s /usr/local/share/arduino/arduino /usr/local/bin/arduino
-
-      # Compile and Run Tests
-      - name: Compile and Run Tests
-        run: |
+          arduino-cli lib install SD Ethernet
           ln -s $GITHUB_WORKSPACE /usr/local/share/arduino/libraries/TM1637TinyDisplay
-          xvfb-run arduino --verify --board arduino:avr:uno --pref sketchbook.path="$PWD" $PWD/examples/TM1637Test/TM1637Test.ino
-          xvfb-run arduino --verify --board arduino:avr:uno --pref sketchbook.path="$PWD" $PWD/examples/TM1637-6Digit-Test/TM1637-6Digit-Test.ino
-          xvfb-run arduino --verify --board arduino:avr:uno --pref sketchbook.path="$PWD" $PWD/examples/ATtiny85/ATtiny85.ino
+      - name: Build Test
+        run: arduino-cli compile --library . --warnings all -b arduino:avr:uno "examples/TM1637Test/TM1637Test.ino"
+      - name: Build Test
+        run: arduino-cli compile --library . --warnings all -b arduino:avr:uno "examples/TM1637-6Digit-Test/TM1637-6Digit-Test.ino"
+      - name: Build Test
+        run: arduino-cli compile --library . --warnings all -b arduino:avr:uno "examples/ATtiny85/ATtiny85.ino"
