@@ -164,7 +164,7 @@ public:
   //!
   //! @param segments An array of size @ref length containing the raw segment values
   //! @param length The number of digits to be modified
-  //! @param pos The position from which to start the modification (0 - leftmost, 3 - rightmost)
+  //! @param pos The position from which to start the modification (0 - leftmost, 5 - rightmost)
   void setSegments(const uint8_t segments[], uint8_t length = MAXDIGITS, uint8_t pos = 0);
 
   //! Clear the display
@@ -180,7 +180,7 @@ public:
   //! @param length The number of digits to set. The user must ensure that the number to be shown
   //!        fits to the number of digits requested (for example, if two digits are to be displayed,
   //!        the number must be between 0 to 99)
-  //! @param pos The position of the most significant digit (0 - leftmost, 3 - rightmost)
+  //! @param pos The position of the most significant digit (0 - leftmost, 5 - rightmost)
   void showNumber(int num, bool leading_zero = false, uint8_t length = MAXDIGITS, uint8_t pos = 0);
 
 
@@ -194,7 +194,7 @@ public:
   //! @param length The number of digits to set. The user must ensure that the number to be shown
   //!        fits to the number of digits requested (for example, if two digits are to be displayed,
   //!        the number must be between 0 to 99)
-  //! @param pos The position of the most significant digit (0 - leftmost, 3 - rightmost)
+  //! @param pos The position of the most significant digit (0 - leftmost, 5 - rightmost)
   void showNumber(long num, bool leading_zero = false, uint8_t length = MAXDIGITS, uint8_t pos = 0);
 
 
@@ -209,7 +209,7 @@ public:
   //! @param length The number of digits to set. The user must ensure that the number to be shown
   //!        fits to the number of digits requested (for example, if two digits are to be displayed,
   //!        the number must be between 0 to 99)
-  //! @param pos The position of the most significant digit (0 - leftmost, 3 - rightmost)
+  //! @param pos The position of the most significant digit (0 - leftmost, 5 - rightmost)
   void showNumber(double num, uint8_t decimal_length = MAXDIGITS, uint8_t length = MAXDIGITS, uint8_t pos = 0);
 
   //! Display a decimal number, with dot control
@@ -236,7 +236,7 @@ public:
   //! @param length The number of digits to set. The user must ensure that the number to be shown
   //!        fits to the number of digits requested (for example, if two digits are to be displayed,
   //!        the number must be between 0 to 99)
-  //! @param pos The position of the most significant digit (0 - leftmost, 3 - rightmost)
+  //! @param pos The position of the most significant digit (0 - leftmost, 5 - rightmost)
   void showNumberDec(long num, uint8_t dots = 0, bool leading_zero = false, uint8_t length = MAXDIGITS, uint8_t pos = 0);
 
   //! Display a hexadecimal number, with dot control
@@ -263,7 +263,7 @@ public:
   //! @param length The number of digits to set. The user must ensure that the number to be shown
   //!        fits to the number of digits requested (for example, if two digits are to be displayed,
   //!        the number must be between 0 to 99)
-  //! @param pos The position of the most significant digit (0 - leftmost, 3 - rightmost)
+  //! @param pos The position of the most significant digit (0 - leftmost, 5 - rightmost)
   void showNumberHex(uint16_t num, uint8_t dots = 0, bool leading_zero = false, uint8_t length = MAXDIGITS, uint8_t pos = 0);
 
   //! Translate a single digit into 7 segment code
@@ -284,7 +284,7 @@ public:
   //! @param s The string to be shown
   //! @param scrollDelay  The delay, in microseconds to wait before scrolling to next frame
   //! @param length The number of digits to set. 
-  //! @param pos The position of the most significant digit (0 - leftmost, 3 - rightmost)
+  //! @param pos The position of the most significant digit (0 - leftmost, 5 - rightmost)
   //! @param dots Dot/Colon enable. The argument is a bitmask, with each bit corresponding to a dot
   //!        between the digits (or colon mark, as implemented by each module). i.e.
   //!        For displays with dots between each digit:
@@ -309,7 +309,7 @@ public:
   //! @param s The string to be shown
   //! @param scrollDelay  The delay, in microseconds to wait before scrolling to next frame
   //! @param length The number of digits to set. 
-  //! @param pos The position of the most significant digit (0 - leftmost, 3 - rightmost)
+  //! @param pos The position of the most significant digit (0 - leftmost, 5 - rightmost)
   //! @param dots Dot/Colon enable. The argument is a bitmask, with each bit corresponding to a dot
   //!        between the digits (or colon mark, as implemented by each module). i.e.
   //!        For displays with dots between each digit:
@@ -395,7 +395,7 @@ protected:
 
    void showDots(uint8_t dots, uint8_t* digits);
    
-   void showNumberBaseEx(int8_t base, uint32_t num, uint8_t dots = 0, bool leading_zero = false, uint8_t length = 4, uint8_t pos = 0);
+   void showNumberBaseEx(int8_t base, uint32_t num, uint8_t dots = 0, bool leading_zero = false, uint8_t length = MAXDIGITS, uint8_t pos = 0);
 
 private:
   uint8_t m_pinClk;
