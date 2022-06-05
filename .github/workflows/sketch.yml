@@ -1,5 +1,5 @@
 # Test Arduino Library
-name: Compile Example Sketches
+name: Build Test
 
 # The workflow will run on every push and pull request to the repository
 on:
