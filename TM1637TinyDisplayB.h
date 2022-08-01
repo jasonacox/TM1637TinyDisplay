@@ -181,7 +181,11 @@ public:
   //! @param length The number of digits to be modified
   //! @param pos The position from which to start the modification (0 - leftmost, 3 - rightmost)
   void setSegments(const uint8_t segments[], uint8_t length = MAXDIGITS, uint8_t pos = 0);
-
+  
+  //! @param segments containing unique raw segment value
+  //! @param pos The position to write the modification (0 - leftmost, 3 - rightmost)
+  void setSegments(const uint8_t segments, uint8_t pos = 0);
+  
   //! Clear the display
   void clear();
 
