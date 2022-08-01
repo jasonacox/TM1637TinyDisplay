@@ -136,6 +136,12 @@ public:
   //! @param flip Flip display upside down true/false
   void flipDisplay(bool flip = true);
 
+  //! Returns the orientation of the display.
+  //!
+  //! True = Display has been flipped (upside down)
+  //!
+  bool isflipDisplay();
+
   //! Sets the brightness of the display.
   //!
   //! The setting takes effect when a command is given to change the data being

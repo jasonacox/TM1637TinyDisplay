@@ -189,6 +189,11 @@ void TM1637TinyDisplayB::flipDisplay(bool flip)
   writeBuffer();
 }
 
+bool TM1637TinyDisplayB::isflipDisplay()
+{
+  return(m_flipDisplay);
+}
+
 void TM1637TinyDisplayB::setBrightness(uint8_t brightness, bool on)
 {
   m_brightness = (brightness & 0x07) | (on? 0x08 : 0x00);
