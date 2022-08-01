@@ -265,6 +265,12 @@ void TM1637TinyDisplay6::setSegments(const uint8_t segments[], uint8_t length, u
   writeBuffer();
 }
 
+void TM1637TinyDisplay6::setSegments(uint8_t A, uint8_t pos) 
+{
+  digitsbuf[pos] = A;  
+  writeBuffer();
+}
+
 void TM1637TinyDisplay6::clear()
 {
   // digits[MAXDIGITS] output array to render

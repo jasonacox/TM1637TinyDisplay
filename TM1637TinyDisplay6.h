@@ -188,6 +188,16 @@ public:
   //! @param pos The position from which to start the modification (0 - leftmost, 5 - rightmost)
   void setSegments(const uint8_t segments[], uint8_t length = MAXDIGITS, uint8_t pos = 0);
 
+  //! Update a single digit segment values
+  //!
+  //! This function receives raw segment values as input and displays them. The segment data
+  //! is a single byte @ref A to update the digit as specified by @ref pos argument 
+  //! with 0 being the leftmost digit.
+  //!
+  //! @param A An byte containing the raw segment values
+  //! @param pos The position from which to start the modification (0 - leftmost, 3 - rightmost)
+  void setSegments(const uint8_t A, uint8_t pos = 0);
+  
   //! Clear the display
   void clear();
 
