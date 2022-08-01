@@ -136,6 +136,12 @@ public:
   //! @param flip Flip display upside down true/false
   void flipDisplay(bool flip = true);
 
+  //! Returns the orientation of the display.
+  //!
+  //! True = Display has been flipped (upside down)
+  //!
+  bool isflipDisplay();
+
   //! Sets the brightness of the display.
   //!
   //! The setting takes effect when a command is given to change the data being
@@ -152,6 +158,21 @@ public:
   //!
   //! @param scrollDelay A number in milliseconds (default is 200)
   void setScrolldelay(unsigned int scrollDelay = 200);
+
+  //! Write the digitsbuf[] to the Display
+  //!
+  //! This function renders the buffer of segment settings in digitbuf[] to the
+  //! device.
+  //!
+  void writeBuffer();
+
+  //! Create and return a copy the digitsbuf[] in buffercopy
+  //!
+  //! This copies the buffer of segment settings into the memory location provided.
+  //!
+  //! @param buffercopy Memory location of an array of at least MAXDIGITS size
+  //! 
+  void readBuffer(uint8_t *buffercopy);
 
   //! Display arbitrary data on the module
   //!
@@ -410,6 +431,7 @@ private:
   unsigned int m_scrollDelay;
   bool m_flipDisplay;
   uint8_t digits[MAXDIGITS];
+  uint8_t digitsbuf[MAXDIGITS];
 };
 
 #endif // __TM1637TINYDISPLAY__

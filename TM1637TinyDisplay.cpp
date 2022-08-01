@@ -179,18 +179,25 @@ TM1637TinyDisplay::TM1637TinyDisplay(uint8_t pinClk, uint8_t pinDIO, unsigned in
   pinMode(m_pinDIO, INPUT);
   digitalWrite(m_pinClk, LOW);
   digitalWrite(m_pinDIO, LOW);
+  clear();
 }
 
 void TM1637TinyDisplay::flipDisplay(bool flip)
 {
   m_flipDisplay = flip;
+  writeBuffer();
+}
+
+bool TM1637TinyDisplay::isflipDisplay()
+{
+  return(m_flipDisplay);
 }
 
 void TM1637TinyDisplay::setBrightness(uint8_t brightness, bool on)
 {
   m_brightness = (brightness & 0x07) | (on? 0x08 : 0x00);
   
-    // Write COMM3 + brightness
+  // Write COMM3 + brightness
   start();
   writeByte(TM1637_I2C_COMM3 + (m_brightness & 0x0f));
   stop();
@@ -201,7 +208,7 @@ void TM1637TinyDisplay::setScrolldelay(unsigned int scrollDelay)
   m_scrollDelay = scrollDelay;
 }
 
-void TM1637TinyDisplay::setSegments(const uint8_t segments[], uint8_t length, uint8_t pos)
+void TM1637TinyDisplay::writeBuffer()
 {
   uint8_t dot = 0;
 
@@ -212,29 +219,48 @@ void TM1637TinyDisplay::setSegments(const uint8_t segments[], uint8_t length, ui
 
   // Write COMM2 + first digit address
   start();
-  if(m_flipDisplay) pos = MAXDIGITS - pos - length;
-  writeByte(TM1637_I2C_COMM2 + (pos & 0x07));
+  writeByte(TM1637_I2C_COMM2 + (0 & 0x07));
 
   // Write the data bytes
   if(m_flipDisplay) {
-    for (uint8_t k=0; k < length; k++) {
+    for (uint8_t k=0; k < MAXDIGITS; k++) {
       dot = 0;
-      if((length - k - 2) >= 0) {
-        dot = segments[length - k - 2] & 0b10000000;
+      if((MAXDIGITS - k - 2) >= 0) {
+        dot = digitsbuf[MAXDIGITS - k - 2] & 0b10000000;
       }
-      uint8_t orig = segments[length - k - 1];
+      uint8_t orig = digitsbuf[MAXDIGITS - k - 1];
       uint8_t flip = ((orig >> 3) & 0b00000111) + 
         ((orig << 3) & 0b00111000) + (orig & 0b01000000) + dot;
       writeByte(flip);
     }
   }
   else {
-    for (uint8_t k=0; k < length; k++) {
-      writeByte(segments[k]);
+    for (uint8_t k=0; k < MAXDIGITS; k++) {
+      writeByte(digitsbuf[k]);
     }
   }
   stop();
 
+}
+
+void TM1637TinyDisplay::readBuffer(uint8_t *buffercopy)
+{
+  for(uint8_t k=0; k<MAXDIGITS; k++) {
+    buffercopy[k] = digitsbuf[k];
+  }
+}
+
+void TM1637TinyDisplay::setSegments(const uint8_t segments[], uint8_t length, uint8_t pos)
+{
+  // Write update into buffer
+  uint8_t i = pos;
+  for (uint8_t k=0; k < length; k++) {
+    digitsbuf[i] = segments[k];
+    i++;
+  }
+
+  // Write buffer to Display
+  writeBuffer();
 }
 
 void TM1637TinyDisplay::clear()

@@ -24,6 +24,9 @@ showNumberHex	KEYWORD2
 encodeDigit	KEYWORD2
 encodeASCII	KEYWORD2
 flipDisplay	KEYWORD2
+isflipDisplay	KEYWORD2
+writeBuffer	KEYWORD2
+readBuffer	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)
@@ -57,6 +60,8 @@ BRIGHT_HIGH	LITERAL1
 
 ON	LITERAL1
 OFF	LITERAL1
+
+MAXDIGITS	LITERAL1
 
 #######################################
 # Macros (LITERAL1)

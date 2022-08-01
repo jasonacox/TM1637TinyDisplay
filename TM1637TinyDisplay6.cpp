@@ -181,11 +181,18 @@ TM1637TinyDisplay6::TM1637TinyDisplay6(uint8_t pinClk, uint8_t pinDIO,
   pinMode(m_pinDIO, INPUT);
   digitalWrite(m_pinClk, LOW);
   digitalWrite(m_pinDIO, LOW);
+  clear();
 }
 
 void TM1637TinyDisplay6::flipDisplay(bool flip)
 {
   m_flipDisplay = flip;
+  writeBuffer();
+}
+
+bool TM1637TinyDisplay6::isflipDisplay()
+{
+  return(m_flipDisplay);
 }
 
 void TM1637TinyDisplay6::setBrightness(uint8_t brightness, bool on)
@@ -203,47 +210,59 @@ void TM1637TinyDisplay6::setScrolldelay(unsigned int scrollDelay)
   m_scrollDelay = scrollDelay;
 }
 
-void TM1637TinyDisplay6::setSegments(const uint8_t segments[], uint8_t length, uint8_t pos)
+void TM1637TinyDisplay6::writeBuffer()
 {
   uint8_t dot = 0;
-  // Adjust for flip
-  if(m_flipDisplay) pos = MAXDIGITS - pos - length;
-
-  // Adjust pos for 6 digit display
-  int index = pos + length - 1;
-  if (index > MAXDIGITS) index = index - MAXDIGITS;
-  pos = digitmap[index];
-
+  
   // Write COMM1
   start();
   writeByte(TM1637_I2C_COMM1);
   stop();
 
-  // Write COMM2 + first digit address
+  // Write COMM2 + start with last digit address on 6-digit display
   start();
-  writeByte(TM1637_I2C_COMM2 + (pos & 0x07));
+  writeByte(TM1637_I2C_COMM2 + (digitmap[MAXDIGITS - 1] & 0x07));
 
   // Write the data bytes
   if(m_flipDisplay) {
-    for (uint8_t k=0; k < length; k++) {
+    for (uint8_t k=0; k < MAXDIGITS; k++) {
       dot = 0;
-      if((k - 1) >= 0) {
-        dot = segments[k - 1] & 0b10000000;
+      if((k - 1) >= 0 ) {
+        dot = digitsbuf[k - 1] & 0b10000000;
       }
-      uint8_t orig = segments[k];
+      uint8_t orig = digitsbuf[k];
       uint8_t flip = ((orig >> 3) & 0b00000111) + 
         ((orig << 3) & 0b00111000) + (orig & 0b01000000) + dot;
       writeByte(flip);
-    }
+    } 
   }
   else {
-    for (uint8_t k=0; k < length; k++) {
+    for (uint8_t k=0; k < MAXDIGITS; k++) {
       // 6 digit display - send in reverse order
-      writeByte(segments[length - 1 - k]); 
+      writeByte(digitsbuf[MAXDIGITS - 1 - k]); 
     }
   }
   stop();
+}
 
+void TM1637TinyDisplay6::readBuffer(uint8_t *buffercopy)
+{
+  for(uint8_t k=0; k<MAXDIGITS; k++) {
+    buffercopy[k] = digitsbuf[k];
+  }
+}
+
+void TM1637TinyDisplay6::setSegments(const uint8_t segments[], uint8_t length, uint8_t pos)
+{
+  // Write update into buffer
+  uint8_t i = pos;
+  for (uint8_t k=0; k < length; k++) {
+    digitsbuf[i] = segments[k];
+    i++;
+  }
+
+  // Write buffer to Display
+  writeBuffer();
 }
 
 void TM1637TinyDisplay6::clear()
