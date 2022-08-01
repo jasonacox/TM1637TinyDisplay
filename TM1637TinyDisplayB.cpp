@@ -197,6 +197,11 @@ bool TM1637TinyDisplayB::isflipDisplay()
 void TM1637TinyDisplayB::setBrightness(uint8_t brightness, bool on)
 {
   m_brightness = (brightness & 0x07) | (on? 0x08 : 0x00);
+  
+  // Write COMM3 + brightness
+  start();
+  writeByte(TM1637_I2C_COMM3 + (m_brightness & 0x0f));
+  stop();
 }
 
 void TM1637TinyDisplayB::setScrolldelay(unsigned int scrollDelay)
@@ -237,10 +242,6 @@ void TM1637TinyDisplayB::writeBuffer()
   }
   stop();
 
-  // Write COMM3 + brightness
-  start();
-  writeByte(TM1637_I2C_COMM3 + (m_brightness & 0x0f));
-  stop();
 }
 
 void TM1637TinyDisplayB::readBuffer(uint8_t *buffercopy)
