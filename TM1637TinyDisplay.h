@@ -409,6 +409,31 @@ public:
   //! @param ms Time to delay between each frame
   void showAnimation_P(const uint8_t data[][4], unsigned int frames = 0, unsigned int ms = 10);
 
+
+  //! The event loop function to enable non-blocking animations
+  //!
+  //! The method does not take any input parameters and returns a boolean
+  //! The return value is TRUE when an animation is still occuring, it is
+  //! FALSE when there is no animiation occuring
+  //!
+  //! @return A boolean value indicating if an animation is occuring
+  bool Animate();
+
+  //! The function used to begin a non-blocking animation
+  //!
+  //! @param usePROGMEN Indicates if the passed animation data is coming from a PROGMEM defined variable
+  //! @param frames Number of frames in the sequence to animate
+  //! @param ms Time to delay between each frame
+  void startAnimation(bool usePROGMEM, const uint8_t (*data)[4], unsigned int frames = 0, unsigned int ms = 10);
+
+  //! The function used to begin a non-blocking scroll of a string
+  //!
+  //! @param usePROGMEN Indicates if the passed string data is coming from a PROGMEM defined variable
+  //! @param ms Time to delay between each frame
+  void scrollString(bool usePROGMEM, const char s[], unsigned int ms);
+
+
+
   //! Translate a single ASCII character into 7 segment code
   //!
   //! The method accepts a number between 0 - 255 and converts it to the
@@ -419,6 +444,7 @@ public:
   //! @return A code representing the 7 segment image of the digit (LSB - segment A;
   //!         bit 6 - segment G; bit 7 - always zero)
   uint8_t encodeASCII(uint8_t chr);
+
 
 protected:
    void bitDelay();
@@ -442,6 +468,14 @@ private:
   bool m_flipDisplay;
   uint8_t digits[MAXDIGITS];
   uint8_t digitsbuf[MAXDIGITS];
+
+  unsigned long m_animation_start;
+  unsigned int m_animation_frames;
+  unsigned int m_animation_last_frame;
+  unsigned int m_animation_frame_ms;
+  uint8_t (*m_animation_sequence)[4];
+  uint8_t (*m_animation_string);
+  uint8_t m_animation_type;
 };
 
 #endif // __TM1637TINYDISPLAY__
