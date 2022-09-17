@@ -27,6 +27,9 @@ flipDisplay	KEYWORD2
 isflipDisplay	KEYWORD2
 writeBuffer	KEYWORD2
 readBuffer	KEYWORD2
+Animate		KEYWORD2
+startAnimation	KEYWORD2
+scrollString	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)
