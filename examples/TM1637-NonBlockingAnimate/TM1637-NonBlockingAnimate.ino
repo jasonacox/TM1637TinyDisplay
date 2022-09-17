@@ -149,7 +149,7 @@ void loop()
         Serial.println("");
         Serial.println("Animate from SRAM");
         // non-blocking animation from SRAM
-		    display.startAnimation(false, ANIMATION, FRAMES(ANIMATION), TIME_MS(50));
+        display.startAnimation(false, ANIMATION, FRAMES(ANIMATION), TIME_MS(50));
         break;
       case 2:
         Serial.println("");
@@ -174,8 +174,8 @@ void loop()
         delay(TEST_DELAY);
         display.showString("End");
         delay(TEST_DELAY * 5);
-    		// start the sequence over again
-		    AnimationNum = 0;
+        // start the sequence over again
+        AnimationNum = 0;
     }
   }
 
