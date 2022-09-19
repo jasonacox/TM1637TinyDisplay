@@ -27,3 +27,5 @@ jobs:
         run: arduino-cli compile --library . --warnings all -b arduino:avr:uno "examples/TM1637-6Digit-Test/TM1637-6Digit-Test.ino"
       - name: Build ATtiny85.ino Example Sketch
         run: arduino-cli compile --library . --warnings all -b arduino:avr:uno "examples/ATtiny85/ATtiny85.ino"
+      - name: Build TM1637-NonBlockingAnimate.ino Example Sketch
+        run: arduino-cli compile --library . --warnings all -b arduino:avr:uno "examples/TM1637-NonBlockingAnimate/TM1637-NonBlockingAnimate.ino"

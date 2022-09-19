@@ -1,5 +1,9 @@
 # Release Notes for TM1637TinyDisplay
 
+## v1.7.0 - Add Non-Blocking Animation for 4-Digit
+
+* Add non-blocking animation and string scrolling to 4-digit display by @hackerceo in https://github.com/jasonacox/TM1637TinyDisplay/pull/24
+
 ## v1.6.0 - Add Buffered Output
 - Display values are kept in persistent buffer for easier updates.
 - Fix colon and decimal display for flipDisplay(true) conditions
