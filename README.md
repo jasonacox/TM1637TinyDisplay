@@ -40,6 +40,9 @@ The library provides a single class named TM1637TinyDisplay with the following f
 * `showString` - Display a ASCII string of text with optional scrolling for long strings
 * `showLevel` - Use display LEDs to simulate a level indicator (vertical or horizontal)  
 * `showAnimation` - Display a sequence of frames to render an animation
+* `startAnimation` - Begins a non-blocking animation of a sequence of frames
+* `startStringScroll` - Begins a non-blocking scrolling of a string message
+* `Animate` - Worker routine to be called regularly which handles animations and scrolling in a non-blocking manner
 * `setSegments` - Directly set the value of the LED segments in each digit
 * `setBrightness` - Sets the brightness of the display
 * `setScrolldelay` - Sets the speed for text scrolling
@@ -51,6 +54,10 @@ PROGMEM functions: Large string or animation data can be left in Flash instead o
 
 * `showAnimation_P` - Display a sequence of frames to render an animation (in PROGMEM)
 * `showString_P` - Display a ASCII string of text with optional scrolling for long strings (in PROGMEM)
+* `startAnimation_P` - Begins a non-blocking animation of a sequence of frames stored in PROGMEM
+* `startStringScroll_P` - Begins a non-blocking scrolling of a string message stored in PROGMEM
+
+
 
 ## Example Code
 ```cpp
@@ -178,4 +185,3 @@ void setup()
 * Arduino - https://playground.arduino.cc/Main/TM1637/
 * MCI Electronics Datasheet for TM1637 - https://www.mcielectronics.cl/website_MCI/static/documents/Datasheet_TM1637.pdf
 * TM16xx - Library for entire TM16xx chip family include maxint-rd's own [display-modules](https://github.com/maxint-rd/arduino-modules#display-modules) - https://github.com/maxint-rd/TM16xx
-

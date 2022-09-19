@@ -15,6 +15,10 @@ and play an extended set of animation sequences.  The animations were built with
 * [TM1637-Countdown.ino](TM1637-Countdown/TM1637-Countdown.ino) sketch is an example of using the library for a countdown timer. Works with 4-Digit and 6-Digit displays.
 * [TM1637-Countdown-Buttons.ino](TM1637-Countdown-Buttons/TM1637-Countdown-Buttons.ino) same as the above but adds buttons and interactive logic to set countdown time.
 
+## Non-Blocking Animations/Scrolling Example
+* [TM1637-NonBlockingAnimate.ino](TM1637-NonBlockingAnimate/TM1637-NonBlockingAnimate.ino) sketch contains examples of using the library to do animations and text scrolling in a non-blocking manner. Works with 4-Digit display.
+
+
 ## Animation
 
 ### 7-Segment LED Display Animator Tool
