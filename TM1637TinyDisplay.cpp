@@ -623,7 +623,12 @@ bool TM1637TinyDisplay::Animate()
     return true;
 }
 
-void TM1637TinyDisplay::startAnimation(bool usePROGMEM, const uint8_t (*data)[4], unsigned int frames, unsigned int ms)
+void TM1637TinyDisplay::startAnimation_P(const uint8_t(*data)[MAXDIGITS], unsigned int frames, unsigned int ms)
+{
+    startAnimation(data, frames, ms, true);
+}
+
+void TM1637TinyDisplay::startAnimation(const uint8_t (*data)[MAXDIGITS], unsigned int frames, unsigned int ms, bool usePROGMEM)
 {
     if (usePROGMEM) {
         m_animation_type = 2;
@@ -638,7 +643,12 @@ void TM1637TinyDisplay::startAnimation(bool usePROGMEM, const uint8_t (*data)[4]
 }
 
 
-void TM1637TinyDisplay::scrollString(bool usePROGMEM, const char (*s), unsigned int ms) {
+void TM1637TinyDisplay::startStringScroll_P(const char s[], unsigned int ms) 
+{
+    startStringScroll(s, ms, true);
+}
+
+void TM1637TinyDisplay::startStringScroll(const char (*s), unsigned int ms, bool usePROGMEM = false) {
     if (usePROGMEM) {
         m_animation_frames = strlen_P(s);
         if (m_animation_frames <= MAXDIGITS) {

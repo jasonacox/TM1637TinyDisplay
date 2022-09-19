@@ -424,13 +424,15 @@ public:
   //! @param usePROGMEN Indicates if the passed animation data is coming from a PROGMEM defined variable
   //! @param frames Number of frames in the sequence to animate
   //! @param ms Time to delay between each frame
-  void startAnimation(bool usePROGMEM, const uint8_t (*data)[4], unsigned int frames = 0, unsigned int ms = 10);
+  void startAnimation(const uint8_t (*data)[MAXDIGITS], unsigned int frames = 0, unsigned int ms = 10, bool usePROGMEM = false);
+  void startAnimation_P(const uint8_t(*data)[MAXDIGITS], unsigned int frames = 0, unsigned int ms = 10);
 
   //! The function used to begin a non-blocking scroll of a string
   //!
   //! @param usePROGMEN Indicates if the passed string data is coming from a PROGMEM defined variable
   //! @param ms Time to delay between each frame
-  void scrollString(bool usePROGMEM, const char s[], unsigned int ms);
+  void startStringScroll(const char s[], unsigned int ms = DEFAULT_SCROLL_DELAY, bool usePROGMEM = false);
+  void startStringScroll_P(const char s[], unsigned int ms = DEFAULT_SCROLL_DELAY);
 
 
 

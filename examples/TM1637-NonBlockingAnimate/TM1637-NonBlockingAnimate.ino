@@ -149,25 +149,25 @@ void loop()
         Serial.println("");
         Serial.println("Animate from SRAM");
         // non-blocking animation from SRAM
-        display.startAnimation(false, ANIMATION, FRAMES(ANIMATION), TIME_MS(50));
+		    display.startAnimation(ANIMATION, FRAMES(ANIMATION), TIME_MS(50));
         break;
       case 2:
         Serial.println("");
         Serial.println("Animate from PROGMEM");
         // non-blocking animation from PROGMEM
-        display.startAnimation(true, ANIMATION2, FRAMES(ANIMATION2), TIME_MS(50));
+        display.startAnimation_P(ANIMATION2, FRAMES(ANIMATION2), TIME_MS(50));
         break;
       case 3:
         Serial.println("");
         Serial.println("Animated String Scroll from PROGMEM");
         // non-blocking scrolling of a long string
-        display.scrollString(true, FlashString, 200); 
+        display.startStringScroll_P(FlashString, 200); 
         break;
       case 4:
         Serial.println("");
         Serial.println("Animated String Scroll from SRAM");
         // non-blocking scrolling of a long string
-        display.scrollString(false, SRamString, 200);
+        display.startStringScroll(SRamString, 200);
         break;
       default:
         display.showString("The");
