@@ -563,6 +563,122 @@ void TM1637TinyDisplay::showLevel(unsigned int level, bool horizontal)
   setSegments(digits);
 }
 
+bool TM1637TinyDisplay::Animate()
+{
+    // return if no animation/scroll is running 
+    if (m_animation_type == 0) return false;
+
+    unsigned int frame_num = (millis() - m_animation_start) / m_animation_frame_ms;
+
+    // we have run past our max frame (this can happen because of frame dropping)
+    if (frame_num >= m_animation_frames) {
+        m_animation_type = 0;
+        return false;
+    }
+
+    // bail out if the animation frame has not changed
+    if (frame_num == m_animation_last_frame) {
+        return true;
+    } else {
+        m_animation_last_frame = frame_num;
+    }
+
+    memset(digits, 0, sizeof(digits));
+    switch(m_animation_type) {
+        case 1: // regular animation running
+            for (unsigned int a = 0; a < 4; a++) {
+                digits[a] = m_animation_sequence[frame_num][a];
+            }
+            setSegments(digits);
+            break;
+        case 2: // PROGMEM animation running
+            for(unsigned int a = 0; a < 4; a++) {
+                digits[a] = pgm_read_byte(&(m_animation_sequence[frame_num][a]));
+            }
+            setSegments(digits);
+            break;
+        case 3: // PROGMEM text scroll running
+            for (int x = 0; x < MAXDIGITS; x++) {
+                int offset = frame_num - MAXDIGITS + x;
+                if (offset >= 0 && offset < m_animation_frames - (2 * MAXDIGITS)) {
+                    digits[x] = encodeASCII(pgm_read_byte(&m_animation_string[offset]));
+                } else {
+                    digits[x] = 0;
+                }
+            }
+            setSegments(digits);
+            break;
+        case 4: // SRAM text scroll running
+            for (int x = 0; x < MAXDIGITS; x++) {
+                int offset = frame_num - MAXDIGITS + x;
+                if (offset >= 0 && offset < m_animation_frames - (2 * MAXDIGITS)) {
+                    digits[x] = encodeASCII(m_animation_string[offset]);
+                } else {
+                    digits[x] = 0;
+                }
+            }
+            setSegments(digits);
+            break;
+    }
+    return true;
+}
+
+void TM1637TinyDisplay::startAnimation_P(const uint8_t(*data)[MAXDIGITS], unsigned int frames, unsigned int ms)
+{
+    startAnimation(data, frames, ms, true);
+}
+
+void TM1637TinyDisplay::startAnimation(const uint8_t (*data)[MAXDIGITS], unsigned int frames, unsigned int ms, bool usePROGMEM)
+{
+    if (usePROGMEM) {
+        m_animation_type = 2;
+    } else {
+        m_animation_type = 1;
+    }
+    m_animation_start = millis() ;
+    m_animation_frames = frames;
+    m_animation_frame_ms = ms;
+    m_animation_sequence = data;
+    m_animation_string = nullptr;
+}
+
+
+void TM1637TinyDisplay::startStringScroll_P(const char s[], unsigned int ms) 
+{
+    startStringScroll(s, ms, true);
+}
+
+void TM1637TinyDisplay::startStringScroll(const char (*s), unsigned int ms, bool usePROGMEM = false) {
+    if (usePROGMEM) {
+        m_animation_frames = strlen_P(s);
+        if (m_animation_frames <= MAXDIGITS) {
+            // no need to scroll, just display it
+            showString_P(s, m_animation_frames, 0, 0);
+            return;
+        } else {
+            m_animation_type = 3;
+        }
+    } else {
+        m_animation_frames = strlen(s);
+        if (m_animation_frames <= MAXDIGITS) {
+            // no need to scroll, just display it
+            showString_P(s, m_animation_frames, 0, 0);
+            return;
+        } else {
+            m_animation_type = 4;
+        }
+    }
+    // add scroll on/off frames to the total animation frame count
+    m_animation_frames = m_animation_frames + (MAXDIGITS * 2);
+
+    m_animation_start = millis();
+    m_animation_frame_ms = ms;
+    m_animation_sequence = nullptr;
+    m_animation_string = s;
+}
+
+
+
 void TM1637TinyDisplay::showAnimation(const uint8_t data[][4], unsigned int frames, unsigned int ms)
 {
   // Animation sequence
