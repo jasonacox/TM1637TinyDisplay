@@ -29,7 +29,9 @@ writeBuffer	KEYWORD2
 readBuffer	KEYWORD2
 Animate		KEYWORD2
 startAnimation	KEYWORD2
-scrollString	KEYWORD2
+startAnimation_P  KEYWORD2 
+startStringScroll	KEYWORD2
+startStringScroll_P	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)
