@@ -638,17 +638,17 @@ void TM1637TinyDisplay::startAnimation(const uint8_t (*data)[MAXDIGITS], unsigne
     m_animation_start = millis() ;
     m_animation_frames = frames;
     m_animation_frame_ms = ms;
-    m_animation_sequence = data;
+    m_animation_sequence = (uint8_t (*)[MAXDIGITS]) data;
     m_animation_string = nullptr;
 }
 
 
-void TM1637TinyDisplay::startStringScroll_P(const char s[], unsigned int ms) 
+void TM1637TinyDisplay::startStringScroll_P(const char s[], unsigned int ms)
 {
     startStringScroll(s, ms, true);
 }
 
-void TM1637TinyDisplay::startStringScroll(const char (*s), unsigned int ms, bool usePROGMEM = false) {
+void TM1637TinyDisplay::startStringScroll(const char s[], unsigned int ms, bool usePROGMEM) {
     if (usePROGMEM) {
         m_animation_frames = strlen_P(s);
         if (m_animation_frames <= MAXDIGITS) {
@@ -674,7 +674,7 @@ void TM1637TinyDisplay::startStringScroll(const char (*s), unsigned int ms, bool
     m_animation_start = millis();
     m_animation_frame_ms = ms;
     m_animation_sequence = nullptr;
-    m_animation_string = s;
+    m_animation_string = (uint8_t *) s;
 }
 
 
