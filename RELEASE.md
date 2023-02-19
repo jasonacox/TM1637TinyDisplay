@@ -1,5 +1,9 @@
 # Release Notes for TM1637TinyDisplay
 
+## v1.8.0 - Updated library operation with new begin() method
+
+* Updated library operation to include an initializing method `begin()` to move outside the constructor hardware related calls, as reported in https://github.com/jasonacox/TM1637TinyDisplay/issues/28
+
 ## v1.7.1 - Fix Compile Errors for ESP8266
 
 * Fix compile errors and warnings on ESP8266 cores (type casts and erroneous defaults in functions) as reported in https://github.com/jasonacox/TM1637TinyDisplay/issues/26

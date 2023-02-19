@@ -9,6 +9,7 @@ TM1637TinyDisplay6	KEYWORD1
 # Methods and Functions (KEYWORD2)
 #######################################
 
+begin	KEYWORD2
 setBrightness	KEYWORD2
 setSegments	KEYWORD2
 setScrolldelay	KEYWORD2
@@ -60,7 +61,6 @@ BRIGHT_4	LITERAL1
 BRIGHT_5	LITERAL1
 BRIGHT_6	LITERAL1
 BRIGHT_7	LITERAL1
-BRIGHT_8	LITERAL1
 BRIGHT_HIGH	LITERAL1
 
 ON	LITERAL1

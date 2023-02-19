@@ -172,14 +172,16 @@ TM1637TinyDisplay::TM1637TinyDisplay(uint8_t pinClk, uint8_t pinDIO, unsigned in
   m_scrollDelay = scrollDelay;
   // Flip 
   m_flipDisplay = flip;
-  
+}
+
+void TM1637TinyDisplay::begin()
+{
   // Set the pin direction and default value.
   // Both pins are set as inputs, allowing the pull-up resistors to pull them up
   pinMode(m_pinClk, INPUT);
   pinMode(m_pinDIO, INPUT);
   digitalWrite(m_pinClk, LOW);
   digitalWrite(m_pinDIO, LOW);
-  clear();
 }
 
 void TM1637TinyDisplay::flipDisplay(bool flip)
