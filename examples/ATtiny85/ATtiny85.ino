@@ -329,6 +329,8 @@ const PROGMEM char FlashString[] = "Flash Test - 1234567890"; // Must be globall
 const PROGMEM char FlashString2[] = "good";
 
 void setup() {
+  display.begin();
+  display.clear();
   display.setBrightness(BRIGHT_7);
 }
 
