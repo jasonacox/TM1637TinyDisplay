@@ -1,14 +1,17 @@
-# TM1637 Tiny Display # 
+# TM1637 Tiny Display
+
 [![arduino-library-badge](https://www.ardu-badge.com/badge/TM1637TinyDisplay.svg?)](https://www.ardu-badge.com/TM1637TinyDisplay)
 [![Build Status](https://github.com/jasonacox/TM1637TinyDisplay/actions/workflows/sketch.yml/badge.svg)](https://github.com/jasonacox/TM1637TinyDisplay/actions/workflows/sketch.yml)
 
 Arduino Library for the TM1637 Based LED Display Module
 
 ## Description
+
 This is an Arduino library for 4 and 6 digit 7-segment LED display modules based on the TM1637 chip.
 Connect the TM1637 display CLK and DIO pins to your Arduino GPIO pins, include this library, initialize TM1637TinyDisplay and call easy to use functions like showNumber(), showString(), showLevel() and showAnimation(). Display will scroll text for larger strings. Functions support screen splitting for easy number + text formatting. Library also runs well on tiny controllers including the ATtiny85.
 
-## Hardware 
+## Hardware
+
 ![TM1637](examples/tm1637.png)
 
 * 4-Digit Display modules based on the TM1637 chip are available from [HiLetgo](https://www.amazon.com/gp/product/B01DKISMXK/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1), [DX](https://dx.com/p/0-36-led-4-digit-display-module-for-arduino-black-blue-works-with-official-arduino-boards-254978) and [SeeedStudio](https://www.digikey.com/products/en?keywords=tm1637).
@@ -17,8 +20,9 @@ Connect the TM1637 display CLK and DIO pins to your Arduino GPIO pins, include t
 ![TM1637](examples/tm1637back.png)
 
 The display has four connectors:
-* CLK - Clock - attach to any GPIO output 
-* DIO - Data  - attach to any GPIO output 
+
+* CLK - Clock - attach to any GPIO output
+* DIO - Data  - attach to any GPIO output
 * VCC - Power 5v
 * GND - Ground
 
@@ -27,39 +31,13 @@ Power Note: Steady clean power is important for circuit stability. If you are se
 Decimals and Colons: Some TM1637 displays come equipped with a middle colon LED (as shown above) as used in digital clocks but with no decimal points. Some displays come with decimal point LEDS for each digit. Some come with both but often the decimal point LEDs are not connected. These extra LEDs are activated by setting the upper bit (0x80) for the digit next to the dot. This library will handle setting that for you via the showNumber() function when you specify floating point numbers or via the showNumberDec() function where you can set the decimal point manually.
 
 ## Installation
+
 This library is available via the Arduino IDE.  Install this library via `Tools`, `Manage Libraries`, search for "TM1637TinyDisplay" and click `Install`.
 
 Alternatively, you can install this manually by cloning this repo into your Arduino library folder (e.g. `~/Documents/Arduino/libraries`).  
 
-## Usage
-The library provides a single class named TM1637TinyDisplay with the following functions:
-
-* `showNumber` - Display an integer and floating point numbers (positive or negative)
-* `showNumberDec` - Display a number with ability to manually set decimal points or colon
-* `showNumberHex` - Display a number in hexadecimal format and set decimal point or colon
-* `showString` - Display a ASCII string of text with optional scrolling for long strings
-* `showLevel` - Use display LEDs to simulate a level indicator (vertical or horizontal)  
-* `showAnimation` - Display a sequence of frames to render an animation
-* `startAnimation` - Begins a non-blocking animation of a sequence of frames
-* `startStringScroll` - Begins a non-blocking scrolling of a string message
-* `Animate` - Worker routine to be called regularly which handles animations and scrolling in a non-blocking manner
-* `setSegments` - Directly set the value of the LED segments in each digit
-* `setBrightness` - Sets the brightness of the display
-* `setScrolldelay` - Sets the speed for text scrolling
-* `flipDisplay` - Sets/flips the orientation of the display
-* `isflipDisplay` - Returns orientation of the display (True = flip)
-* `readBuffer` - Returns current display segment values
-
-PROGMEM functions: Large string or animation data can be left in Flash instead of being loaded in to SRAM to save memory. 
-
-* `showAnimation_P` - Display a sequence of frames to render an animation (in PROGMEM)
-* `showString_P` - Display a ASCII string of text with optional scrolling for long strings (in PROGMEM)
-* `startAnimation_P` - Begins a non-blocking animation of a sequence of frames stored in PROGMEM
-* `startStringScroll_P` - Begins a non-blocking scrolling of a string message stored in PROGMEM
-
-
-
 ## Example Code
+
 ```cpp
 #include <Arduino.h>
 #include <TM1637TinyDisplay.h>
@@ -68,11 +46,13 @@ PROGMEM functions: Large string or animation data can be left in Flash instead o
 #define CLK 1
 #define DIO 2
 
-// Initialize TM1637TinyDisplay
+// Instantiate TM1637TinyDisplay Class
 TM1637TinyDisplay display(CLK, DIO);
 
 void setup() {
-  display.setBrightness(0x0f);
+  // Initialize Display
+  display.begin();
+  display.setBrightness(BRIGHT_HIGH);
 }
 
 void loop() {
@@ -111,9 +91,8 @@ void loop() {
 }
 ```
 
-Refer to [TM1637TinyDisplay.h](TM1637TinyDisplay.h) for information on available functions. See also [Examples](examples) for more demonstration.
-
 ## Animation and Animator Tool
+
 The showAnimation() function projects a sequence of frames (patterns) onto the display.  This works by defining the animation sequence through a multi-dimensional array of patterns.  
 
 You can use the included javascript based interactive [7-Segment LED Animator Tool](https://jasonacox.github.io/TM1637TinyDisplay/examples/7-segment-animator.html) to help build your animation. The source code is in the [Examples](examples) folder.  This tool will let you set up the LED sequences you want, save each frame and copy the final code (a static array) directly into your sketch to use for the `showAnimation(data, frames, timing)` function.  Here is an example:
@@ -164,6 +143,7 @@ TM1637TinyDisplay6 display(CLK, DIO); // 6-Digit Display Class
 
 void setup()
 {
+  display.begin();
   display.setBrightness(BRIGHT_HIGH);
   display.clear();
   display.showString("digits");
@@ -175,11 +155,44 @@ void setup()
 }
 ```
 
+## Functions
+
+The library provides a single class named TM1637TinyDisplay with the following functions:
+
+* `begin()` - Initialize display memory and hardware (call in `setup()`)
+* `clear()` - Display an integer and floating point numbers (positive or negative)
+* `showNumber(..)` - Display a number
+* `showNumberDec(..)` - Display a number with ability to manually set decimal points or colon
+* `showNumberHex(..)` - Display a number in hexadecimal format and set decimal point or colon
+* `showString(..)` - Display a ASCII string of text with optional scrolling for long strings
+* `startStringScroll(..)` - Begins a non-blocking scrolling of a string message
+* `showLevel(..)` - Use display LEDs to simulate a level indicator (vertical or horizontal)  
+* `showAnimation(..)` - Display a sequence of frames to render an animation
+* `startAnimation(..)` - Begins a non-blocking animation of a sequence of frames
+* `Animate()` - Worker routine to be called regularly which handles animations and scrolling in a non-blocking manner
+* `setSegments(..)` - Directly set the value of the LED segments in each digit
+* `setBrightness(..)` - Sets the brightness of the display
+* `setScrolldelay(..)` - Sets the speed for text scrolling
+* `flipDisplay(..)` - Sets/flips the orientation of the display
+* `isflipDisplay()` - Returns orientation of the display (True = flip)
+* `readBuffer(..)` - Returns current display segment values
+
+PROGMEM functions: Large string or animation data can be left in Flash instead of being loaded in to SRAM to save memory. 
+
+* `showAnimation_P(..)` - Display a sequence of frames to render an animation (in PROGMEM)
+* `showString_P(..)` - Display a ASCII string of text with optional scrolling for long strings (in PROGMEM)
+* `startAnimation_P(..)` - Begins a non-blocking animation of a sequence of frames stored in PROGMEM
+* `startStringScroll_P(..)` - Begins a non-blocking scrolling of a string message stored in PROGMEM
+
+Refer to [TM1637TinyDisplay.h](TM1637TinyDisplay.h) for information on available functions. See also [Examples](examples) for more demonstration.
+
 ## Arduino Library
+
 * Library: https://www.arduinolibraries.info/libraries/tm1637-tiny-display
 * Scan Logs: http://downloads.arduino.cc/libraries/logs/github.com/jasonacox/TM1637TinyDisplay/
 
 ## References and Credit
+
 * This library is based on the great work by Avishay Orpaz - https://github.com/avishorp/TM1637
 * SevenSegmentTM1637 Arduino Library by Bram Harmsen - https://github.com/bremme/arduino-tm1637 
 * Arduino - https://playground.arduino.cc/Main/TM1637/
