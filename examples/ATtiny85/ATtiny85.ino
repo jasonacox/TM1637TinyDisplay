@@ -330,7 +330,6 @@ const PROGMEM char FlashString2[] = "good";
 
 void setup() {
   display.begin();
-  display.clear();
   display.setBrightness(BRIGHT_7);
 }
 

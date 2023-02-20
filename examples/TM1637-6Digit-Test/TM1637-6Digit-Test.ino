@@ -157,7 +157,6 @@ TM1637TinyDisplay6 display(CLK, DIO);
 void setup()
 {
   display.begin();
-  display.clear();
   display.setBrightness(BRIGHT_HIGH);
 }
 
