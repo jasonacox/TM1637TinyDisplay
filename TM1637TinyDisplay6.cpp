@@ -184,6 +184,7 @@ void TM1637TinyDisplay6::begin()
   pinMode(m_pinDIO, INPUT);
   digitalWrite(m_pinClk, LOW);
   digitalWrite(m_pinDIO, LOW);
+  clear();
 }
 
 void TM1637TinyDisplay6::flipDisplay(bool flip)
