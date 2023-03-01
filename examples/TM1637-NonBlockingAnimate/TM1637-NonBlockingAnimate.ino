@@ -121,7 +121,6 @@ void setup()
 {
   Serial.begin(9600);
   display.begin();
-  display.setBrightness(BRIGHT_HIGH);
   AnimationNum = 0;
 }
 
