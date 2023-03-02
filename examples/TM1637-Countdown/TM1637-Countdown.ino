@@ -48,7 +48,6 @@ unsigned long countDown;
 void setup()
 {
   display.begin();
-  display.setBrightness(BRIGHT_HIGH);
 
   // Record Epoch - Same as Timer Reset
   startTime = millis();

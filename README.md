@@ -8,7 +8,7 @@ Arduino Library for the TM1637 Based LED Display Module
 ## Description
 
 This is an Arduino library for 4 and 6 digit 7-segment LED display modules based on the TM1637 chip.
-Connect the TM1637 display CLK and DIO pins to your Arduino GPIO pins, include this library, initialize TM1637TinyDisplay and call easy to use functions like showNumber(), showString(), showLevel() and showAnimation(). Display will scroll text for larger strings. Functions support screen splitting for easy number + text formatting. Library also runs well on tiny controllers including the ATtiny85.
+Connect the TM1637 display CLK and DIO pins to your Arduino GPIO pins, include this library, initialize TM1637TinyDisplay and call easy to use functions like `showNumber()`, `showString()`, `showLevel()` and `showAnimation()`. Display will scroll text for larger strings. Functions support screen splitting for easy number + text formatting. Library also runs well on tiny controllers including the ATtiny85.
 
 ## Hardware
 
@@ -26,25 +26,30 @@ The display has four connectors:
 * VCC - Power 5v
 * GND - Ground
 
-Power Note: Steady clean power is important for circuit stability. If you are seeing display artifacts during high frequency updates or animation sequences, you may be experiencing power fluctuations that are impacting signal timing and communication with the TM1637. This is especially true with standalone microprocessor applications that lack any power conditioning (e.g. ATtiny85). A polarized 100uF electrolytic capacitor inserted across VCC and GND can help smooth out the spikes.
+**Power Note:** Steady clean power is important for circuit stability. If you are seeing display artifacts during high frequency updates or animation sequences, you may be experiencing power fluctuations that are impacting signal timing and communication with the TM1637. This is especially true with standalone microprocessor applications that lack any power conditioning (e.g. ATtiny85). A polarized 100uF electrolytic capacitor inserted across VCC and GND can help smooth out the spikes.
 
-Decimals and Colons: Some TM1637 displays come equipped with a middle colon LED (as shown above) as used in digital clocks but with no decimal points. Some displays come with decimal point LEDS for each digit. Some come with both but often the decimal point LEDs are not connected. These extra LEDs are activated by setting the upper bit (0x80) for the digit next to the dot. This library will handle setting that for you via the showNumber() function when you specify floating point numbers or via the showNumberDec() function where you can set the decimal point manually.
+**Decimals and Colons:** Some TM1637 displays come equipped with a middle colon LED (like above) as used in digital clocks but with no decimal points. Some displays come with decimal point LEDS for each digit. Some come with both but often the decimal point LEDs are not connected. These extra LEDs are activated by setting the upper eighth bit (0x80) for the digit to the left of the dot. This library will handle setting that for you via the `showNumber()` function when you specify floating point numbers, or you can do it manually via the `showNumberDec()` function where you can set the decimal points/colon yourself.
 
 ## Installation
 
 This library is available via the Arduino IDE.  Install this library via `Tools`, `Manage Libraries`, search for "TM1637TinyDisplay" and click `Install`.
 
-Alternatively, you can install this manually by cloning this repo into your Arduino library folder (e.g. `~/Documents/Arduino/libraries`).  
+Alternatively, you can install this manually by cloning this repo into your Arduino library folder (e.g. `~/Documents/Arduino/libraries`).
 
 ## Example Code
+
+<p align="center">
+  <a href="examples/4-digit-display-basic.fzz"><img src="examples/4-digit-display-basic_bb.svg" width="40%" /></a><br />
+  Basic connection schematic done with <a href="https://fritzing.org">Fritzing</a>
+</p>
 
 ```cpp
 #include <Arduino.h>
 #include <TM1637TinyDisplay.h>
 
 // Define Digital Pins
-#define CLK 1
-#define DIO 2
+#define CLK 2
+#define DIO 3
 
 // Instantiate TM1637TinyDisplay Class
 TM1637TinyDisplay display(CLK, DIO);
@@ -52,7 +57,6 @@ TM1637TinyDisplay display(CLK, DIO);
 void setup() {
   // Initialize Display
   display.begin();
-  display.setBrightness(BRIGHT_HIGH);
 }
 
 void loop() {
@@ -93,9 +97,9 @@ void loop() {
 
 ## Animation and Animator Tool
 
-The showAnimation() function projects a sequence of frames (patterns) onto the display.  This works by defining the animation sequence through a multi-dimensional array of patterns.  
+The `showAnimation()` function projects a sequence of frames (patterns) onto the display.  This works by defining the animation sequence through a multi-dimensional array of patterns.
 
-You can use the included javascript based interactive [7-Segment LED Animator Tool](https://jasonacox.github.io/TM1637TinyDisplay/examples/7-segment-animator.html) to help build your animation. The source code is in the [Examples](examples) folder.  This tool will let you set up the LED sequences you want, save each frame and copy the final code (a static array) directly into your sketch to use for the `showAnimation(data, frames, timing)` function.  Here is an example:
+You can use the included javascript based interactive [7-Segment LED Animator Tool](https://jasonacox.github.io/TM1637TinyDisplay/examples/7-segment-animator.html) to help build your animation. The source code is in the [Examples](examples) folder. This tool will let you set up the LED sequences you want, save each frame and copy the final code (a static array) directly into your sketch to use for the `showAnimation(data, frames, timing)` function. Here is an example:
 
 ```cpp
 // Data from Animator Tool
@@ -126,7 +130,7 @@ const uint8_t ANIMATION[12][4] = {
 
 ![TM1637-6-Back](examples/tm1637-6-back.png)
 
-This library now supports the 6-digit display as well as the 4-digit display.  The 6-digit display requires additional handling.  Specifically, the display digits are not sequential (requires a map) and the 7-segment LED data must be uploaded in reverse order.  
+This library now supports the 6-digit display as well as the 4-digit display.  The 6-digit display requires additional handling.  Specifically, the display digits are not sequential (requires a map) and the 7-segment LED data must be uploaded in reverse order.
 
 TM1637TinyDisplay6 handles this for you but you must initialize the display using the TM1637TinyDisplay6 class:
 
@@ -136,16 +140,14 @@ TM1637TinyDisplay6 handles this for you but you must initialize the display usin
 #include <TM1637TinyDisplay6.h>       // Include 6-Digit Display Class Header
 
 // Define Digital Pins
-#define CLK 1
-#define DIO 2
+#define CLK 2
+#define DIO 3
 
 TM1637TinyDisplay6 display(CLK, DIO); // 6-Digit Display Class
 
 void setup()
 {
   display.begin();
-  display.setBrightness(BRIGHT_HIGH);
-  display.clear();
   display.showString("digits");
   delay(1000);
   display.showNumber(123456);
@@ -177,7 +179,7 @@ The library provides a single class named TM1637TinyDisplay with the following f
 * `isflipDisplay()` - Returns orientation of the display (True = flip)
 * `readBuffer(..)` - Returns current display segment values
 
-PROGMEM functions: Large string or animation data can be left in Flash instead of being loaded in to SRAM to save memory. 
+PROGMEM functions: Large string or animation data can be left in Flash instead of being loaded in to SRAM to save memory.
 
 * `showAnimation_P(..)` - Display a sequence of frames to render an animation (in PROGMEM)
 * `showString_P(..)` - Display a ASCII string of text with optional scrolling for long strings (in PROGMEM)

@@ -185,6 +185,7 @@ void TM1637TinyDisplay6::begin()
   digitalWrite(m_pinClk, LOW);
   digitalWrite(m_pinDIO, LOW);
   clear();
+  setBrightness(BRIGHT_HIGH);
 }
 
 void TM1637TinyDisplay6::flipDisplay(bool flip)
