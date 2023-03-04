@@ -1,10 +1,10 @@
 # Release Notes for TM1637TinyDisplay
 
-## v1.8.1 - Updated begin() method to set default brightness
+## v1.8.1 - Add Default Brightness
 
 * Updated the `begin()` method to set a non zero default brightness for the display, as reported in https://github.com/jasonacox/TM1637TinyDisplay/pull/29#issuecomment-1446362105 and submitted by @mgesteiro in https://github.com/jasonacox/TM1637TinyDisplay/pull/30
 
-## v1.8.0 - Updated library operation with new begin() method
+## v1.8.0 - Updated Library Operation with New begin() Method
 
 * Updated library operation to include an initializing method `begin()` to move outside the constructor hardware related calls, as reported in https://github.com/jasonacox/TM1637TinyDisplay/issues/28
 
