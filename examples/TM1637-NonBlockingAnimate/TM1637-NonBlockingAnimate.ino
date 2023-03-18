@@ -120,7 +120,7 @@ TM1637TinyDisplay display(CLK, DIO);
 void setup()
 {
   Serial.begin(9600);
-  display.setBrightness(BRIGHT_HIGH);
+  display.begin();
   AnimationNum = 0;
 }
 

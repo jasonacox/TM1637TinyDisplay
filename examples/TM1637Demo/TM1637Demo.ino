@@ -321,7 +321,7 @@ const uint8_t ANIMATION3[218][4] PROGMEM = {
 };
 
 void setup() {
-  display.setBrightness(BRIGHT_7);
+  display.begin();
   display.showNumber(1234);
   delay(1000);
 

@@ -1,5 +1,18 @@
 # Release Notes for TM1637TinyDisplay
 
+## v1.8.1 - Add Default Brightness
+
+* Updated the `begin()` method to set a non zero default brightness for the display, as reported in https://github.com/jasonacox/TM1637TinyDisplay/pull/29#issuecomment-1446362105 and submitted by @mgesteiro in https://github.com/jasonacox/TM1637TinyDisplay/pull/30
+
+## v1.8.0 - Updated Library Operation with New begin() Method
+
+* Updated library operation to include an initializing method `begin()` to move outside the constructor hardware related calls, as reported in https://github.com/jasonacox/TM1637TinyDisplay/issues/28
+
+## v1.7.1 - Fix Compile Errors for ESP8266
+
+* Fix compile errors and warnings on ESP8266 cores (type casts and erroneous defaults in functions) as reported in https://github.com/jasonacox/TM1637TinyDisplay/issues/26
+* Fix function names for async animation/scroll in keywords.txt by @hackerceo in https://github.com/jasonacox/TM1637TinyDisplay/pull/25
+
 ## v1.7.0 - Add Non-Blocking Animation for 4-Digit
 
 * Add non-blocking animation and string scrolling to 4-digit display by @hackerceo in https://github.com/jasonacox/TM1637TinyDisplay/pull/24

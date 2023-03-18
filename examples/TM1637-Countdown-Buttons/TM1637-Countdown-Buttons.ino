@@ -55,8 +55,7 @@ int Sec = 0;
 
 void setup()
 {
-  display.setBrightness(BRIGHT_HIGH);
-  display.clear();
+  display.begin();
 
   pinMode(BUTTON_UP, INPUT_PULLUP);
   pinMode(BUTTON_DOWN, INPUT_PULLUP);

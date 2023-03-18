@@ -117,8 +117,7 @@
 class TM1637TinyDisplay {
 
 public:
-  //! Initialize a TM1637TinyDisplay object, setting the clock and
-  //! data pins.
+  //! Initialize a TM1637TinyDisplay object.
   //!
   //! @param pinClk - The number of the digital pin connected to the clock pin of the module
   //! @param pinDIO - The number of the digital pin connected to the DIO pin of the module
@@ -127,6 +126,12 @@ public:
   //! @param flip - Flip display orientation (default=false)
   TM1637TinyDisplay(uint8_t pinClk, uint8_t pinDIO, unsigned int bitDelay = DEFAULT_BIT_DELAY, 
     unsigned int scrollDelay = DEFAULT_SCROLL_DELAY, bool flip=DEFAULT_FLIP);
+
+  //! Initialize the display, setting the clock and data pins.
+  //!
+  //! This method should be called once (typically in setup()) before calling any other.
+  //! @note It may be unnecessary depending on your hardware configuration.
+  void begin();
 
   //! Sets the orientation of the display.
   //!
@@ -475,7 +480,7 @@ private:
   unsigned int m_animation_frames;
   unsigned int m_animation_last_frame;
   unsigned int m_animation_frame_ms;
-  uint8_t (*m_animation_sequence)[4];
+  uint8_t (*m_animation_sequence)[MAXDIGITS];
   uint8_t (*m_animation_string);
   uint8_t m_animation_type;
 };

@@ -105,6 +105,7 @@ TM1637TinyDisplay display(CLK, DIO);
 
 void setup()
 {
+  display.begin();
 }
 
 void loop()
