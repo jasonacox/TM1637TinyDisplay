@@ -392,8 +392,6 @@ void TM1637TinyDisplay6::showNumberBaseEx(int8_t base, uint32_t num, uint8_t dot
     negative = true;
   }
 
-  // uint8_t digits[MAXDIGITS];
-
   if (num == 0 && !leading_zero) {
     // Singular case - take care separately
     for(uint8_t i = 0; i < (length-1); i++) {
