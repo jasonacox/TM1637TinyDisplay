@@ -590,13 +590,13 @@ bool TM1637TinyDisplay::Animate()
     memset(digits, 0, sizeof(digits));
     switch(m_animation_type) {
         case 1: // regular animation running
-            for (unsigned int a = 0; a < 4; a++) {
+            for (unsigned int a = 0; a < MAXDIGITS; a++) {
                 digits[a] = m_animation_sequence[frame_num][a];
             }
             setSegments(digits);
             break;
         case 2: // PROGMEM animation running
-            for(unsigned int a = 0; a < 4; a++) {
+            for(unsigned int a = 0; a < MAXDIGITS; a++) {
                 digits[a] = pgm_read_byte(&(m_animation_sequence[frame_num][a]));
             }
             setSegments(digits);
