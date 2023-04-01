@@ -114,8 +114,6 @@ byte AnimationNum;
 
 // Initialize TM1637TinyDisplay - 4 Digit Display
 TM1637TinyDisplay display(CLK, DIO);
-// Initialize TM1637TinyDisplay - 6 Digit Display
-// TM1637TinyDisplay6 display(CLK, DIO);
 
 void setup()
 {
