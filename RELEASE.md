@@ -1,5 +1,9 @@
 # Release Notes for TM1637TinyDisplay
 
+## v1.9.0 - Add Non-Blocking Animation for 6-Digit
+
+* Add non-blocking animation and string scrolling to 6-digit display by @hackerceo in https://github.com/jasonacox/TM1637TinyDisplay/pull/31
+
 ## v1.8.1 - Add Default Brightness
 
 * Updated the `begin()` method to set a non zero default brightness for the display, as reported in https://github.com/jasonacox/TM1637TinyDisplay/pull/29#issuecomment-1446362105 and submitted by @mgesteiro in https://github.com/jasonacox/TM1637TinyDisplay/pull/30
