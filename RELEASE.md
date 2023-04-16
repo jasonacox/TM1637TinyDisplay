@@ -1,5 +1,9 @@
 # Release Notes for TM1637TinyDisplay
 
+## v1.9.1 - Overflow Fix for showNumber()
+
+* Changed abs() to labs() in showNumber() function by @KelevraSlevin7 in https://github.com/jasonacox/TM1637TinyDisplay/pull/33
+
 ## v1.9.0 - Add Non-Blocking Animation for 6-Digit
 
 * Add non-blocking animation and string scrolling to 6-digit display by @hackerceo in https://github.com/jasonacox/TM1637TinyDisplay/pull/31

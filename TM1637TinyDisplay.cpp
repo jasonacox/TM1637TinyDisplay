@@ -298,7 +298,7 @@ void TM1637TinyDisplay::showNumber(long num, bool leading_zero, uint8_t length, 
 void TM1637TinyDisplay::showNumber(double num, uint8_t decimal_length, uint8_t length, uint8_t pos)
 {
   int num_len = 0;              
-  long inum = abs((long)num);  
+  long inum = labs((long)num);  
   int decimal_places = 0;       
   double value = 0.0;
   bool negative = false; 
@@ -315,7 +315,7 @@ void TM1637TinyDisplay::showNumber(double num, uint8_t decimal_length, uint8_t l
     num_len++; // make space for negative
     negative = true;
   }
-  if(abs(num)<1) {
+  if(labs(num)<1) {
     num_len++; // make space for 0. prefix
     leading_zero = true;
   }
@@ -336,7 +336,7 @@ void TM1637TinyDisplay::showNumber(double num, uint8_t decimal_length, uint8_t l
   }
   if(num>0) value = value + 0.5; // round up
   if(num<0) value = value - 0.5; // round down
-  inum = abs((long)value);
+  inum = labs((long)value);
 
   // render display array
   if (inum == 0 && !leading_zero) {
