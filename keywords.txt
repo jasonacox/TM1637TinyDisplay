@@ -33,6 +33,7 @@ startAnimation	KEYWORD2
 startAnimation_P  KEYWORD2 
 startStringScroll	KEYWORD2
 startStringScroll_P	KEYWORD2
+stopAnimation	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)

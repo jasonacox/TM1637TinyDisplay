@@ -1,8 +1,24 @@
 # Release Notes for TM1637TinyDisplay
 
-## v1.9.1 - Overflow Fix for showNumber()
+## v1.10.0 - Animation Looping
 
-* Changed abs() to labs() in showNumber() function by @KelevraSlevin7 in https://github.com/jasonacox/TM1637TinyDisplay/pull/33
+* Bug Fix (v1.9.1): Changed abs() to labs() in showNumber() function by @KelevraSlevin7 in https://github.com/jasonacox/TM1637TinyDisplay/pull/33 fixes overflow situation on some cores for showNumber()
+* Added option for non-blocking animation to allow looping sequence via `Animate(true)` and added method to stop animation with `stopAnimation()` for `TM1637TinyDisplay` and `TM1637TinyDisplay6` classes.
+
+```cpp
+  //! The event loop function to enable non-blocking animations
+  //!
+  //! The method returns TRUE when an animation is still occurring, it is
+  //! FALSE when there is no animation occurring
+  //!
+  //! @return A boolean value indicating if an animation is occurring
+  //! @param loop If true, keep looping animation when it ends
+  bool Animate(bool loop = false);
+
+  //! The function used to stop a non-blocking animation
+  //!
+  void stopAnimation();
+```
 
 ## v1.9.0 - Add Non-Blocking Animation for 6-Digit
 

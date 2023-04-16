@@ -358,7 +358,7 @@ public:
 
   //! Display a Level Indicator (both orientations)
   //!
-  //! Illumiate LEDs to provide a visual indicator of level (horizontal or vertical orientation)
+  //! Illuminate LEDs to provide a visual indicator of level (horizontal or vertical orientation)
   //!
   //! @param level A value between 0 and 100 (representing percentage)
   //! @param horizontal Boolean (true/false) where true = horizontal, false = vertical
@@ -366,7 +366,7 @@ public:
   
   //! Display a sequence of raw LED segment data to create an animation
   //!
-  //! Play thorugh an array of raw LED segment data to create a moving pattern.  
+  //! Play through an array of raw LED segment data to create a moving pattern.  
   //!
   //! const uint8_t Example[2][4] = 
   //! {
@@ -391,7 +391,7 @@ public:
 
   //! Display a sequence of raw LED segment data to create an animation (PROGMEM)
   //!
-  //! Play thorugh an array of raw LED segment data to create a moving pattern.  
+  //! Play through an array of raw LED segment data to create a moving pattern.  
   //! This function is for reading PROGMEM read-only flash memory space instead of RAM
   //!
   //! const uint8_t Example[2][4] = 
@@ -414,15 +414,14 @@ public:
   //! @param ms Time to delay between each frame
   void showAnimation_P(const uint8_t data[][4], unsigned int frames = 0, unsigned int ms = 10);
 
-
   //! The event loop function to enable non-blocking animations
   //!
-  //! The method does not take any input parameters and returns a boolean
-  //! The return value is TRUE when an animation is still occuring, it is
-  //! FALSE when there is no animiation occuring
+  //! The method returns TRUE when an animation is still occurring, it is
+  //! FALSE when there is no animation occurring
   //!
-  //! @return A boolean value indicating if an animation is occuring
-  bool Animate();
+  //! @return A boolean value indicating if an animation is occurring
+  //! @param loop If true, keep looping animation when it ends
+  bool Animate(bool loop = false);
 
   //! The function used to begin a non-blocking animation
   //!
@@ -432,14 +431,16 @@ public:
   void startAnimation(const uint8_t (*data)[MAXDIGITS], unsigned int frames = 0, unsigned int ms = 10, bool usePROGMEM = false);
   void startAnimation_P(const uint8_t(*data)[MAXDIGITS], unsigned int frames = 0, unsigned int ms = 10);
 
+  //! The function used to stop a non-blocking animation
+  //!
+  void stopAnimation();
+ 
   //! The function used to begin a non-blocking scroll of a string
   //!
   //! @param usePROGMEN Indicates if the passed string data is coming from a PROGMEM defined variable
   //! @param ms Time to delay between each frame
   void startStringScroll(const char s[], unsigned int ms = DEFAULT_SCROLL_DELAY, bool usePROGMEM = false);
   void startStringScroll_P(const char s[], unsigned int ms = DEFAULT_SCROLL_DELAY);
-
-
 
   //! Translate a single ASCII character into 7 segment code
   //!
@@ -451,7 +452,6 @@ public:
   //! @return A code representing the 7 segment image of the digit (LSB - segment A;
   //!         bit 6 - segment G; bit 7 - always zero)
   uint8_t encodeASCII(uint8_t chr);
-
 
 protected:
    void bitDelay();

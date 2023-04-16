@@ -568,7 +568,7 @@ void TM1637TinyDisplay::showLevel(unsigned int level, bool horizontal)
   setSegments(digits);
 }
 
-bool TM1637TinyDisplay::Animate()
+bool TM1637TinyDisplay::Animate(bool loop)
 {
     // return if no animation/scroll is running 
     if (m_animation_type == 0) return false;
@@ -577,8 +577,14 @@ bool TM1637TinyDisplay::Animate()
 
     // we have run past our max frame (this can happen because of frame dropping)
     if (frame_num >= m_animation_frames) {
+      if (loop) {
+        // restart
+        m_animation_start = millis();
+        frame_num = 0;
+      } else {
         m_animation_type = 0;
         return false;
+      }
     }
 
     // bail out if the animation frame has not changed
@@ -647,6 +653,10 @@ void TM1637TinyDisplay::startAnimation(const uint8_t (*data)[MAXDIGITS], unsigne
     m_animation_string = nullptr;
 }
 
+void TM1637TinyDisplay::stopAnimation()
+{
+    m_animation_type = 0;
+}
 
 void TM1637TinyDisplay::startStringScroll_P(const char s[], unsigned int ms)
 {

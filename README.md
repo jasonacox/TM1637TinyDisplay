@@ -172,6 +172,7 @@ The library provides a single class named TM1637TinyDisplay with the following f
 * `showAnimation(..)` - Display a sequence of frames to render an animation
 * `startAnimation(..)` - Begins a non-blocking animation of a sequence of frames
 * `Animate()` - Worker routine to be called regularly which handles animations and scrolling in a non-blocking manner
+* `stopAnimation(..)` - Stops non-blocking animation
 * `setSegments(..)` - Directly set the value of the LED segments in each digit
 * `setBrightness(..)` - Sets the brightness of the display
 * `setScrolldelay(..)` - Sets the speed for text scrolling
