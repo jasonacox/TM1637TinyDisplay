@@ -29,6 +29,7 @@ extern "C" {
 #include <TM1637TinyDisplay.h>
 #include <Arduino.h>
 
+#define labs(x) ((x)>0?(x):-(x))
 
 //
 //      A

@@ -29,6 +29,8 @@ extern "C" {
 #include <TM1637TinyDisplay6.h>
 #include <Arduino.h>
 
+#define labs(x) ((x)>0?(x):-(x))
+
 // Digit sequence map for 6 digit displays
 const uint8_t digitmap[] = { 2, 1, 0, 5, 4, 3 }; 
 
