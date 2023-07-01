@@ -12,12 +12,12 @@ Connect the TM1637 display CLK and DIO pins to your Arduino GPIO pins, include t
 
 ## Hardware
 
-![TM1637](examples/tm1637.png)
+![TM1637](https://raw.githubusercontent.com/jasonacox/TM1637TinyDisplay/master/examples/tm1637.png)
 
 * 4-Digit Display modules based on the TM1637 chip are available from [HiLetgo](https://www.amazon.com/gp/product/B01DKISMXK/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1), [DX](https://dx.com/p/0-36-led-4-digit-display-module-for-arduino-black-blue-works-with-official-arduino-boards-254978) and [SeeedStudio](https://www.digikey.com/products/en?keywords=tm1637).
 * 6-Digit Display modules - see [here](https://github.com/jasonacox/TM1637TinyDisplay#tm1637-6-digit-display---tm1637tinydisplay6).
 
-![TM1637](examples/tm1637back.png)
+![TM1637](https://raw.githubusercontent.com/jasonacox/TM1637TinyDisplay/master/examples/tm1637back.png)
 
 The display has four connectors:
 
@@ -124,11 +124,11 @@ const uint8_t ANIMATION[12][4] = {
 ```
 ## TM1637 6-Digit Display - TM1637TinyDisplay6
 
-![TM1637-6](examples/tm1637-6.png)
+![TM1637-6](https://raw.githubusercontent.com/jasonacox/TM1637TinyDisplay/master/examples/tm1637-6.png)
 
 6-Digit Display modules based on the TM1637 chip are available from [Amazon](https://smile.amazon.com/diymore-Display-Digital-Decimal-Segments/dp/B08G4BYR2B/ref=sr_1_2?crid=2ZNMBUFWRVDIL&dchild=1&keywords=tm1637%2B6%2Bdigit&qid=1617163070&sprefix=tm1637%2B%2Caps%2C218&sr=8-2&th=1) and [AliExpress](https://www.aliexpress.com/item/1005002060120661.html?spm=a2g0s.9042311.0.0.47454c4dYpnXsR). 
 
-![TM1637-6-Back](examples/tm1637-6-back.png)
+![TM1637-6-Back](https://raw.githubusercontent.com/jasonacox/TM1637TinyDisplay/master/examples/tm1637-6-back.png)
 
 This library now supports the 6-digit display as well as the 4-digit display.  The 6-digit display requires additional handling.  Specifically, the display digits are not sequential (requires a map) and the 7-segment LED data must be uploaded in reverse order.
 
