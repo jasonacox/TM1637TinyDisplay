@@ -284,8 +284,8 @@ void loop()
   sprintf(stringb, "25%cC", '\xB0'); // Display 25 + degree symbol + C
   display.showString(stringb);
   delay(TEST_DELAY);
-  display.clear();                  // Long string test
-  display.showString("abcdefghijklmnopqrstuvwxyz.-=ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+  display.clear();                  // Extended characters test
+  display.showString("!-/0123456789<=>?@ABCDEFGHIJKLMmNOPQRSTUVWwXYZ[]^_`abcdefghijklnnnopqrstuvvvxyz{|}~");
   delay(TEST_DELAY);
 
   // Test Strings in PROGMEM flash memory
