@@ -1,5 +1,13 @@
 # Release Notes for TM1637TinyDisplay
 
+## v1.11.0 - Enhanced Character Set
+
+* Updated character set by @J-Brinkman in https://github.com/jasonacox/TM1637TinyDisplay/issues/39
+
+```cpp
+display.showString("!-/0123456789<=>?@ABCDEFGHIJKLMmNOPQRSTUVWwXYZ[]^_`abcdefghijklnnnopqrstuvvvxyz{|}~");
+```
+
 ## v1.10.0 - Animation Looping
 
 * Bug Fix (v1.9.1): Changed abs() to labs() in showNumber() function by @KelevraSlevin7 in https://github.com/jasonacox/TM1637TinyDisplay/pull/33 fixes overflow situation on some cores for showNumber()
