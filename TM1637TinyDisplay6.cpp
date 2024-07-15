@@ -119,7 +119,7 @@ const uint8_t asciiToSegment[] PROGMEM = {
    0b01111000, // 084 T
    0b00111110, // 085 U
    0b00111110, // 086 V
-   0b00011110, // 087 W (For display use Ww)
+   0b00111100, // 087 W (For display use Ww)
    0b01110110, // 088 X
    0b01101110, // 089 Y
    0b01011011, // 090 Z
@@ -151,7 +151,7 @@ const uint8_t asciiToSegment[] PROGMEM = {
    0b01111000, // 116 t
    0b00011100, // 117 u
    0b00011100, // 118 v
-   0b00111100, // 119 w (For display use vv) 
+   0b00011110, // 119 w (For display use uu) 
    0b01110110, // 120 x
    0b01101110, // 121 y
    0b01011011, // 122 z
