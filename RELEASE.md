@@ -1,5 +1,35 @@
 # Release Notes for TM1637TinyDisplay
 
+## v1.12.0 - Clear Display Option
+
+* Update `begin()` function to allow parameter control of display clear and full brightness setting. Default behavior if not specified will be `true` which is the behavior with prior version.
+* Remove clean and set brightness from begin by @smaryus in https://github.com/jasonacox/TM1637TinyDisplay/pull/42.
+
+```cpp
+//! Initialize the display, setting the clock and data pins.
+//!
+//! This method should be called once (typically in setup()) before calling any other.
+//! @note It may be unnecessary depending on your hardware configuration.
+void begin();
+//! @param clearDisplay - Clear display and set the brightness to maximum value.
+void begin(bool clearDisplay=true);
+
+void TM1637TinyDisplay::begin(bool clearDisplay)
+{
+  // Set the pin direction and default value.
+  // Both pins are set as inputs, allowing the pull-up resistors to pull them up
+  pinMode(m_pinClk, INPUT);
+  pinMode(m_pinDIO, INPUT);
+  digitalWrite(m_pinClk, LOW);
+  digitalWrite(m_pinDIO, LOW);
+  if (clearDisplay)
+  {
+    clear();
+    setBrightness(BRIGHT_HIGH);
+  }
+}
+```
+
 ## v1.11.0 - Enhanced Character Set
 
 * Updated character set by @J-Brinkman in https://github.com/jasonacox/TM1637TinyDisplay/issues/39
