@@ -175,7 +175,7 @@ TM1637TinyDisplay::TM1637TinyDisplay(uint8_t pinClk, uint8_t pinDIO, unsigned in
   m_flipDisplay = flip;
 }
 
-void TM1637TinyDisplay::begin()
+void TM1637TinyDisplay::begin(bool clearDisplay)
 {
   // Set the pin direction and default value.
   // Both pins are set as inputs, allowing the pull-up resistors to pull them up
@@ -183,6 +183,11 @@ void TM1637TinyDisplay::begin()
   pinMode(m_pinDIO, INPUT);
   digitalWrite(m_pinClk, LOW);
   digitalWrite(m_pinDIO, LOW);
+  if (clearDisplay)
+  {
+    clear();
+    setBrightness(BRIGHT_HIGH);
+  }
 }
 
 void TM1637TinyDisplay::flipDisplay(bool flip)
