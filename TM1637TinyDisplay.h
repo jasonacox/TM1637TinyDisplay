@@ -131,7 +131,8 @@ public:
   //!
   //! This method should be called once (typically in setup()) before calling any other.
   //! @note It may be unnecessary depending on your hardware configuration.
-  void begin();
+  //! @param clearDisplay - Clear display and set the brightness to maximum value.
+  void begin(bool clearDisplay=true);
 
   //! Sets the orientation of the display.
   //!
