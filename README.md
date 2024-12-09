@@ -199,5 +199,5 @@ Refer to [TM1637TinyDisplay.h](TM1637TinyDisplay.h) for information on available
 * This library is based on the great work by Avishay Orpaz - https://github.com/avishorp/TM1637
 * SevenSegmentTM1637 Arduino Library by Bram Harmsen - https://github.com/bremme/arduino-tm1637 
 * Arduino - https://playground.arduino.cc/Main/TM1637/
-* Titan Micro Electronics Datasheet for TM1637 - [View](docs/TM1637.pdf) [\[Download\]](http://www.titanmec.com/index/article/download.html?file=aHR0cDovL3R3ZHotYXNzZXRzLmRqd2VpbGFpLmNvbS90d2R6X2VuLzIwMjQwMzA5LzIwMjQwMzA5MTQxNjM3OTkxLnBkZg%3D%3D&name=TM1637)
+* [Titan Micro Electronics](http://www.titanmec.com) Datasheet for TM1637 - [View docs/TM1637.pdf](docs/TM1637.pdf)
 * TM16xx - Library for entire TM16xx chip family include maxint-rd's own [display-modules](https://github.com/maxint-rd/arduino-modules#display-modules) - https://github.com/maxint-rd/TM16xx
