@@ -683,7 +683,7 @@ void TM1637TinyDisplay6::startStringScroll(const char s[], unsigned int ms, bool
         m_animation_frames = strlen(s);
         if (m_animation_frames <= MAXDIGITS) {
             // no need to scroll, just display it
-            showString_P(s, m_animation_frames, 0, 0);
+            showString(s, m_animation_frames, 0, 0);
             return;
         } else {
             m_animation_type = 4;
