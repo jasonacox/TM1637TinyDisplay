@@ -1,5 +1,9 @@
 # Release Notes for TM1637TinyDisplay
 
+## v1.12.1 - startStringScroll Fix
+
+* Fix startStringScroll for non _p strings with length <= MAXDIGITS by @pistolingo in https://github.com/jasonacox/TM1637TinyDisplay/pull/45
+
 ## v1.12.0 - Clear Display Option
 
 * Update `begin()` function to allow parameter control of display clear and full brightness setting. Default behavior if not specified will be `true` which is the behavior with prior version.
