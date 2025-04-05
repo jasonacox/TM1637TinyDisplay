@@ -171,13 +171,15 @@ void loop()
         Serial.println("");
         Serial.println("Animated Short String Scroll from SRAM");
         // non-blocking scrolling of a short string
-        display.startStringScroll("STAT", 200);
+        display.startStringScroll("SRAM", 200);
+        delay(TEST_DELAY);
         break;
       case 6:
         Serial.println("");
         Serial.println("Animated Short String Scroll from PROGMEM");
         // non-blocking scrolling of a short string
-        display.startStringScroll_P("PROG", 200);
+        display.startStringScroll_P("FLAS", 200);
+        delay(TEST_DELAY);
         break;
       default:
         display.showString("The");
