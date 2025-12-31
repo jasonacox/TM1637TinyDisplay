@@ -1,5 +1,13 @@
 # Release Notes for TM1637TinyDisplay
 
+## v1.12.2 - Fix ESP8266 Compiler Warnings
+
+* Fix compiler warnings on ESP8266 platform by correcting type mismatches and signed/unsigned comparisons.
+* Change loop variables from `int` to `size_t` in `showString()` and `showString_P()` functions to match `strlen()` return type.
+* Add explicit `(int)` cast in `Animate()` function comparisons to eliminate signed/unsigned warnings.
+* Fix `m_animation_string` pointer declaration syntax in header files.
+* Contributed by @stef-ladefense in https://github.com/jasonacox/TM1637TinyDisplay/pull/48
+
 ## v1.12.1 - startStringScroll Fix
 
 * Fix startStringScroll for non _p strings with length <= MAXDIGITS by @pistolingo in https://github.com/jasonacox/TM1637TinyDisplay/pull/45
