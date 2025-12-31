@@ -482,7 +482,7 @@ private:
   unsigned int m_animation_last_frame;
   unsigned int m_animation_frame_ms;
   uint8_t (*m_animation_sequence)[MAXDIGITS];
-  uint8_t (*m_animation_string);
+  uint8_t *m_animation_string;
   uint8_t m_animation_type;
 };
 

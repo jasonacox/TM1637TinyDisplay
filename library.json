@@ -1,6 +1,6 @@
 {
   "name": "TM1637TinyDisplay",
-  "version": "1.12.1",
+  "version": "1.12.2",
   "keywords": "TM1637, tiny, LED, display",
   "description": "A simple library to display numbers, text and animation on a 4 and 6 digit 7-segment TM1637 based display modules. Offers non-blocking animations and scrolling!",
   "repository": {

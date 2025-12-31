@@ -435,7 +435,7 @@ void TM1637TinyDisplay6::showString(const char s[], uint8_t length, uint8_t pos,
 
   // Basic Display
   if (strlen(s) <= MAXDIGITS) {
-    for (int x = 0; x < strlen(s); x++) {
+    for (size_t x = 0; x < strlen(s); x++) {
       digits[x] = encodeASCII(s[x]);
     }
     if(dots != 0) {
@@ -486,7 +486,7 @@ void TM1637TinyDisplay6::showString_P(const char s[], uint8_t length, uint8_t po
 
   // Basic Display
   if (strlen_P(s) <= MAXDIGITS) {
-    for (int x = 0; x < strlen_P(s); x++) {
+    for (size_t x = 0; x < strlen_P(s); x++) {
       digits[x] = encodeASCII(pgm_read_byte(&s[x]));
     }
     if(dots != 0) {
@@ -617,7 +617,7 @@ bool TM1637TinyDisplay6::Animate(bool loop)
         case 3: // PROGMEM text scroll running
             for (int x = 0; x < MAXDIGITS; x++) {
                 int offset = frame_num - MAXDIGITS + x;
-                if (offset >= 0 && offset < m_animation_frames - (2 * MAXDIGITS)) {
+                if (offset >= 0 && offset < (int)(m_animation_frames - (2 * MAXDIGITS))) {
                     digits[x] = encodeASCII(pgm_read_byte(&m_animation_string[offset]));
                 } else {
                     digits[x] = 0;
@@ -628,7 +628,7 @@ bool TM1637TinyDisplay6::Animate(bool loop)
         case 4: // SRAM text scroll running
             for (int x = 0; x < MAXDIGITS; x++) {
                 int offset = frame_num - MAXDIGITS + x;
-                if (offset >= 0 && offset < m_animation_frames - (2 * MAXDIGITS)) {
+                if (offset >= 0 && offset < (int)(m_animation_frames - (2 * MAXDIGITS))) {
                     digits[x] = encodeASCII(m_animation_string[offset]);
                 } else {
                     digits[x] = 0;
